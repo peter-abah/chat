@@ -8,7 +8,7 @@ const Header = ({ chat }: { chat: Chat }) => {
   const { name } = getChatInfo(chat);
 
   return (
-    <header className='flex justify-between p-4'>
+    <header className='flex justify-between p-2'>
       <div className='flex'>
         <BackBtn className='mr-3' />
         <h1 className='text-xl font-bold'>{name}</h1>

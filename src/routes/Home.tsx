@@ -4,11 +4,13 @@ import Header from '../components/Header';
 
 const Home = () => {
   return (
-    <main className='m-6'>
+    <main>
       <Header />
-      {chats.map((chat) => (
-        <Chat key={chat.id} chat={chat} />
-      ))}
+      <div className='px-4'>
+        {chats.map((chat) => (
+          <Chat key={chat.id} chat={chat} />
+        ))}
+      </div>
     </main>
   )
 };
