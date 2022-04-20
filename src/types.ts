@@ -13,9 +13,11 @@ export interface Message {
   userId: Index;
 }
 
+export type ChatType = 'private' | 'group';
+
 interface BaseChat {
   id: Index;
-  type: 'private' | 'group';
+  type: ChatType;
   participants: Index[];
   lastMessage: Message;
 }

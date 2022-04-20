@@ -3,7 +3,7 @@ import Chat from '../components/Chat';
 
 const Home = () => {
   return (
-    <main>
+    <main className='m-6'>
       {chats.map((chat) => (
         <Chat key={chat.id} chat={chat} />
       ))}
