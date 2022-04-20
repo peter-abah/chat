@@ -1,5 +1,5 @@
-import { Chat, PrivateChat, User } from '../../types';
-import * as db from '../../db';
+import { Chat, PrivateChat, User } from '../types';
+import * as db from '../db';
 
 export const getChatUser = (chat: PrivateChat) => {
   const userId = chat.participants.filter((id) => id !== db.currentUser.id)[0];

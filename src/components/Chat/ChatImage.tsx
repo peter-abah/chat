@@ -1,5 +1,5 @@
 import { Chat } from '../../types';
-import { getChatInfo } from './shared';
+import { getChatInfo } from '../../lib/chats';
 
 interface Props {
   chat: Chat;
