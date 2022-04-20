@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { chats } from '../../db'
 
 import Header from './Header';
+import Messages from './Messages';
 
 const Chat = () => {
   const { id } = useParams() as { id: string };
@@ -10,7 +11,7 @@ const Chat = () => {
   return (
     <>
       <Header chat={chat} />
-      <p>messages here</p>
+      <Messages chat={chat} />
       <p>form</p>
     </>
   );
