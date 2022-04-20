@@ -1,4 +1,4 @@
-import { Chat, PrivateChat, User } from '../types';
+import { Chat, PrivateChat } from '../types';
 import * as db from '../db';
 
 export const getChatUser = (chat: PrivateChat) => {
