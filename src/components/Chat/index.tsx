@@ -9,7 +9,7 @@ const Chat = ({ chat }: { chat: ChatType }) => {
   const { name } = getChatInfo(chat);
 
   return (
-    <Link to={`/chat/${chat.id}`} className='flex my-6 by'>
+    <Link to={`/chat/${chat.id}`} className='flex py-3 by'>
       <ChatImage className='mr-3' chat={chat} />
       <div className='grow'>
         <h2 className='font-bold'>{name}</h2>
