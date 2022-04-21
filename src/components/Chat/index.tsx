@@ -1,5 +1,5 @@
-import { Chat as ChatType } from '../../types';
-import { getChatInfo } from '../../lib/chats';
+import { Chat as ChatType } from '@/types';
+import { getChatInfo } from '@/lib/chats';
 
 import { Link } from 'react-router-dom';
 import ChatImage from './ChatImage';

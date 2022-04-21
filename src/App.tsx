@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Home, Chat, Login } from './routes';
+import { Home, Chat, Login } from '@/routes';
 
 function App() {
   return (

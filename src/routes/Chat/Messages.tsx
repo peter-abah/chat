@@ -1,6 +1,6 @@
-import * as db from '../../db';
-import { Chat } from '../../types';
-import Message from '../../components/Message';
+import * as db from '@/db';
+import { Chat } from '@/types';
+import Message from '@/components/Message';
 
 const Messages = ({ chat }: { chat: Chat }) => {
   const messages = db.chatMessages[chat.id];

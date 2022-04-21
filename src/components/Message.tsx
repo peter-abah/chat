@@ -1,4 +1,4 @@
-import { Message as MsgType} from '../types';
+import { Message as MsgType} from '@/types';
 
 const Message = ({ message }: { message: MsgType}) => {
   return (

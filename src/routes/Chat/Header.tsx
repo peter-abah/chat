@@ -1,8 +1,8 @@
-import { Chat } from '../../types';
-import { getChatInfo } from '../../lib/chats';
+import { Chat } from '@/types';
+import { getChatInfo } from '@/lib/chats';
 
 import { MdSearch } from 'react-icons/md';
-import BackBtn from '../../components/BackBtn';
+import BackBtn from '@/components/BackBtn';
 
 const Header = ({ chat }: { chat: Chat }) => {
   const { name } = getChatInfo(chat);
