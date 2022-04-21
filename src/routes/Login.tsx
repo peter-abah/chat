@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmail } from '@/firebase/users';
 
 interface FormData {
   email: string;
@@ -6,8 +8,17 @@ interface FormData {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-  const onSubmit = (data: FormData) => alert(JSON.stringify(data));
+  const onSubmit = async ({email, password}: FormData) => {
+    try {
+      await signInWithEmail(email, password);
+      navigate('/');
+    } catch (e) {
+      window.alert('An error occured could not sign in' + JSON.stringify(e))
+    }
+  }
 
   return (
     <main>
