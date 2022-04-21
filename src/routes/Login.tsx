@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmail } from '@/firebase/users';
+
+import Spinner from '@/components/Spinner';
 
 interface FormData {
   email: string;
@@ -9,14 +12,18 @@ interface FormData {
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isSubmiting, setIsSubmiting] = useState(false)
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const onSubmit = async ({email, password}: FormData) => {
+    setIsSubmiting(true);
     try {
       await signInWithEmail(email, password);
       navigate('/');
     } catch (e) {
       window.alert('An error occured could not sign in' + JSON.stringify(e))
+    } finally {
+      setIsSubmiting(false);
     }
   }
 
@@ -49,10 +56,12 @@ const Login = () => {
           
           <div className="mt-8">
             <button
-              className="block mx-auto px-4 py-2 min-w-[10rem] rounded-lg border"
+              className="flex items-center justify-center mx-auto px-4 py-2 min-w-[15rem] rounded-lg border"
               type='submit'
+              disabled={isSubmiting}
             >
-              Login
+              <Spinner loading={isSubmiting} />
+              <span className='ml-4'>Login</span>
             </button>
           </div>
         </form>
