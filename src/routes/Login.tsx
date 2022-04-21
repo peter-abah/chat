@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmail } from '@/firebase/users';
+
+import { signInWithEmail, errorToMsg } from '@/firebase/users';
 
 import Spinner from '@/components/Spinner';
 
@@ -12,21 +13,18 @@ interface FormData {
 
 const Login = () => {
   const navigate = useNavigate();
-  const [isSubmiting, setIsSubmiting] = useState(false)
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  let { register, handleSubmit, setError, formState } = useForm<FormData>();
+  const { errors, isSubmitting } = formState;
   const onSubmit = async ({email, password}: FormData) => {
-    setIsSubmiting(true);
     try {
       await signInWithEmail(email, password);
       navigate('/');
-    } catch (e) {
-      window.alert('An error occured could not sign in' + JSON.stringify(e))
-    } finally {
-      setIsSubmiting(false);
+    } catch (e: any) {
+      const [key, message] = Object.entries(errorToMsg(e))[0] as [any, any];
+      setError(key, message)
     }
-  }
-
+  };
   return (
     <main>
       <h1 className="mx-4 my-6 text-2xl">Chat</h1>
@@ -54,13 +52,17 @@ const Login = () => {
             {errors.password && <small className="pl-2 text-sm">{errors.password.message}</small>}
           </div>
           
+          {/** ignoring typescript error since unknown property is not present at runtime **/}
+          {/* @ts-ignore */}
+          {errors.unknown && <small className='text-sm mt-3'>{errors.unknown.message}</small>}
+          
           <div className="mt-8">
             <button
               className="flex items-center justify-center mx-auto px-4 py-2 min-w-[15rem] rounded-lg border"
               type='submit'
-              disabled={isSubmiting}
+              disabled={isSubmitting}
             >
-              <Spinner loading={isSubmiting} />
+              <Spinner loading={isSubmitting} />
               <span className='ml-4'>Login</span>
             </button>
           </div>
