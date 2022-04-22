@@ -32,9 +32,9 @@ export const chatMessages: ChatMessages = {
 }
 
 export const users: User[] = [
-  { id: 1, name: 'John' },
-  { id: 2, name: 'Homer' },
-  { id: 3, name: 'Peter' }
+  { uid: 1, displayName: 'John' },
+  { uid: 2, displayName: 'Homer' },
+  { uid: 3, displayName: 'Peter' }
 ];
 
-export const currentUser: User = { id: 2, name: 'Homer' };
+export const currentUser: User = { uid: 2, displayName: 'Homer' };

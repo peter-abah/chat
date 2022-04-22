@@ -2,8 +2,8 @@ import { Chat, PrivateChat } from '@/types';
 import * as db from '@/db';
 
 export const getChatUser = (chat: PrivateChat) => {
-  const userId = chat.participants.filter((id) => id !== db.currentUser.id)[0];
-  const user = db.users.filter(({ id }) => userId === id)[0];
+  const userId = chat.participants.filter((id) => id !== db.currentUser.uid)[0];
+  const user = db.users.filter(({ uid }) => userId === uid)[0];
   return user;
 };
 
@@ -13,5 +13,5 @@ export const getChatInfo = (chat: Chat) => {
   }
   
   const user = getChatUser(chat);
-  return { name: user.name, picture: user.picture }
+  return { name: user?.displayName || '', picture: user.picture }
 };

@@ -1,8 +1,8 @@
 export type Index = number | string;
 
 export interface User {
-  id: Index;
-  name: string;
+  uid: Index;
+  displayName: string | null;
   picture?: string | null;
 };
 

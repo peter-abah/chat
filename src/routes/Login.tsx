@@ -52,7 +52,7 @@ const Login = () => {
             {errors.password && <small className="pl-2 text-sm">{errors.password.message}</small>}
           </div>
           
-          {/** ignoring typescript error since unknown property is not present at runtime **/}
+          {/** ignoring typescript error since unknown property is not present at during type checking  **/}
           {/* @ts-ignore */}
           {errors.unknown && <small className='text-sm mt-3'>{errors.unknown.message}</small>}
           

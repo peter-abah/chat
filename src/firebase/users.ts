@@ -1,11 +1,12 @@
-import { auth } from '.';
-
+import { auth, db } from '.';
+import { doc, setDoc } from 'firebase/firestore';
 import { 
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
     AuthError,
-    AuthErrorCodes
+    AuthErrorCodes,
+    User
 } from "firebase/auth";
 
 interface UserData {
@@ -14,12 +15,20 @@ interface UserData {
   name: string;
 };
 
+const addUserToDb = async (user: User) => {
+  const docRef = doc(db, 'users', user.uid);
+  await setDoc(docRef, user);
+};
+
 const signUpWithEmail = async (userData: UserData) => {
   const { name, email, password } = userData;
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(user, { displayName: name });
 
-  if (auth.currentUser) return auth.currentUser;
+  if (auth.currentUser) {
+    await addUserToDb(auth.currentUser);
+    return auth.currentUser;
+  }
   throw new Error('Unknown Error')
 };
 
