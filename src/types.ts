@@ -24,6 +24,7 @@ interface BaseChat {
 
 export interface PrivateChat extends BaseChat {
   type: 'private';
+  participants: [Index, Index];
 }
 
 export interface GroupChat extends BaseChat {

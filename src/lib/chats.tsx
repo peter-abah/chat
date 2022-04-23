@@ -1,17 +1,20 @@
 import { Chat, PrivateChat } from '@/types';
-import * as db from '@/db';
+import { auth } from '@/firebase';
+import { getUser } from '@/firebase/users';
 
-export const getChatUser = (chat: PrivateChat) => {
-  const userId = chat.participants.filter((id) => id !== db.currentUser.uid)[0];
-  const user = db.users.filter(({ uid }) => userId === uid)[0];
+export const getChatUser = async (chat: PrivateChat) => {
+  if (!auth.currentUser) throw new Error('User must be logged in');
+
+  const userId = chat.participants.filter((id) => id !== auth.currentUser!.uid)[0] as string;
+  const user = await getUser(userId);
   return user;
 };
 
-export const getChatInfo = (chat: Chat) => {
+export const getChatInfo = async (chat: Chat) => {
   if (chat.type === 'group') {
     return { name: chat.name, picture: chat.picture }
   }
   
-  const user = getChatUser(chat);
-  return { name: user?.displayName || '', picture: user.picture }
+  const user = await getChatUser(chat);
+  return { name: user.displayName || '', picture: user.picture }
 };
