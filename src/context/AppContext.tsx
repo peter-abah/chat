@@ -38,10 +38,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   }, [auth.currentUser]);
   
   useEffect(() => {
-    if (!currentUser) navigate('/login')
-  }, [currentUser]);
-  
-  useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
         setCurrentUser(user);
@@ -49,7 +45,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
         setCurrentUser(null);
       }
    })
-  });
+  }, []);
   
   return (
     <AppContext.Provider value={{chats, users, currentUser}}>

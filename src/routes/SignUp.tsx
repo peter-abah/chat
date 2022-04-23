@@ -7,8 +7,9 @@ import Spinner from '@/components/Spinner';
 
 const formSchema = yup.object({
   name: yup.string().required('Enter your name.'),
-  email: yup.string().required().email('Enter valid email.'),
-  password: yup.string().required()
+  email: yup.string().required('Enter your email.')
+    .email('Enter valid email.'),
+  password: yup.string().required('Enter password')
     .min(8, 'Password must have at least 8 characters'),
   passwordConfirmation: yup.string().oneOf(
     [yup.ref('password'), null],
@@ -75,7 +76,7 @@ const SignUp = () => {
             }
           </div>
           
-          <div className="flex flex-col">
+          <div className="flex flex-col mb-4">
             <label className="font-bold">Password: </label>
             <input
               className="px-3 py-2 border rounded-md"

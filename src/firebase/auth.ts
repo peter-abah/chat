@@ -6,8 +6,9 @@ import {
     updateProfile,
     AuthError,
     AuthErrorCodes,
-    User
 } from "firebase/auth";
+
+import { User } from '@/types';
 
 interface UserData {
   email: string;
@@ -16,17 +17,19 @@ interface UserData {
 };
 
 const addUserToDb = async (user: User) => {
+  window.alert(JSON.stringify(user))
   const docRef = doc(db, 'users', user.uid);
   await setDoc(docRef, user);
+  window.alert(JSON.stringify(user) + '******')
 };
 
 export const signUpWithEmail = async (userData: UserData) => {
   const { name, email, password } = userData;
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
-  await updateProfile(user, { displayName: name });
 
   if (auth.currentUser) {
-    await addUserToDb(auth.currentUser);
+    const { name, uid, displayName } = auth.currentUser
+    await addUserToDb({ name, uid, displayName });
     return auth.currentUser;
   }
   throw new Error('Unknown Error')
