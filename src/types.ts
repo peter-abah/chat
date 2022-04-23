@@ -33,4 +33,9 @@ export interface GroupChat extends BaseChat {
   picture?: string | null;
 };
 
+export interface ChatInfo {
+  name: string;
+  picture: string;
+}
+
 export type Chat = GroupChat | PrivateChat;
