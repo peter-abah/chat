@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { signInWithEmail, errorToMsg } from '@/firebase/users';
+import { signInWithEmail, errorToMsg } from '@/firebase/auth';
 
 import Spinner from '@/components/Spinner';
 
