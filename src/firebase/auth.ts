@@ -20,7 +20,7 @@ const addUserToDb = async (user: User) => {
   await setDoc(docRef, user);
 };
 
-const signUpWithEmail = async (userData: UserData) => {
+export const signUpWithEmail = async (userData: UserData) => {
   const { name, email, password } = userData;
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(user, { displayName: name });
