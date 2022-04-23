@@ -1,5 +1,14 @@
 import { db } from '.'
-import { getDoc, doc } from 'firebase/firestore';
+import { 
+  getDoc, 
+  getDocs,
+  collection,
+  doc,
+  query,
+  startAfter,
+  limit,
+  orderBy
+} from 'firebase/firestore';
 
 import { User } from '@/types';
 
@@ -16,4 +25,26 @@ export const getUser = async (uid: string) => {
   }
   
   throw new Error('User not found');
+};
+
+const usersQuery = () => {
+  return query(collection(db, 'users'),
+    limit(25),
+    orderBy('displayName')
+  );
+};
+
+const nextUsersQuery = (lastUid: string) => {
+  return query(collection(db, 'users'),
+    limit(25),
+    startAfter(lastUid),
+    orderBy('displayName')
+  );
+}
+
+export const getUsers = async (lastUid?: string) => {
+  const query = lastUid ? nextUsersQuery(lastUid) : usersQuery();
+  const snapshot = await getDocs(query);
+  const users= snapshot.docs.map((e) => e.data() as User)
+  return users;
 };
