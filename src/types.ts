@@ -1,7 +1,7 @@
 export type Index = number | string;
 
 export interface User {
-  uid: Index;
+  uid: string;
   displayName: string | null;
   picture?: string | null;
 };

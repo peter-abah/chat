@@ -1,9 +1,8 @@
-import * as db from '@/db';
 import { Chat } from '@/types';
 import Message from '@/components/Message';
 
 const Messages = ({ chat }: { chat: Chat }) => {
-  const messages = db.chatMessages[chat.id];
+  const messages: any[] = [];
 
   return (
     <div className='px-4'>

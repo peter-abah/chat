@@ -17,10 +17,8 @@ interface UserData {
 };
 
 const addUserToDb = async (user: User) => {
-  window.alert(JSON.stringify(user))
   const docRef = doc(db, 'users', user.uid);
   await setDoc(docRef, user);
-  window.alert(JSON.stringify(user) + '******')
 };
 
 export const signUpWithEmail = async (userData: UserData) => {
@@ -28,8 +26,7 @@ export const signUpWithEmail = async (userData: UserData) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
 
   if (auth.currentUser) {
-    const { name, uid, displayName } = auth.currentUser
-    await addUserToDb({ name, uid, displayName });
+    await addUserToDb({ uid: auth.currentUser.uid, displayName: name });
     return auth.currentUser;
   }
   throw new Error('Unknown Error')
