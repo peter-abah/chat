@@ -1,6 +1,15 @@
 import { db, auth } from '.';
-import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
+import {
+  setDoc,
+  collection,
+  doc,
+  query,
+  where,
+  onSnapshot,
+  orderBy
+} from "firebase/firestore";
 import { Chat } from '@/types';
+import { getChatId } from '@/lib/chats';
 
 export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   if (!auth.currentUser) throw new Error('User must be logged in');
@@ -17,3 +26,14 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   
   return unsub;
 };
+
+export const createChat = async (uid: string) => {
+  if (!auth.currentUser) throw new Error('User must be logged in');
+  
+  const chatId = getChatId(uid, auth.currentUser!.uid);
+  const docRef = doc(db, 'chats', chatId);
+  await setDoc(docRef, {
+    type: 'private',
+    participants: [uid, auth.currentUser!.uid]
+  }, { merge: true });
+}
