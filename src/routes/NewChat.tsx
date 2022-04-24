@@ -1,5 +1,6 @@
 import useSwr from 'swr';
 import { getUsers } from '@/firebase/users';
+import User from '@/components/User';
 
 const NewChat = () => {
   const { data, error } = useSwr('users', () => getUsers());
@@ -9,7 +10,9 @@ const NewChat = () => {
   
   return (
     <div>
-      {data.map((user) => <p>{JSON.stringify(user)}</p>)}
+      {data.map((user) => (
+        <User key={user.uid} user={user} />
+      ))}
     </div>
   );
 };
