@@ -10,7 +10,7 @@ const Chat = ({ chat }: { chat: ChatType }) => {
   const { data } = useSwr(chat, getChatInfo);
 
   return (
-    <Link to={`/chat/${chat.id}`} className='flex py-3 by'>
+    <Link to={`/chats/${chat.id}`} className='flex py-3 by'>
       <ProfileImage
         className='mr-3'
         name={data?.name || ''}
