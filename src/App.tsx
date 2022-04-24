@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { Home, Chat, Login, SignUp, PrivateRoute } from '@/routes';
+import { 
+  Home,
+  Chat,
+  NewChat,
+  Login,
+  SignUp,
+  PrivateRoute
+} from '@/routes';
 import { AppContextProvider } from '@/context/AppContext';
 
 function App() {
@@ -10,6 +17,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path='/' element={<Home />} />
           <Route path='/chat/:id' element={<Chat />} />
+          <Route path='/chat/new' element={<NewChat />} />
         </Route>
 
         <Route path='/login' element={<Login />} />

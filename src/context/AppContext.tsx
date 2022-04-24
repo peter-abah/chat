@@ -15,19 +15,19 @@ import { getChats } from '@/firebase/chats';
 export interface AppContextInterface {
   chats: Chat[];
   users: User[];
-  currentUser: User | null;
+  isSignedIn: boolean;
 }
 const AppContext = createContext<AppContextInterface>({ 
   chats: [],
   users: [],
-  currentUser: null
+  isSignedIn: false
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [currentUser, setCurrentUser] = useLocalStorage<User | null>('currentUser', null);
-  
+  const [isSignedIn, setIsSignedIn] = useLocalStorage('signedIn', false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,15 +40,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
-        setCurrentUser(user);
+        setIsSignedIn(true);
       } else {
-        setCurrentUser(null);
+        setIsSignedIn(false);
       }
    })
-  }, []);
+  }, [auth.currentUser]);
   
   return (
-    <AppContext.Provider value={{chats, users, currentUser}}>
+    <AppContext.Provider value={{chats, users, isSignedIn}}>
       {children}
     </AppContext.Provider>
   )

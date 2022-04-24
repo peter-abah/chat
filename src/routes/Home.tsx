@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useAppContext } from '@/context/AppContext'
 import Chat from '@/components/Chat';
 import Header from '@/components/Header';
@@ -14,12 +15,12 @@ const Home = () => {
           <Chat key={chat.id} chat={chat} />
         ))}
       </div>
-      <button 
+      <Link
+        to='/chats/new'
         className='fixed bottom-6 right-6 rounded-full p-3 border'
-        onClick={() => null}
       >
         <AddChatIcon className='text-3xl' />
-      </button>
+      </Link>
     </main>
   )
 };
