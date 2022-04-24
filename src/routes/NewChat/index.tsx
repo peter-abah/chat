@@ -1,5 +1,7 @@
 import useSwr from 'swr';
 import { getUsers } from '@/firebase/users';
+
+import Header from './Header';
 import User from '@/components/User';
 
 const NewChat = () => {
@@ -9,11 +11,12 @@ const NewChat = () => {
   if (!data) return <p>Loading</p>
   
   return (
-    <div>
+    <main>
+      <Header />
       {data.map((user) => (
         <User key={user.uid} user={user} />
       ))}
-    </div>
+    </main>
   );
 };
 
