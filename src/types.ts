@@ -19,7 +19,7 @@ interface BaseChat {
   id: Index;
   type: ChatType;
   participants: Index[];
-  lastMessage: Message;
+  lastMessage?: Message;
 }
 
 export interface PrivateChat extends BaseChat {

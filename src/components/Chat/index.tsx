@@ -18,7 +18,9 @@ const Chat = ({ chat }: { chat: ChatType }) => {
       />
       <div className='grow'>
         <h2 className='font-bold'>{data?.name}</h2>
-        <LastMessage message={chat.lastMessage} type={chat.type} />
+        {chat.lastMessage &&
+          <LastMessage message={chat.lastMessage} type={chat.type} />
+        }
       </div>
     </Link>
   )

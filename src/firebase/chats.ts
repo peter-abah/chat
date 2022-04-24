@@ -19,7 +19,11 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   );
   const unsub = onSnapshot(q, (snapshot) => {
     const result: Chat[] = [];
-    snapshot.forEach((doc) => result.push(doc.data() as Chat));
+    snapshot.forEach((doc) => {
+      const data = {...doc.data(), id: doc.id } as Chat;
+      result.push(data);
+    });
+    alert(JSON.stringify(result));
     callbackFn(result);
   });
   
