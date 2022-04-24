@@ -15,8 +15,7 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   if (!auth.currentUser) throw new Error('User must be logged in');
  
   const q = query(collection(db, "chats"), 
-    where("participants", "array-contains", auth.currentUser.uid),
-    orderBy("updated_at")
+    where("participants", "array-contains", auth.currentUser.uid)
   );
   const unsub = onSnapshot(q, (snapshot) => {
     const result: Chat[] = [];
