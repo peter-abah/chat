@@ -1,5 +1,5 @@
 interface Props {
-  imgUrl?: string;
+  imgUrl?: string | null;
   name: string;
   className: string;
 };

@@ -16,5 +16,5 @@ export const getChatInfo = async (chat: Chat) => {
   }
   
   const user = await getChatUser(chat);
-  return { name: user.displayName || '', picture: user.picture }
+  return { name: user.displayName || 'No Name', picture: user.picture }
 };
