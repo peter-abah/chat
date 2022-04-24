@@ -16,5 +16,16 @@ export const getChatInfo = async (chat: Chat) => {
   }
   
   const user = await getChatUser(chat);
-  return { name: user.displayName || 'No Name', picture: user.picture }
+  return { 
+    name: user.displayName || 'No Name',
+    picture: user.picture 
+  }
 };
+
+export const getChatId = (uid1: string, uid2: string) => {
+  const comp = uid1.localeCompare(uid2);
+  if (comp === 0) throw new Error('ids are the same');
+
+  if (comp === -1) return uid1 + '_' + uid2;
+  return uid2 + '_' + uid1;
+}
