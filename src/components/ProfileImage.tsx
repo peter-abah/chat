@@ -15,7 +15,7 @@ const ProfileImage = ({ imgUrl, name, className }: Props) => {
   
   return (
     <span className={className}>
-      {name[0].toUpperCase()}
+      {name[0]?.toUpperCase()}
     </span>
   )
 };
