@@ -23,7 +23,6 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
       const data = {...doc.data(), id: doc.id } as Chat;
       result.push(data);
     });
-    alert(JSON.stringify(result));
     callbackFn(result);
   });
   

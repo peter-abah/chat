@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { useAppContext } from '@/context/AppContext';
 
@@ -9,10 +8,6 @@ const Chat = () => {
   const { id } = useParams() as { id: string };
   const { chats } = useAppContext();
   const chat = chats.filter((c) => id == c.id)[0];
-  
-  useEffect(() => {
-    window.alert(JSON.stringify(chats))
-  }, [chats]);
 
   return (
     <>
