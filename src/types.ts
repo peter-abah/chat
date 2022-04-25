@@ -7,7 +7,7 @@ export interface User {
 };
 
 export interface Message {
-  id: Index;
+  id: string;
   body: string;
   userName: string;
   userId: Index;
@@ -16,7 +16,7 @@ export interface Message {
 export type ChatType = 'private' | 'group';
 
 interface BaseChat {
-  id: Index;
+  id: string;
   type: ChatType;
   participants: Index[];
   lastMessage?: Message;

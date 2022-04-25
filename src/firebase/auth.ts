@@ -38,6 +38,13 @@ export const signInWithEmail = async (email: string, password: string) => {
   throw new Error('Unknown Error');
 };
 
+export const authenticate = (message?: string) => {
+  message ||= 'User must be logged in'
+  if (!auth.currentUser) {
+    throw new Error(message);
+  }
+};
+
 export const errorToMsg = (e: AuthError) => {
   switch (e.code) {
     case AuthErrorCodes.EMAIL_EXISTS:
