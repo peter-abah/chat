@@ -31,11 +31,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.currentUser) return;
- 
+    if (!isSignedIn) return;
+
     const unsub = getChats(setChats);
     return () => unsub();
-  }, [auth.currentUser]);
+  }, [isSignedIn]);
   
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
@@ -45,7 +45,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
         setIsSignedIn(false);
       }
    })
-  }, [auth.currentUser]);
+  }, [setIsSignedIn]);
   
   return (
     <AppContext.Provider value={{chats, users, isSignedIn}}>
