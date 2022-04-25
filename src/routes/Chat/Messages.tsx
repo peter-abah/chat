@@ -5,7 +5,7 @@ const Messages = ({ chat }: { chat: Chat }) => {
   const messages: any[] = [];
 
   return (
-    <div className='px-4'>
+    <div className='px-4 grow'>
       {messages.map((msg) => (
         <Message key={msg.id} message={msg} />
       ))}
