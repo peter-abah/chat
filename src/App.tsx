@@ -9,21 +9,24 @@ import {
   PrivateRoute
 } from '@/routes';
 import { AppContextProvider } from '@/context/AppContext';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 function App() {
   return (
-    <AppContextProvider>
-      <Routes>
-        <Route element={<PrivateRoute />}>
-          <Route path='/' element={<Home />} />
-          <Route path='/chats/:id' element={<Chat />} />
-          <Route path='/chats/new' element={<NewChat />} />
-        </Route>
-
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<SignUp />} />
-      </Routes>
-    </AppContextProvider>
+    <ErrorBoundary>
+      <AppContextProvider>
+        <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/chats/:id' element={<Chat />} />
+            <Route path='/chats/new' element={<NewChat />} />
+          </Route>
+  
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
+        </Routes>
+      </AppContextProvider>
+    </ErrorBoundary>
   )
 }
 
