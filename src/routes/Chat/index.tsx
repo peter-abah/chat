@@ -14,7 +14,7 @@ const Chat = () => {
     <main className='flex flex-col min-h-screen'>
       <Header chat={chat} />
       <Messages chat={chat} />
-      <MessageForm />
+      <MessageForm chat={chat} />
     </main>
   );
 };
