@@ -7,26 +7,26 @@ import {
   QueryDocumentSnapshot
 } from 'firebase/firestore';
 
-const useQuerySnapshot = <T extends DocumentData>(
+const useQuerySnapshot = <T extends any>(
   query: Query,
   transformData?: (d: QueryDocumentSnapshot) => T
 ) => {
-  const [data, setData] = useState<DocumentData[]>([])
+  const [data, setData] = useState<T[]>([])
   const [error, setError] = useState<FirestoreError | null>(null)
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     const unsub = onSnapshot(query, (snapshot) => {
-      const result: DocumentData[] = [];
+      const result: T[] = [];
 
       snapshot.forEach((doc) => {
         let docData;
         if (transformData) {
           docData = transformData(doc);
         } else {
-          docData = {...doc.data(), id: doc.id }
+          docData = {...doc.data(), id: doc.id } as T;
         }
-        result.push(docData);;
+        result.push(docData);
       });
 
       setLoading(false);

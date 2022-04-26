@@ -10,7 +10,8 @@ export interface Message {
   id: string;
   body: string;
   userName: string;
-  userId: Index;
+  userId: string;
+  timestamp: number;
 }
 
 export type ChatType = 'private' | 'group';
