@@ -5,8 +5,8 @@ interface Props {
   redirectPath?: string;
 }
 const PrivateRoute = ({ redirectPath = '/login' }: Props) => {
-  const { isSignedIn } = useAppContext();
-  if (!isSignedIn) {
+  const { currentUser } = useAppContext();
+  if (!currentUser) {
     return <Navigate to={redirectPath} replace />;
   }
   
