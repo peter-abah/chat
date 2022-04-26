@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-bg: 255 255 255;
+  --color-text: 0 0 0;
+  --color-primary: 146 20 12;
+  --color-msg-other: 200 200 200;
+  --color-msg-user: var(--color-primary);
+}
+
+body {
+  @apply text-text bg-bg;
+}
+
+/*.theme {*/
+/*  --forest-green-traditional: 4, 71, 28;*/
+/*  --ivory: 246, 247, 235;*/
+/*  --independence: 58, 64, 90;*/
+/*  --deep-saffron: 243, 146, 55;*/
+/*  --accent: var(--dark-red);*/
+/*  --color-primary: var*/
+/*}*/
