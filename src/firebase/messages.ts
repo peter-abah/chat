@@ -1,4 +1,11 @@
-import { addDoc, collection, serverTimestamp, query, DocumentData } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  query,
+  orderBy,
+  DocumentData
+} from 'firebase/firestore';
 import { auth, db } from '.';
 import { authenticate } from './auth'
 import { Chat, User, Message } from '@/types';
@@ -16,7 +23,10 @@ export const sendMessage = async (chat: Chat, currentUser: User, body: string) =
 }
 
 export const messagesQuery = (chat: Chat) => {
-  return query(collection(db, 'chats', chat.id, 'messages'))
+  return query(
+    collection(db, 'chats', chat.id, 'messages'),
+    orderBy('timestamp')
+  )
 };
 
 export const transformData = (msgDoc: DocumentData) => {
