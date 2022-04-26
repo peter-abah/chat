@@ -29,10 +29,14 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!auth.currentUser) return;
 
     const unsub = getChats(setChats);
     return () => unsub();
+
+  // using currentUser here instead of auth.currentUser since auth is
+  // imported and any change in auth does not call the useEffect function again
+  // and I need this hook to call again if a user signs in.
   }, [currentUser]);
   
   useEffect(() => {

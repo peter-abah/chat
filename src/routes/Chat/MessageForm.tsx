@@ -2,16 +2,20 @@ import { useForm } from 'react-hook-form';
 import TextArea from 'react-textarea-autosize';
 import { sendMessage } from '@/firebase/messages';
 import { Chat } from '@/types';
+import { useAppContext } from '@/context/AppContext'
 import { serializeError } from '@/lib/utils';
 
 type FormData = { body: string };
 const MessageForm = ({ chat }: { chat: Chat }) => {
   const { register, formState, reset, handleSubmit } = useForm<FormData>();
   const { isSubmitting, errors } = formState;
+  const { currentUser } = useAppContext();
 
   const onSubmit = async ({ body }: FormData) => {
     try {
-      await sendMessage(chat, body);
+      if (!currentUser) return;
+
+      await sendMessage(chat, currentUser, body);
       reset();
     } catch (e) {
       window.alert(serializeError(e));
