@@ -17,7 +17,7 @@ const Home = () => {
       </div>
       <Link
         to='/chats/new'
-        className='fixed bottom-6 right-6 rounded-full p-3 border'
+        className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
       >
         <AddChatIcon className='text-3xl' />
       </Link>

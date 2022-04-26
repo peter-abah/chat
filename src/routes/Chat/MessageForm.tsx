@@ -33,7 +33,7 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
       />
       <button 
         disabled={isSubmitting || !!errors.body}
-        className='ml-2 px-3 py-1'
+        className='ml-2 px-3 py-1 bg-primary text-white disabled:opacity-75'
         type='submit'
       >Send</button>
     </form>
