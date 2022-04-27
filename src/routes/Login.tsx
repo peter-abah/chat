@@ -63,7 +63,7 @@ const Login = () => {
               disabled={isSubmitting}
             >
               <Spinner loading={isSubmitting} className='!fill-white' />
-              <span className='ml-4'>Login</span>
+              <span className='ml-4 font-bold'>Login</span>
             </button>
           </div>
         </form>

@@ -4,6 +4,7 @@ import { sendMessage } from '@/firebase/messages';
 import { Chat } from '@/types';
 import { useAppContext } from '@/context/AppContext'
 import { serializeError } from '@/lib/utils';
+import { MdSend } from 'react-icons/md'
 
 type FormData = { body: string };
 const MessageForm = ({ chat }: { chat: Chat }) => {
@@ -25,7 +26,7 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='sticky bottom-0 z-10 flex items-start p-2'
+      className='sticky bottom-0 z-10 flex items-start p-2 bg-bg'
     >
       <TextArea 
         className='border px-4 py-2 grow'
@@ -33,9 +34,11 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
       />
       <button 
         disabled={isSubmitting || !!errors.body}
-        className='ml-2 px-3 py-1 bg-primary text-white disabled:opacity-75'
+        className='ml-2 px-3 py-1 bg-primary text-white rounded-sm font-bold disabled:opacity-75'
         type='submit'
-      >Send</button>
+      >
+        <MdSend className='text-2xl'/>
+      </button>
     </form>
   )
 };

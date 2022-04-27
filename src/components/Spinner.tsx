@@ -9,7 +9,7 @@ interface Props {
 const Spinner = ({ loading, className, style }: Props) => {
   if (!loading) return null;
   
-  className += "mr-2 w-6 h-6 text-transparent animate-spin fill-primary"
+  className += " mr-2 w-6 h-6 text-transparent animate-spin fill-primary"
   return (
     <svg 
       role="status"

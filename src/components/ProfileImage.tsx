@@ -5,7 +5,7 @@ interface Props {
 };
 
 const ProfileImage = ({ imgUrl, name, className }: Props) => {
-  className += ' w-12 h-12 text-lg text-white grid place-items-center rounded-full bg-gray-700';
+  className += ' w-10 h-10 text-lg text-white grid place-items-center rounded-full bg-gray-700';
 
   if (imgUrl) {
     return (

@@ -3,7 +3,7 @@ import { useAppContext } from '@/context/AppContext'
 import Chat from '@/components/Chat';
 import Header from '@/components/Header';
 
-import { BiMessageSquareAdd as AddChatIcon } from 'react-icons/bi';
+import { MdChat } from 'react-icons/md';
 
 const Home = () => {
   const { chats } = useAppContext();
@@ -19,7 +19,7 @@ const Home = () => {
         to='/chats/new'
         className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
       >
-        <AddChatIcon className='text-3xl' />
+        <MdChat className='text-3xl' />
       </Link>
     </main>
   )

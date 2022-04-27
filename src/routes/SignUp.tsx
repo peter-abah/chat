@@ -117,7 +117,7 @@ const SignUp = () => {
               disabled={isSubmitting}
             >
               <Spinner loading={isSubmitting} className='!fill-white' />
-              <span className='ml-4'>Sign up</span>
+              <span className='ml-4 font-bold'>Sign up</span>
             </button>
           </div>
         </form>

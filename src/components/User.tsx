@@ -21,7 +21,7 @@ const User = ({ user, onClick }: Props) => {
         imgUrl={user.picture}
         name={name}
       />
-      <p className='text-lg'>{name}</p>
+      <p className='text-lg font-bold'>{name}</p>
     </button>
   )
 };
