@@ -26,15 +26,16 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='sticky bottom-0 z-10 flex items-start p-2 bg-bg'
+      className='sticky bottom-0 z-10 flex items-start px-4 p-2 bg-bg'
     >
       <TextArea 
-        className='border px-4 py-2 grow'
+        className='border rounded-md px-4 py-2 grow'
+        maxRows={5}
         {...register('body', { required: 'Enter Message' })}
       />
       <button 
         disabled={isSubmitting || !!errors.body}
-        className='ml-2 px-3 py-1 bg-primary text-white rounded-sm font-bold disabled:opacity-75'
+        className='ml-2 px-3 py-1 bg-primary text-white rounded-xl font-bold disabled:opacity-75'
         type='submit'
       >
         <MdSend className='text-2xl'/>
