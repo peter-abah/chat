@@ -48,6 +48,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
         // setting it to user in firestore to access other properties and prevent 
         // sensitive user info from being stored in local storage
         setCurrentUser(_user);
+        navigate('/');
       } else {
         setCurrentUser(null);
       }

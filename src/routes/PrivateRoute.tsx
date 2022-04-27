@@ -1,12 +1,11 @@
 import { Outlet, Navigate } from 'react-router-dom'
-import { useAppContext } from '@/context/AppContext';
+import { auth } from '@/firebase';
 
 interface Props {
   redirectPath?: string;
 }
 const PrivateRoute = ({ redirectPath = '/login' }: Props) => {
-  const { currentUser } = useAppContext();
-  if (!currentUser) {
+  if (!auth.currentUser) {
     return <Navigate to={redirectPath} replace />;
   }
   
