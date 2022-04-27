@@ -1,13 +1,14 @@
 import { chatsQuery } from '@/firebase/chats';
 import useQuerySnapshot from '@/hooks/useQuerySnapshot';
 import Chat from '@/components/Chat';
+import Loader from '@/components/Loader';
 import { Chat as ChatType } from '@/types';
 
 const ChatsList = () => {
   const query = chatsQuery();
   const { data: chats, loading, error } = useQuerySnapshot<ChatType>(query);
   if (loading) {
-     return <p className='p-4'>Loading...</p>
+     return <Loader />
   }
 
   if (error) {

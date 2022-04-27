@@ -11,6 +11,7 @@ import { getChatId } from '@/lib/chats';
 
 import Header from './Header';
 import User from '@/components/User';
+import Loader from'@/components/Loader';
 
 const NewChat = () => {
   const navigate = useNavigate();
@@ -22,9 +23,9 @@ const NewChat = () => {
     loading,
     error: chatError
   } = useAsync(_createChat);
-  if (error) return <p className='p-6'>An error occured</p>;
+  if (error) return <p className='p-4'>An error occured</p>;
   
-  if (!users) return <p>Loading</p>
+  if (!users) return <Loader />
   
   // filter currentUser from users list
   users = users.filter(({uid}) => uid !== currentUser?.uid)

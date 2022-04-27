@@ -1,6 +1,7 @@
 import useQuerySnapshot from '@/hooks/useQuerySnapshot';
 import { messagesQuery, transformData } from '@/firebase/messages'
 import Message from '@/components/Message';
+import Loader from '@/components/Loader';
 import { serializeError } from '@/lib/utils';
 import { Chat } from '@/types';
 
@@ -10,8 +11,8 @@ const Messages = ({ chat }: { chat: Chat }) => {
     query, transformData
   );
   
-  if (loading) return <p>Loading..</p>
-  if (error) return <p>Error: {serializeError(error)}</p>
+  if (loading) return <Loader />
+  if (error) return <p className='p-4'>An error occured</p>
 
   return (
     <div className='px-4 grow'>
