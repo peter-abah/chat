@@ -14,17 +14,20 @@ import User from '@/components/User';
 
 const NewChat = () => {
   const navigate = useNavigate();
-  const { chats } = useAppContext();
-  const { data, error } = useSwr('users', () => getUsers());
+  const { chats, currentUser } = useAppContext();
+  let { data: users, error } = useSwr('users', () => getUsers());
 
   const { 
     func: createChat,
     loading,
     error: chatError
   } = useAsync(_createChat);
-  if (error) return <p>{JSON.stringify(error)}</p>;
+  if (error) return <p className='p-6'>An error occured</p>;
   
-  if (!data) return <p>Loading</p>
+  if (!users) return <p>Loading</p>
+  
+  // filter currentUser from users list
+  users = users.filter(({uid}) => uid !== currentUser?.uid)
   
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (loading || !auth.currentUser) return;
@@ -44,7 +47,7 @@ const NewChat = () => {
   return (
     <main>
       <Header />
-      {data.map((user) => (
+      {users.map((user) => (
         <User 
           key={user.uid}
           user={user}
