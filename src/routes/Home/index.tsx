@@ -1,20 +1,13 @@
-import { Link } from 'react-router-dom'
-import { useAppContext } from '@/context/AppContext'
-import Chat from '@/components/Chat';
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
-
+import ChatsList from './ChatsList';
 import { MdChat } from 'react-icons/md';
 
 const Home = () => {
-  const { chats } = useAppContext();
   return (
     <main>
       <Header />
-      <div className='px-4'>
-        {chats.map((chat) => (
-          <Chat key={chat.id} chat={chat} />
-        ))}
-      </div>
+      <ChatsList />
       <Link
         to='/chats/new'
         className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
