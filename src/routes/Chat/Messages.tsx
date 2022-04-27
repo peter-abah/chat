@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
 import useQuerySnapshot from '@/hooks/useQuerySnapshot';
+import useScroll from '@/hooks/useScroll';
+
 import { messagesQuery, transformData } from '@/firebase/messages'
 import Message from '@/components/Message';
 import Loader from '@/components/Loader';
@@ -11,6 +14,9 @@ const Messages = ({ chat }: { chat: Chat }) => {
     query, transformData
   );
   
+  const [ref, executeScroll] = useScroll<HTMLDivElement>();
+  useEffect(executeScroll, [messages])
+  
   if (loading) return <Loader />
   if (error) return <p className='p-4'>An error occured</p>
 
@@ -19,6 +25,7 @@ const Messages = ({ chat }: { chat: Chat }) => {
       {messages.map((msg) => (
         <Message key={msg.id} message={msg} />
       ))}
+      <div ref={ref} />
     </div>
   )
 };
