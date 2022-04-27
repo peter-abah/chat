@@ -7,7 +7,7 @@ import { serializeError } from '@/lib/utils';
 
 const ChatsList = () => {
   const query = chatsQuery();
-  const { data: chats, loading, error } = useQuerySnapshot<ChatType>(query);
+  const { data: chats, loading, error } = useQuerySnapshot<ChatType>('chats', query);
   if (loading) {
      return <Loader />
   }

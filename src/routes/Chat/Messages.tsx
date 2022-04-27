@@ -11,7 +11,7 @@ import { Chat } from '@/types';
 const Messages = ({ chat }: { chat: Chat }) => {
   const query = messagesQuery(chat);
   const { data: messages, error, loading } = useQuerySnapshot(
-    query, transformData
+    chat.id, query, transformData
   );
   
   const [ref, executeScroll] = useScroll<HTMLDivElement>();

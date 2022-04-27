@@ -8,6 +8,7 @@ import {
 } from 'firebase/firestore';
 
 const useQuerySnapshot = <T extends any>(
+  key: any,
   query: Query,
   transformData?: (d: QueryDocumentSnapshot) => T
 ) => {
@@ -36,7 +37,7 @@ const useQuerySnapshot = <T extends any>(
     })
     
     return () => unsub();
-  }, [query, transformData]);
+  }, [key, transformData]);
 
   return { data, error, loading };
 };
