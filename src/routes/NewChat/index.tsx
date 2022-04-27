@@ -8,6 +8,7 @@ import { auth } from '@/firebase';
 import { getUsers } from '@/firebase/users';
 import { createChat as _createChat } from '@/firebase/chats';
 import { getChatId } from '@/lib/chats';
+import { serializeError } from '@/lib/utils';
 
 import Header from './Header';
 import User from '@/components/User';
@@ -23,7 +24,7 @@ const NewChat = () => {
     loading,
     error: chatError
   } = useAsync(_createChat);
-  if (error) return <p className='p-4'>An error occured</p>;
+  if (error) return <p className='p-4'>{serializeError(error)}</p>;
   
   if (!users) return <Loader />
   

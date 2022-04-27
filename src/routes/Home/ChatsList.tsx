@@ -3,6 +3,7 @@ import useQuerySnapshot from '@/hooks/useQuerySnapshot';
 import Chat from '@/components/Chat';
 import Loader from '@/components/Loader';
 import { Chat as ChatType } from '@/types';
+import { serializeError } from '@/lib/utils';
 
 const ChatsList = () => {
   const query = chatsQuery();
@@ -12,7 +13,7 @@ const ChatsList = () => {
   }
 
   if (error) {
-    return <p className='p-4'>An error occured</p>
+    return <p className='p-4'>{serializeError(error)}</p>
   }
 
   return (

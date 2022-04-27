@@ -18,7 +18,7 @@ const Messages = ({ chat }: { chat: Chat }) => {
   useEffect(executeScroll, [messages])
   
   if (loading) return <Loader />
-  if (error) return <p className='p-4'>An error occured</p>
+  if (error) return <p className='p-4'>{serializeError(error)}</p>
 
   return (
     <div className='px-4 grow'>
