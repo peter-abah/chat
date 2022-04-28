@@ -51,6 +51,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
         navigate('/');
       } else {
         setCurrentUser(null);
+        navigate('/login');
       }
    })
   }, [setCurrentUser]);

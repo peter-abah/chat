@@ -3,7 +3,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { 
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    updateProfile,
+    signOut,
     AuthError,
     AuthErrorCodes,
 } from "firebase/auth";
@@ -36,6 +36,10 @@ export const signInWithEmail = async (email: string, password: string) => {
   const { user } = await signInWithEmailAndPassword(auth, email, password);
   if (auth.currentUser) return auth.currentUser;
   throw new Error('Unknown Error');
+};
+
+export const signOutUser = () => {
+  signOut(auth);
 };
 
 export const authenticate = (message?: string) => {
