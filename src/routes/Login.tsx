@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { signInWithEmail, errorToMsg } from '@/firebase/auth';
 
@@ -66,6 +66,11 @@ const Login = () => {
               <span className='ml-4 font-bold'>Login</span>
             </button>
           </div>
+          
+          <p className='mt-8 text-sm text-center'>
+            <span>Don't have an account? </span>
+            <Link to='/signup' className='underline text-primary'>Sign up</Link>
+          </p>
         </form>
       </section>
     </main>
