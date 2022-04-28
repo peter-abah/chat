@@ -1,6 +1,8 @@
 import {
   addDoc,
+  updateDoc,
   collection,
+  doc,
   serverTimestamp,
   query,
   orderBy,
@@ -12,14 +14,20 @@ import { Chat, User, Message } from '@/types';
 
 export const sendMessage = async (chat: Chat, currentUser: User, body: string) => {
   authenticate();
-  
-  const collectionRef = collection(db, 'chats', chat.id, 'messages');
-  await addDoc(collectionRef, {
+  const message = {
     userName: currentUser.displayName, // displayName in auth user can be null
     userId: auth.currentUser!.uid,
     timestamp: serverTimestamp(),
     body
-  });
+  }
+  const collectionRef = collection(db, 'chats', chat.id, 'messages');
+  await Promise.all([
+    addDoc(collectionRef, message),
+    updateDoc(doc(db, 'chats', chat.id), {
+      lastMessage: message,
+      updatedAt: serverTimestamp()
+    })
+  ]);
 }
 
 export const messagesQuery = (chat: Chat) => {
