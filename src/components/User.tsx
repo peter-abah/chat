@@ -12,7 +12,7 @@ const User = ({ user, onClick }: Props) => {
 
   return (
     <button 
-      className='flex items-center py-3 px-4'
+      className='flex w-full items-center py-3 px-4'
       onClick={onClick}
       data-uid={user.uid}
     >
