@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Route, Routes, Outlet} from 'react-router-dom';
 import PrivateRoute from '@/routes/PrivateRoute';
 
-import Header from './Header';
 import SelectUsers from './SelectUsers';
 import GroupForm from './GroupForm';
 
@@ -23,7 +22,6 @@ const NewGroup = () => {
     
   return (
     <>
-      <Header />
       <Outlet />
 
       <Routes>
