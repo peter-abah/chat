@@ -4,10 +4,11 @@ import ProfileImage from './ProfileImage';
 
 interface Props {
   user: UserType;
+  isSelected?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const User = ({ user, onClick }: Props) => {
+const User = ({ user, onClick, isSelected }: Props) => {
   const name = user.displayName || 'No name';
 
   return (
@@ -20,6 +21,7 @@ const User = ({ user, onClick }: Props) => {
         className='mr-3'
         imgUrl={user.picture}
         name={name}
+        isSelected={isSelected}
       />
       <p className='font-bold'>{name}</p>
     </button>
