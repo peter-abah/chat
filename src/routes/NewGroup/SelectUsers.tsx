@@ -22,7 +22,12 @@ const SelectUsers = ({participants, onSelectUser}: Props) => {
   return (
    <>
      {users.map((user) => (
-       <User key={user.uid} user={user} />
+       <User
+          key={user.uid}
+          user={user}
+          isSelected={participants.includes(user.uid)}
+          onClick={onSelectUser}
+        />
      ))}
    </>
   )

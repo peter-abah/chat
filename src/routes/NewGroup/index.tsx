@@ -12,7 +12,7 @@ const NewGroup = () => {
     const { uid } = e.currentTarget.dataset as { uid: string };
     if (!uid) return;
 
-    if (uid in participants) {
+    if (participants.includes(uid)) {
       const filtered = participants.filter((id) => id !== uid);
       setParticipants(filtered);
     } else {
