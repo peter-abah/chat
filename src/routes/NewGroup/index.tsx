@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Outlet} from 'react-router-dom';
 import PrivateRoute from '@/routes/PrivateRoute';
 
+import Header from './Header';
 import SelectUsers from './SelectUsers';
 import GroupForm from './GroupForm';
 
@@ -21,27 +22,32 @@ const NewGroup = () => {
   }
     
   return (
-    <Routes>
-      <Route
-        index
-        element={
-          <SelectUsers
-            participants={participants}
-            onSelectUser={onSelectUser}
-          />
-        }
-      />
-      <Route element={
-        <PrivateRoute redirectPath='./' isAuthorized={participants.length > 0} />
-      }>
+    <>
+      <Header />
+      <Outlet />
+
+      <Routes>
         <Route
-          path='form' 
+          index
           element={
-           <GroupForm participants={participants} />
+            <SelectUsers
+              participants={participants}
+              onSelectUser={onSelectUser}
+            />
           }
         />
-      </Route>
-    </Routes>
+        <Route element={
+          <PrivateRoute redirectPath='./' isAuthorized={participants.length > 0} />
+        }>
+          <Route
+            path='form' 
+            element={
+             <GroupForm participants={participants} />
+            }
+          />
+        </Route>
+      </Routes>
+    </>
   )
 };
 
