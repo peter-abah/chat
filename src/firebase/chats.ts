@@ -1,7 +1,9 @@
 import {
+  addDoc,
   setDoc,
   collection,
   doc,
+  serverTimestamp,
   query,
   where,
   onSnapshot,
@@ -38,7 +40,7 @@ export const chatsQuery = () => {
 }
 
 export const createChat = async (uid: string) => {
-  if (!auth.currentUser) throw new Error('User must be logged in');
+  authenticate();
   
   const chatId = getChatId(uid, auth.currentUser!.uid);
   const docRef = doc(db, 'chats', chatId);
@@ -46,4 +48,24 @@ export const createChat = async (uid: string) => {
     type: 'private',
     participants: [uid, auth.currentUser!.uid]
   }, { merge: true });
+};
+
+interface GroupData {
+  name: string;
+  picture?: string;
+  participants: string[];
+}
+
+export const createGroupChat = async ({name, picture, participants}: GroupData) => {
+  authenticate();
+
+  await addDoc(collection(db, 'chats'), {
+    participants: [...participants, auth.currentUser!.uid],
+    owner: auth.currentUser!.uid,
+    type: 'group',
+    created_at: serverTimestamp(),
+    updated_at: serverTimestamp(),
+    name,
+    picture
+  });
 }
