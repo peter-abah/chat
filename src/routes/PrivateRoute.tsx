@@ -3,9 +3,11 @@ import { auth } from '@/firebase';
 
 interface Props {
   redirectPath?: string;
-}
-const PrivateRoute = ({ redirectPath = '/login' }: Props) => {
-  if (!auth.currentUser) {
+  isAuthorized?: boolean
+};
+const PrivateRoute = ({ redirectPath = '/login', isAuthorized }: Props) => {
+  isAuthorized ||= !!auth.currentUser;
+  if (!isAuthorized) {
     return <Navigate to={redirectPath} replace />;
   }
   
