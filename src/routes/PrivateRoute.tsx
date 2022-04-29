@@ -5,8 +5,10 @@ interface Props {
   redirectPath?: string;
   isAuthorized?: boolean
 };
-const PrivateRoute = ({ redirectPath = '/login', isAuthorized }: Props) => {
-  isAuthorized ||= !!auth.currentUser;
+const PrivateRoute = ({
+  redirectPath = '/login',
+  isAuthorized = !!auth.currentUser 
+}: Props) => {
   if (!isAuthorized) {
     return <Navigate to={redirectPath} replace />;
   }

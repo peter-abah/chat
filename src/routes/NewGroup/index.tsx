@@ -32,7 +32,7 @@ const NewGroup = () => {
         }
       />
       <Route element={
-        <PrivateRoute redirectPath='.' isAuthorized={participants.length > 0} />
+        <PrivateRoute redirectPath='./' isAuthorized={participants.length > 0} />
       }>
         <Route
           path='form' 
