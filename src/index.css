@@ -10,10 +10,6 @@
   --color-msg-user: var(--color-primary);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   @apply text-text bg-bg;
 }
