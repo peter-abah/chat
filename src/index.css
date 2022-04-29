@@ -6,7 +6,7 @@
   --color-bg: 255 255 255;
   --color-text: 0 0 0;
   --color-primary: 146 20 12;
-  --color-msg-other: 200 200 200;
+  --color-msg-other: 240 240 240;
   --color-msg-user: var(--color-primary);
 }
 

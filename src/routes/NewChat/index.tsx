@@ -48,7 +48,7 @@ const NewChat = () => {
   
   return (
     <main>
-      <Header />
+      <Header subheading='Select user' />
       {users.map((user) => (
         <User 
           key={user.uid}

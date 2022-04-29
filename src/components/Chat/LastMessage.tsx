@@ -7,8 +7,9 @@ interface Props {
 };
 
 const LastMessage = ({ message, type, className }: Props) => {
-  const { userName, body } = message;
-  className += ' text-sm'
+  const { userName } = message;
+  const body = message.body.substring(0, 300);
+  className += ' text-sm max-w-full truncate'
   if (type === 'group') {
     return <p className={className}>{userName}: {body}</p>;
   }
