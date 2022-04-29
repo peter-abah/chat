@@ -23,7 +23,7 @@ const Messages = ({ chat }: { chat: Chat }) => {
   return (
     <div className='px-4 grow'>
       {messages.map((msg) => (
-        <Message key={msg.id} message={msg} />
+        <Message key={msg.id} message={msg} chat={chat} />
       ))}
       <div ref={ref} />
     </div>

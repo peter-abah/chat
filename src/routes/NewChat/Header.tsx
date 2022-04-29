@@ -4,7 +4,7 @@ import BackBtn from '@/components/BackBtn';
 const Header = ({ subheading }: { subheading?: string }) => {
   return (
     <header 
-      className='sticky top-0 left-0 z-20 p-4 flex items-center'
+      className='sticky top-0 bg-bg z-20 p-4 flex items-center'
     >
       <BackBtn className='mr-4' />
       <div className='mr-auto'>

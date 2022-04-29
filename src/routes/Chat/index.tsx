@@ -4,12 +4,14 @@ import { useAppContext } from '@/context/AppContext';
 import Header from './Header';
 import Messages from './Messages';
 import MessageForm from './MessageForm';
+import Loader from '@/components/Loader';
 
 const Chat = () => {
   const { id } = useParams() as { id: string };
   const { chats } = useAppContext();
   const chat = chats.filter((c) => id == c.id)[0];
 
+  if (!chat) return <Loader />;
   return (
     <main className='flex flex-col min-h-screen'>
       <Header chat={chat} />

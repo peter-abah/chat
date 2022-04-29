@@ -11,7 +11,7 @@ const Header = ({ chat }: { chat: Chat }) => {
   const name = data?.name ? data.name : '';
 
   return (
-    <header className='flex justify-between p-2'>
+    <header className='flex justify-between sticky top-0 bg-bg p-2'>
       <div className='flex'>
         <BackBtn className='mr-2' />
         <ProfileImage

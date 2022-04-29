@@ -8,7 +8,7 @@ interface Props {
 };
 
 const ProfileImage = ({ imgUrl, name, className, isSelected }: Props) => {
-  className += ' w-10 h-10 text-lg text-white grid place-items-center rounded-full bg-gray-700';
+  className += ' w-10 h-10 text-lg text-white grid place-items-center rounded-full bg-slate-700';
   let imgElem;
   if (imgUrl) {
     imgElem = <img className={className} src={imgUrl} alt={name} /> 

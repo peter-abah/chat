@@ -8,6 +8,8 @@
   --color-primary: 146 20 12;
   --color-msg-other: 240 240 240;
   --color-msg-user: var(--color-primary);
+  --color-meta: 90 90 90;
+  --color-meta-light: 220 220 220;
 }
 
 body {
@@ -15,7 +17,7 @@ body {
 }
 
 /*.theme {*/
-/*  --forest-green-traditional: 4, 71, 28;*/
+/*  --forest-green100aditional: 4, 71, 28;*/
 /*  --ivory: 246, 247, 235;*/
 /*  --independence: 58, 64, 90;*/
 /*  --deep-saffron: 243, 146, 55;*/
