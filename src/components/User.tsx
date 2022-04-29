@@ -4,7 +4,7 @@ import ProfileImage from './ProfileImage';
 
 interface Props {
   user: UserType;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const User = ({ user, onClick }: Props) => {
