@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from '.';
 import { authenticate } from './auth'
+import { saveFile } from './storage';
 import { Chat } from '@/types';
 import { getChatId } from '@/lib/chats';
 
@@ -52,13 +53,13 @@ export const createChat = async (uid: string) => {
 
 interface GroupData {
   name: string;
-  picture?: string;
+  picture?: File;
   participants: string[];
 }
 
 export const createGroupChat = async ({name, picture, participants}: GroupData) => {
   authenticate();
-
+  const photoUrl = picture ? await saveFile(picture) : undefined;
   await addDoc(collection(db, 'chats'), {
     participants: [...participants, auth.currentUser!.uid],
     owner: auth.currentUser!.uid,
@@ -66,6 +67,6 @@ export const createGroupChat = async ({name, picture, participants}: GroupData) 
     created_at: serverTimestamp(),
     updated_at: serverTimestamp(),
     name,
-    ...(picture) && { picture }
+    ...(photoUrl) && { photoUrl }
   });
 }
