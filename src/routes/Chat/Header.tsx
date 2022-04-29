@@ -17,7 +17,7 @@ const Header = ({ chat }: { chat: Chat }) => {
         <ProfileImage
           className='!w-8 !h-8 mr-2'
           name={name}
-          imgUrl={data?.picture}
+          imgUrl={data?.photoUrl}
         />
         <h1 className='text-xl font-bold'>{data?.name}</h1>
       </div>

@@ -19,7 +19,7 @@ const User = ({ user, onClick, isSelected }: Props) => {
     >
       <ProfileImage
         className='mr-3'
-        imgUrl={user.picture}
+        imgUrl={user.photoUrl}
         name={name}
         isSelected={isSelected}
       />

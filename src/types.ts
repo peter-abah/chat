@@ -3,7 +3,7 @@ export type Index = number | string;
 export interface User {
   uid: string;
   displayName: string | null;
-  picture?: string | null;
+  photoUrl?: string | null;
 };
 
 export interface Message {
@@ -32,12 +32,12 @@ export interface GroupChat extends BaseChat {
   type: 'group';
   name: string;
   owner: Index;
-  picture?: string | null;
+  photoUrl?: string | null;
 };
 
 export interface ChatInfo {
   name: string;
-  picture: string;
+  photoUrl: string;
 }
 
 export type Chat = GroupChat | PrivateChat;

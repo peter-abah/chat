@@ -12,13 +12,13 @@ export const getChatUser = async (chat: PrivateChat) => {
 
 export const getChatInfo = async (chat: Chat) => {
   if (chat.type === 'group') {
-    return { name: chat.name, picture: chat.picture }
+    return { name: chat.name, photoUrl: chat.photoUrl }
   }
   
   const user = await getChatUser(chat);
   return { 
     name: user.displayName || 'No Name',
-    picture: user.picture 
+    photoUrl: user.photoUrl 
   }
 };
 

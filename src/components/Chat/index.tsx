@@ -14,7 +14,7 @@ const Chat = ({ chat }: { chat: ChatType }) => {
       <ProfileImage
         className='mr-3'
         name={data?.name || ''}
-        imgUrl={data?.picture}
+        imgUrl={data?.photoUrl}
       />
       <div className='grow grid'>
         <h2 className='font-bold'>{data?.name}</h2>
