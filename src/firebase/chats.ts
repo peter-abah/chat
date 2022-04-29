@@ -66,6 +66,6 @@ export const createGroupChat = async ({name, picture, participants}: GroupData) 
     created_at: serverTimestamp(),
     updated_at: serverTimestamp(),
     name,
-    picture
+    ...(picture) && { picture }
   });
 }
