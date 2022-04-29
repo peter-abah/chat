@@ -5,13 +5,14 @@ import {
   useEffect,
   ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocalStorage } from 'usehooks-ts'
 import { Chat, User } from '@/types';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/firebase'
 import { getChats } from '@/firebase/chats';
 import { getUser } from '@/firebase/users';
+
+import Loader from '@/components/Loader';
 
 export interface AppContextInterface {
   chats: Chat[];
@@ -24,7 +25,8 @@ const AppContext = createContext<AppContextInterface>({
 
 export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   const [chats, setChats] = useState<Chat[]>([]);
-  const [currentUser, setCurrentUser] = useLocalStorage<User | null>('currentUser', null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const navigate = useNavigate();
 
@@ -41,6 +43,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   
   useEffect(() => {
     onAuthStateChanged(auth, async (user: User | null) => {
+      setAuthLoading(false);
       if (user) {
         // setting it to user in firebase auth to avoid delay in signing in
         setCurrentUser(user)
@@ -48,13 +51,14 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
         // setting it to user in firestore to access other properties and prevent 
         // sensitive user info from being stored in local storage
         setCurrentUser(_user);
-        navigate('/');
       } else {
         setCurrentUser(null);
         navigate('/login');
       }
    })
   }, [setCurrentUser]);
+  
+  if (authLoading) return <Loader />;
   
   return (
     <AppContext.Provider value={{chats, currentUser}}>
