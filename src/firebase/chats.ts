@@ -57,7 +57,7 @@ export const createChat = async (uid: string) => {
 
 interface GroupData {
   name: string;
-  picture?: File;
+  picture?: File | null;
   participants: string[];
 }
 

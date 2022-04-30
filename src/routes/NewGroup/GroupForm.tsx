@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useAsync from '@/hooks/useAsync';
@@ -7,6 +7,7 @@ import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
 
 import Header from './Header';
+import ProfileImage from '@/components/ProfileImage';
 import Loader from '@/components/Loader';
 
 interface Props {
@@ -19,20 +20,34 @@ interface FormData {
 const GroupForm = ({participants}: Props) => {
   const navigate = useNavigate();
   const { loading, func: createGroup } = useAsync(createGroupChat);
-  // const [image, setImage] = useState(null);
+  const [image, setImage] = useState<File | null>(null);
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
 
-  const { register, handleSubmit, formState } = useForm<FormData>();
+  const { register, handleSubmit, getValues, formState } = useForm<FormData>();
   const { isSubmitting, errors } = formState;
+  
+  useEffect(() => {
+    if (imgUrl) {
+      URL.revokeObjectURL(imgUrl)
+    }
+    const url = image ? URL.createObjectURL(image) : null;
+    setImgUrl(url);
+  }, [image]);
 
   const onSubmit = async ({name}: FormData) => {
     try {
-      await createGroup({name, participants});
+      await createGroup({name, participants, picture: image});
       navigate('/');
     } catch (e) {
       window.alert(serializeError(e));
     }
   };
   
+  const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const img = e.currentTarget.files?.[0];
+    if (img) setImage(img);
+  };
+
   if (loading) return <Loader />
 
   return (
@@ -40,6 +55,32 @@ const GroupForm = ({participants}: Props) => {
       <Header subheading='Name group' />
       
       <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
+        <div className='mb-4 flex flex-col items-center'>
+          <ProfileImage
+            className='!w-32 !h-32'
+            imgUrl={imgUrl}
+            name={getValues('name') || ''}
+          />
+          <input
+            className='hidden fixed top-[9999px] z-[-1]'
+            id='group-image'
+            type='file'
+            accept=".jpg,.png,.gif,.jpeg"
+            onChange={onImgChange}
+          />
+          <div className='mt-2 flex w-fit'>
+            <label 
+              htmlFor='group-image'
+              className='px-4 py-1 text-sm rounded-md text-white bg-primary mr-4'
+            >Select Image</label>
+            <button
+              type='button'
+              className='px-4 py-1 text-sm rounded-md text-white bg-zinc-600'
+              onClick={() => setImage(null)}
+            >Remove</button>
+          </div>
+        </div>
+ 
         <div className="flex flex-col">
           <label className="font-bold">Group Name</label>
           <input 
