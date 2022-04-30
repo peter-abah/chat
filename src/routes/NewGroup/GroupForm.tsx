@@ -1,8 +1,13 @@
+// import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import useAsync from '@/hooks/useAsync';
+
 import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
+
 import Header from './Header';
+import Loader from '@/components/Loader';
 
 interface Props {
   participants: string[];
@@ -13,18 +18,22 @@ interface FormData {
 
 const GroupForm = ({participants}: Props) => {
   const navigate = useNavigate();
+  const { loading, func: createGroup } = useAsync(createGroupChat);
+  // const [image, setImage] = useState(null);
 
   const { register, handleSubmit, formState } = useForm<FormData>();
   const { isSubmitting, errors } = formState;
 
   const onSubmit = async ({name}: FormData) => {
     try {
-      await createGroupChat({name, participants});
+      await createGroup({name, participants});
       navigate('/');
     } catch (e) {
       window.alert(serializeError(e));
     }
   };
+  
+  if (loading) return <Loader />
 
   return (
     <section>
