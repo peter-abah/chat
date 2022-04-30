@@ -33,6 +33,7 @@ const useQuerySnapshot = <T extends any>(
       setLoading(false);
       setData(result);
     }, (error) => {
+      setLoading(false);
       setError(error);
     })
     

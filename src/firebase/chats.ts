@@ -19,7 +19,8 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   authenticate();
  
   const q = query(collection(db, "chats"), 
-    where("participants", "array-contains", auth.currentUser!.uid)
+    where("participants", "array-contains", auth.currentUser!.uid),
+    orderBy('updatedAt', 'desc')
   );
   const unsub = onSnapshot(q, (snapshot) => {
     const result: Chat[] = [];
@@ -36,7 +37,8 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
 export const chatsQuery = () => {
   authenticate();
   return query(collection(db, "chats"), 
-    where("participants", "array-contains", auth.currentUser!.uid)
+    where("participants", "array-contains", auth.currentUser!.uid),
+    orderBy('updatedAt', 'desc')
   );
 }
 
@@ -47,7 +49,9 @@ export const createChat = async (uid: string) => {
   const docRef = doc(db, 'chats', chatId);
   await setDoc(docRef, {
     type: 'private',
-    participants: [uid, auth.currentUser!.uid]
+    participants: [uid, auth.currentUser!.uid],
+    createdAt: serverTimestamp(),
+    updated_at: serverTimestamp(),
   }, { merge: true });
 };
 
@@ -64,8 +68,8 @@ export const createGroupChat = async ({name, picture, participants}: GroupData) 
     participants: [...participants, auth.currentUser!.uid],
     owner: auth.currentUser!.uid,
     type: 'group',
-    created_at: serverTimestamp(),
-    updated_at: serverTimestamp(),
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
     name,
     ...(photoUrl) && { photoUrl }
   });

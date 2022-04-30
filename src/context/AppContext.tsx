@@ -32,7 +32,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
 
   useEffect(() => {
     if (!auth.currentUser) return;
-
+   
     const unsub = getChats(setChats);
     return () => unsub();
 
