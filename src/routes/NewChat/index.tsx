@@ -19,32 +19,32 @@ const NewChat = () => {
   const { chats, currentUser } = useAppContext();
   let { data: users, error } = useSwr('users', () => getUsers());
 
-  const { 
-    func: createChat,
-    loading,
-    error: chatError
-  } = useAsync(_createChat);
-  if (error) return <p className='p-4'>{serializeError(error)}</p>;
+  const { func: createChat, loading } = useAsync(_createChat);
   
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      if (loading || !auth.currentUser) return;
+
+      const { uid } = e.currentTarget.dataset as { uid: string };
+      const chatId = getChatId(uid, auth.currentUser!.uid);
+      const chat = chats.find((chat) => chat.id === chatId);
+      
+      if (chat) {
+        navigate(`/chats/${chatId}`)
+        return;
+      }
+      await createChat(uid);
+      navigate(`/chats/${chatId}`);
+    } catch (e) {
+      window.alert(serializeError(e))
+    }
+  };
+
+  if (error) return <p className='p-4'>{serializeError(error)}</p>;
   if (!users) return <Loader />
   
   // filter currentUser from users list
   users = users.filter(({uid}) => uid !== currentUser?.uid)
-  
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (loading || !auth.currentUser) return;
-
-    const { uid } = e.currentTarget.dataset as { uid: string };
-    const chatId = getChatId(uid, auth.currentUser!.uid);
-    const chat = chats.find((chat) => chat.id === chatId);
-    
-    if (chat) {
-      navigate(`/chats/${chatId}`)
-      return;
-    }
-    await createChat(uid);
-    navigate(`/chats/${chatId}`);
-  }
   
   return (
     <main>
