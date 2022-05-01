@@ -38,7 +38,7 @@ const NewGroup = () => {
           <PrivateRoute redirectPath='./' isAuthorized={participants.length > 0} />
         }>
           <Route
-            path='form' 
+            path='form/*' 
             element={
              <GroupForm participants={participants} />
             }

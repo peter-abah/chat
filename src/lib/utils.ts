@@ -1,4 +1,5 @@
 import { toDate, format } from 'date-fns';
+import { PixelCrop } from 'react-image-crop';
 
 export const serializeError = (error: any) => {
   return JSON.stringify(
@@ -13,4 +14,44 @@ export const formatTimestamp = (
   options?: any
 ) => {
   return format(toDate(timestamp), formatStr, options);
+};
+
+// promisify a callback first function.
+// returns a promise returning function.
+export const promisify = function<T>(
+  func: (cb: (data: T) => void, ...args: any[]) => void
+) {
+  const promiseFunc = (...args: any[]) => {
+    return new Promise((resolve, reject) => {
+      func((data) => resolve(data), ...args);
+    })
+  }
+  return promiseFunc;
+}
+
+export const getCroppedImage = async (image: HTMLImageElement, crop: PixelCrop) => {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const canvasToBlobPromise = promisify<Blob | null>(canvas.toBlob.bind(canvas));
+
+  if (!context) throw new Error('canvas context is null');
+
+  let { x, y, width, height } = crop;
+  // getting dimensions for image since drawImage uses natural width and
+  // crop uses image element width and height.
+  const scaleX = image.width / image.naturalWidth;
+  const scaleY = image.height / image.naturalHeight;
+  x /= scaleX;
+  y /= scaleY;
+  const cropWidth = width / scaleX;
+  const cropHeight = height / scaleY;
+
+  canvas.width = width;
+  canvas.height = height;
+  context.drawImage(
+    image, x, y, cropWidth, cropHeight, 0, 0, width, height
+  );
+
+  const blob = await canvasToBlobPromise() as Blob;
+  return new File([blob], "");
 };

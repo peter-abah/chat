@@ -1,59 +1,27 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import useAsync from '@/hooks/useAsync';
-
-import { createGroupChat } from '@/firebase/chats';
-import  { serializeError } from '@/lib/utils';
-
-import Header from './Header';
+import Header from '../Header';
 import ProfileImage from '@/components/ProfileImage';
-import Loader from '@/components/Loader';
 
-interface Props {
-  participants: string[];
-};
 interface FormData {
   name: string;
 };
 
-const GroupForm = ({participants}: Props) => {
-  const navigate = useNavigate();
-  const { loading, func: createGroup } = useAsync(createGroupChat);
-  const [image, setImage] = useState<File | null>(null);
-  const [imgUrl, setImgUrl] = useState<string | null>(null);
+interface Props {
+  onSubmit: (data: FormData) => void;
+  onImgChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  imgUrl: string | null;
+  clearImage: () => void;
+};
 
+const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
   const { register, handleSubmit, getValues, formState } = useForm<FormData>();
   const { isSubmitting, errors } = formState;
-  
-  useEffect(() => {
-    if (imgUrl) {
-      URL.revokeObjectURL(imgUrl)
-    }
-    const url = image ? URL.createObjectURL(image) : null;
-    setImgUrl(url);
-  }, [image]);
-
-  const onSubmit = async ({name}: FormData) => {
-    try {
-      await createGroup({name, participants, picture: image});
-      navigate('/');
-    } catch (e) {
-      window.alert(serializeError(e));
-    }
-  };
-  
-  const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const img = e.currentTarget.files?.[0];
-    if (img) setImage(img);
-  };
-
-  if (loading) return <Loader />
 
   return (
     <section>
       <Header subheading='Name group' />
-      
+ 
       <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-4 flex flex-col items-center'>
           <ProfileImage
@@ -76,7 +44,7 @@ const GroupForm = ({participants}: Props) => {
             <button
               type='button'
               className='px-4 py-1 text-sm rounded-md text-white bg-zinc-600'
-              onClick={() => setImage(null)}
+              onClick={clearImage}
             >Remove</button>
           </div>
         </div>
@@ -100,4 +68,5 @@ const GroupForm = ({participants}: Props) => {
     </section>
   )
 };
-export default GroupForm;
+
+export default Form;
