@@ -51,7 +51,7 @@ export const createChat = async (uid: string) => {
     type: 'private',
     participants: [uid, auth.currentUser!.uid],
     createdAt: serverTimestamp(),
-    updated_at: serverTimestamp(),
+    updatedAt: serverTimestamp(),
   }, { merge: true });
 };
 
