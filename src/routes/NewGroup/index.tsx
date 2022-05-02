@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import { Route, Routes, Outlet} from 'react-router-dom';
 import PrivateRoute from '@/routes/PrivateRoute';
 
+import { removeProperty } from '@/lib/utils';
 import SelectUsers from './SelectUsers';
 import GroupForm from './GroupForm';
 
 const NewGroup = () => {
-  const [participants, setParticipants] = useState<string[]>([]);
+  const [participants, setParticipants] = useState<{[index: string]: boolean}>({});
   
   const onSelectUser = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { uid } = e.currentTarget.dataset as { uid: string };
     if (!uid) return;
 
-    if (participants.includes(uid)) {
-      const filtered = participants.filter((id) => id !== uid);
+    if (participants.hasOwnProperty(uid)) {
+      const filtered = removeProperty(participants, uid);
       setParticipants(filtered);
     } else {
-      setParticipants([...participants, uid])
+      setParticipants({...participants, uid: true})
     }
   }
     

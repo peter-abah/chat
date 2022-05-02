@@ -16,6 +16,11 @@ export const formatTimestamp = (
   return format(toDate(timestamp), formatStr, options);
 };
 
+export const removeProperty = <T>(object: T, key: string) => {
+  const { [key]: omit, ...rest } = object;
+  return rest;
+}
+
 // promisify a callback first function.
 // returns a promise returning function.
 export const promisify = function<T>(

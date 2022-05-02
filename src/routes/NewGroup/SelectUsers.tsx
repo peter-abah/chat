@@ -10,7 +10,7 @@ import Loader from '@/components/Loader';
 import {MdArrowForward} from 'react-icons/md';
 
 interface Props {
-  participants: string[];
+  participants: {[index: string]: boolean};
   onSelectUser: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 const SelectUsers = ({participants, onSelectUser}: Props) => {
@@ -29,7 +29,7 @@ const SelectUsers = ({participants, onSelectUser}: Props) => {
        <User
           key={user.uid}
           user={user}
-          isSelected={participants.includes(user.uid)}
+          isSelected={participants.hasOwnProperty(user.uid)}
           onClick={onSelectUser}
         />
      ))}

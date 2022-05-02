@@ -11,7 +11,7 @@ import Form from './Form';
 import Loader from '@/components/Loader';
 
 interface Props {
-  participants: string[];
+  participants: {[index: string]: boolean};
 };
 interface FormData {
   name: string;
@@ -33,7 +33,8 @@ const GroupForm = ({participants}: Props) => {
 
   const onSubmit = async ({name}: FormData) => {
     try {
-      await createGroup({name, participants, picture: image});
+      const participantsIds = Object.keys(participants);
+      await createGroup({name, participantsIds, picture: image});
       navigate('/');
     } catch (e) {
       window.alert(serializeError(e));
