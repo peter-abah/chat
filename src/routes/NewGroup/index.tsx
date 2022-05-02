@@ -17,7 +17,7 @@ const NewGroup = () => {
       const filtered = removeProperty(participants, uid);
       setParticipants(filtered);
     } else {
-      setParticipants({...participants, uid: true})
+      setParticipants({...participants, [uid]: true})
     }
   }
     
@@ -36,7 +36,7 @@ const NewGroup = () => {
           }
         />
         <Route element={
-          <PrivateRoute redirectPath='./' isAuthorized={participants.length > 0} />
+          <PrivateRoute redirectPath='./' isAuthorized={Object.keys(participants).length > 0} />
         }>
           <Route
             path='form/*' 

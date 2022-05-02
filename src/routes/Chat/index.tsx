@@ -13,7 +13,7 @@ const Chat = () => {
 
   if (!chat) return <Loader />;
   return (
-    <main className='flex flex-col min-h-screen'>
+    <main className='flex flex-col h-screen'>
       <Header chat={chat} />
       <Messages chat={chat} />
       <MessageForm chat={chat} />

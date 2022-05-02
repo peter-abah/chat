@@ -34,7 +34,11 @@ const GroupForm = ({participants}: Props) => {
   const onSubmit = async ({name}: FormData) => {
     try {
       const participantsIds = Object.keys(participants);
-      await createGroup({name, participantsIds, picture: image});
+      await createGroup({
+        name,
+        participants: participantsIds,
+        picture: image
+      });
       navigate('/');
     } catch (e) {
       window.alert(serializeError(e));

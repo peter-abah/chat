@@ -16,12 +16,12 @@ const Messages = ({ chat }: { chat: Chat }) => {
   
   const [ref, executeScroll] = useScroll<HTMLDivElement>();
   useEffect(executeScroll, [messages])
-  
+
   if (loading) return <Loader />
   if (error) return <p className='p-4'>{serializeError(error)}</p>
 
   return (
-    <div className='px-4 grow'>
+    <div className='px-4 grow overflow-y-auto'>
       {messages.map((msg) => (
         <Message key={msg.id} message={msg} chat={chat} />
       ))}

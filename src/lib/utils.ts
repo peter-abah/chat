@@ -16,7 +16,7 @@ export const formatTimestamp = (
   return format(toDate(timestamp), formatStr, options);
 };
 
-export const removeProperty = <T>(object: T, key: string) => {
+export const removeProperty = (object: any, key: string) => {
   const { [key]: omit, ...rest } = object;
   return rest;
 }
