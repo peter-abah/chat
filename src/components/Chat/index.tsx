@@ -18,9 +18,7 @@ const Chat = ({ chat }: { chat: ChatType }) => {
       />
       <div className='grow grid'>
         <h2 className='font-bold'>{data?.name}</h2>
-        {chat.lastMessage &&
-          <LastMessage message={chat.lastMessage} type={chat.type} />
-        }
+        <LastMessage message={chat.lastMessage} type={chat.type} />
       </div>
     </Link>
   )

@@ -39,7 +39,7 @@ const GroupForm = ({participants}: Props) => {
         participants: participantsIds,
         picture: image
       });
-      navigate('/');
+      navigate('/', {replace: true});
     } catch (e) {
       window.alert(serializeError(e));
     }

@@ -30,11 +30,11 @@ const NewChat = () => {
       const chat = chats.find((chat) => chat.id === chatId);
       
       if (chat) {
-        navigate(`/chats/${chatId}`)
+        navigate(`/chats/${chatId}`, {replace: true})
         return;
       }
       await createChat(uid);
-      navigate(`/chats/${chatId}`);
+      navigate(`/chats/${chatId}`, {replace: true});
     } catch (e) {
       window.alert(serializeError(e))
     }
