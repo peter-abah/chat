@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
 import { getUsers } from '@/firebase/users';
 import { serializeError } from '@/lib/utils';
-import Header from './Header';
+import Header from '@/components/Header';
 import User from '@/components/User';
 import Loader from '@/components/Loader';
 import {MdArrowForward} from 'react-icons/md';
@@ -24,7 +24,7 @@ const SelectUsers = ({participants, onSelectUser}: Props) => {
   
   return (
    <section>
-     <Header subheading='Add participants' />
+     <Header heading='Create group' subheading='Add participants' />
      {users.map((user) => (
        <User
           key={user.uid}

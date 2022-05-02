@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Header from '../Header';
+import Header from '@/components/Header';
 import ProfileImage from '@/components/ProfileImage';
 
 interface FormData {
@@ -20,7 +20,7 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
 
   return (
     <section>
-      <Header subheading='Name group' />
+      <Header heading='Create group' subheading='Name group' />
  
       <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-4 flex flex-col items-center'>

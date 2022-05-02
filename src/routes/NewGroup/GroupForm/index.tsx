@@ -6,7 +6,6 @@ import useAsync from '@/hooks/useAsync';
 import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
 
-import Header from '../Header';
 import CropImage from './CropImage';
 import Form from './Form';
 import Loader from '@/components/Loader';
