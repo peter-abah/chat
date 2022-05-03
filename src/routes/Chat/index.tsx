@@ -11,7 +11,10 @@ const Chat = () => {
   const { chats } = useAppContext();
   const chat = chats.filter((c) => id == c.id)[0];
 
-  if (!chat) return <Loader />;
+  if (!chat) return (
+    <p className='p-6 text-lg'>Chat not found</p>
+   );
+
   return (
     <main className='flex flex-col h-screen'>
       <Header chat={chat} />
