@@ -1,6 +1,7 @@
 import {
   addDoc,
   setDoc,
+  getDoc,
   collection,
   doc,
   serverTimestamp,
@@ -32,6 +33,24 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   });
   
   return unsub;
+};
+
+const chatsCache : { [index: string]: Chat } = {}
+
+export const getChat = async (id: string) => {
+  if (chatsCache[id]) return chatsCache[id];
+  
+  const snapshot = await getDoc(doc(db, 'chats', id));
+  if (snapshot.exists()) {
+    const chat ={
+      ...snapshot.data(),
+      id: snapshot.id
+    }  as Chat;
+    chatsCache[id] = chat;
+    return chat;
+  }
+  
+  throw new Error('Chat not found');
 };
 
 export const chatsQuery = () => {

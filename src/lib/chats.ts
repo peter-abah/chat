@@ -5,7 +5,9 @@ import { getUser } from '@/firebase/users';
 export const getChatUser = async (chat: PrivateChat) => {
   if (!auth.currentUser) throw new Error('User must be logged in');
 
-  const userId = chat.participants.filter((id) => id !== auth.currentUser!.uid)[0] as string;
+  const userId = chat.participants.find((id) => id !== auth.currentUser!.uid);
+  if (!userId) throw new Error('Chat user not found');
+
   const user = await getUser(userId);
   return user;
 };
@@ -21,6 +23,18 @@ export const getChatInfo = async (chat: Chat) => {
     photoUrl: user.photoUrl 
   }
 };
+
+export const getChatLink = (chat: Chat) => {
+  if (chat.type === 'group') {
+    return `/groups/${chat.id}`;
+  }
+  
+  const userId = chat.participants.find(
+    (id) => id !== auth.currentUser?.uid
+  );
+  
+  return `/users/${userId}`
+}
 
 export const getChatId = (uid1: string, uid2: string) => {
   const comp = uid1.localeCompare(uid2);
