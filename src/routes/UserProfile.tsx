@@ -1,4 +1,3 @@
-
 import useSwr from 'swr';
 import { useParams } from 'react-router-dom';
 import { getUser } from '@/firebase/users';
