@@ -6,6 +6,7 @@ import {
   NewChat,
   NewGroup,
   UserProfile,
+  GroupProfile,
   Login,
   SignUp,
   PrivateRoute
@@ -24,6 +25,7 @@ function App() {
             <Route path='/chats/new' element={<NewChat />} />
             <Route path='/chats/new_group/*' element={<NewGroup />} />
             <Route path='/users/:user_id' element={<UserProfile />} />
+            <Route path='/groups/:id' element={<GroupProfile />} /> 
           </Route>
   
           <Route path='/login' element={<Login />} />

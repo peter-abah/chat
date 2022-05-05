@@ -55,7 +55,7 @@ const _getParticipants = async (participants: string[]) => {
   if (participants.length > 10) {
     throw new Error('Participants length must not be greater than 10');
   }
-  
+
   const q = query(collection(db, 'users'),
     where('uid', 'in', participants)
   );
@@ -72,7 +72,6 @@ export const getParticipants = async (participants: string[]) => {
   const participantsPromises = partitionedParticipants.map(
     (p) => _getParticipants(p)
   );
-
   const result = await Promise.all(participantsPromises);
   const merged = result.reduce((total, arr) => total.concat(arr), []);
   return merged;
