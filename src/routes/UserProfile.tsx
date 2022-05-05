@@ -25,17 +25,17 @@ const UserProfile = () => {
       <BackBtn className='block ml-4 mt-4' />
       <div className='flex justify-center'>
         <ProfileImage
-          className='!w-32 !h-32'
+          className='!w-32 !h-32 !text-[4rem]'
           imgUrl={photoUrl}
           name={displayName || ''}
         />
       </div>
       
-      <h1 className='text-xl px-4 text-center mt-4'>
+      <h1 className='font-bold text-xl px-4 text-center mt-4'>
         {displayName}
       </h1>
       
-      <p className='text-sm text-center px-4 mt-2'>About is here</p>
+      <p className='text-center px-4 mt-2'>About is here</p>
     </main>
   )
 };

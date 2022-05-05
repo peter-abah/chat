@@ -27,8 +27,8 @@ const Participants = ({chat}: {chat: GroupChat}) => {
   };
 
   return (
-    <section className='px-4'>
-      <h2 className='font-bold mb-2'>Participants</h2>
+    <section className='pr-4'>
+      <h2 className='font-bold mb-2 px-4'>Participants</h2>
       {participants.map((user) => (
         <div className='flex items-center'>
           <User

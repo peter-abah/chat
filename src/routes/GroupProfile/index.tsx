@@ -27,7 +27,7 @@ const GroupProfile = () => {
       <BackBtn className='block ml-4 mt-4' />
       <div className='flex justify-center'>
         <ProfileImage
-          className='!w-32 !h-32'
+          className='!w-32 !h-32 !text-[!text-4rem]'
           imgUrl={photoUrl}
           name={name || ''}
         />
