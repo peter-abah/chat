@@ -8,7 +8,9 @@ import BackBtn from '@/components/BackBtn';
 import ProfileImage from '@/components/ProfileImage';
 
 const Header = ({ chat }: { chat: Chat }) => {
-  const { data, error } = useSwr(chat, getChatInfo);
+  const { data, error } = useSwr(
+    `chatinfo/${chat.id}`, () => getChatInfo(chat)
+  );
   const name = data?.name ? data.name : '';
   
   const link = getChatLink(chat);

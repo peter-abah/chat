@@ -7,7 +7,9 @@ import ProfileImage from '@/components/ProfileImage';
 import LastMessage from './LastMessage';
 
 const Chat = ({ chat }: { chat: ChatType }) => {
-  const { data } = useSwr(chat, getChatInfo);
+  const { data, error } = useSwr(
+    `chatinfo/${chat.id}`, () => getChatInfo(chat)
+  );
 
   return (
     <Link to={`/chats/${chat.id}`} className='flex py-3 items-center'>
