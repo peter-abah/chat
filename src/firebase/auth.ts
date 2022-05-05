@@ -67,6 +67,10 @@ export const authenticate = (message?: string) => {
   }
 };
 
+export const authorize = (isAuthorized: boolean, message = 'Not authorized') => {
+  if (!isAuthorized) throw new Error(message);
+}
+
 export const errorToMsg = (e: AuthError) => {
   switch (e.code) {
     case AuthErrorCodes.EMAIL_EXISTS:

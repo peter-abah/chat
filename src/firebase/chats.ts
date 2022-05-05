@@ -2,18 +2,21 @@ import {
   addDoc,
   setDoc,
   getDoc,
+  updateDoc,
+  deleteDoc,
   collection,
   doc,
   serverTimestamp,
+  arrayRemove,
   query,
   where,
   onSnapshot,
   orderBy
 } from "firebase/firestore";
 import { db, auth } from '.';
-import { authenticate } from './auth'
+import { authenticate, authorize } from './auth'
 import { saveFile } from './storage';
-import { Chat } from '@/types';
+import { Chat, GroupChat } from '@/types';
 import { getChatId } from '@/lib/chats';
 
 export const getChats = (callbackFn: (chats: Chat[]) => void) => {
@@ -52,6 +55,30 @@ export const getChat = async (id: string) => {
   
   throw new Error('Chat not found');
 };
+
+export const removeUserFromGroup = async (chat: GroupChat, userId: string) => {
+  authenticate();
+  authorize(
+    chat.owner === auth.currentUser?.uid,
+    'Not authorized. Must own group to edit'
+  );
+  authorize(userId !== auth.currentUser?.uid, 'Cannot remove self')
+  
+  
+  await updateDoc(doc(db, 'chats', chat.id), {
+    participants: arrayRemove(userId)
+  });
+};
+
+export const deleteGroup = async (chat: GroupChat) => {
+  authenticate();
+  authorize(
+    chat.owner === auth.currentUser?.uid,
+    'Not authorized. Must own group to delete'
+  );
+
+  await deleteDoc(doc(db, 'chats', chat.id));
+}
 
 export const chatsQuery = () => {
   authenticate();
