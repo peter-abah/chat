@@ -1,18 +1,23 @@
-import useSwr from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '@/context/AppContext';
 
+import { removeUserFromGroup, deleteGroup } from '@/firebase/chats';
 import { getParticipants } from '@/firebase/users';
 import { serializeError } from '@/lib/utils';
 import { GroupChat } from '@/types';
+
 import User from '@/components/User';
 import Loader from '@/components/Loader';
 import { MdDelete } from 'react-icons/md';
 
 const Participants = ({chat}: {chat: GroupChat}) => {
-  const { data: participants, error } = useSwr(
-    `${chat.id}/participants`, () => getParticipants(chat.participants)
+  const { mutate } = useSWRConfig();
+  const { data: participants, error } = useSWR(
+    [chat.participants], getParticipants
   );
   const navigate = useNavigate();
+  const { currentUser } = useAppContext();
 
   if (error) {
     return (
@@ -25,20 +30,42 @@ const Participants = ({chat}: {chat: GroupChat}) => {
   const handleUserClick = (uid: string) => {
     return () => navigate(`/users/${uid}`, {replace: true})
   };
+  
+  const canRemoveUser = (uid: string) => {
+    return currentUser?.uid === chat.owner && uid !== currentUser?.uid;
+  }
+  
+  const removeUser = async (uid: string) => {
+    if (!canRemoveUser(uid)) return;
+  
+    const shouldDelete = window.confirm('Are you sure you want to remove this user');
+    if (!shouldDelete) return;
+  
+    try {
+      await removeUserFromGroup(chat, uid);
+      
+      // refetching chat data
+      mutate(`${chat.id}/participants`);
+      mutate(chat.id);
+    } catch (e) {
+      window.alert(serializeError(e))
+    }
+  }
 
   return (
     <section className='pr-4'>
       <h2 className='font-bold mb-2 px-4'>Participants</h2>
       {participants.map((user) => (
-        <div className='flex items-center'>
+        <div key={user.uid} className='flex items-center'>
           <User
-            key={user.uid}
             user={user}
             onClick={handleUserClick(user.uid)}
           />
-          <button>
-            <MdDelete className='text-xl text-red-600' />
-          </button>
+          {canRemoveUser(user.uid) &&
+            <button onClick={() => removeUser(user.uid)}>
+              <MdDelete className='text-xl text-red-600' />
+            </button>
+          }
         </div>
       ))}
     </section>

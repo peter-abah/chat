@@ -38,18 +38,13 @@ export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   return unsub;
 };
 
-const chatsCache : { [index: string]: Chat } = {}
-
 export const getChat = async (id: string) => {
-  if (chatsCache[id]) return chatsCache[id];
-  
   const snapshot = await getDoc(doc(db, 'chats', id));
   if (snapshot.exists()) {
     const chat ={
       ...snapshot.data(),
       id: snapshot.id
     }  as Chat;
-    chatsCache[id] = chat;
     return chat;
   }
   
@@ -62,7 +57,6 @@ export const removeUserFromGroup = async (chat: GroupChat, userId: string) => {
     chat.owner === auth.currentUser?.uid,
     'Not authorized. Must own group to edit'
   );
-  authorize(userId !== auth.currentUser?.uid, 'Cannot remove self')
   
   
   await updateDoc(doc(db, 'chats', chat.id), {
