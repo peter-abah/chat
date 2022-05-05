@@ -32,7 +32,18 @@ export const promisify = function<T>(
     })
   }
   return promiseFunc;
-}
+};
+
+export const partitionArray = <T>(arr: T[], partitionLength: number) => {
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (i % partitionLength === 0) result.push([]);
+    const last = result[result.length - 1]
+    last.push(arr[i])
+  }
+  
+  return result;
+};
 
 export const getCroppedImage = async (image: HTMLImageElement, crop: PixelCrop) => {
   const canvas = document.createElement('canvas');
