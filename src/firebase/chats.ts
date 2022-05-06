@@ -65,16 +65,15 @@ export const removeUserFromGroup = async (chat: GroupChat, userId: string) => {
   });
 };
 
-export const addUserToGroup = async (chat: GroupChat, userId: string) => {
+export const addUsersToGroup = async (chat: GroupChat, uids: string[]) => {
   authenticate();
   authorize(
     chat.owner === auth.currentUser?.uid,
     'Not authorized. Must own group to edit'
   );
-  
-  
+
   await updateDoc(doc(db, 'chats', chat.id), {
-    participants: arrayUnion(userId)
+    participants: arrayUnion(...uids)
   });
 };
 

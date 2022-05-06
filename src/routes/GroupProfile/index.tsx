@@ -1,103 +1,67 @@
-import useSwr from 'swr';
-import { useParams, useNavigate } from 'react-router-dom';
+import useSWR from 'swr'
 import { useAppContext } from '@/context/AppContext';
+import useSelectParticipants from '@/hooks/useSelectParticipants';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 
-import { getChat, removeUserFromGroup, deleteGroup } from '@/firebase/chats';
+import GroupProfile from './GroupProfile';
+import PrivateRoute from '@/routes/PrivateRoute';
+import SelectUsers from '@/components/SelectUsers';
+import Header from '@/components/Header';
+
+import { GroupChat } from '@/types';
 import { serializeError } from '@/lib/utils';
+import { addUsersToGroup, getChat } from '@/firebase/chats';
 
-import { MdExitToApp as MdExit, MdDelete } from 'react-icons/md';
-import Participants from './Participants';
-import BackBtn from '@/components/BackBtn';
-import Loader from '@/components/Loader';
-import ProfileImage from '@/components/ProfileImage';
-
-const GroupProfile = () => {
+const Main = () => {
   const navigate = useNavigate();
   const { id } = useParams() as { id: string };
-  const { data: chat, error } = useSwr(id, getChat);
+  const { data: chat } = useSWR(id, getChat) as { data: GroupChat };
+
   const { currentUser } = useAppContext();
+  const { participants, onSelectUser } = useSelectParticipants();
 
-  if (error) {
-    return (
-      <p className='p-6 text-lg'>{serializeError(error)}</p>
-    );
-  };
-
-  if (!chat) return <Loader />;
-  if (chat.type !== 'group' ) return null;
+  const shouldExclude = (uid: string) => {
+    return uid === currentUser?.uid || chat?.participants.includes(uid);
+  }
   
-  const leaveGroup = async () => {
-    const shouldLeave = window.confirm('Are you sure you want to leave?')
-    if (!shouldLeave || !currentUser) return;
-
+  const onNext = async () => {
+    const uids = Object.keys(participants);
+    if (uids.length <= 0 || chat?.type !== 'group') return;
+    
     try {
-      await removeUserFromGroup(chat, currentUser.uid);
-      navigate('/')
+      await addUsersToGroup(chat, uids);
+      navigate(`/chats/${chat.id}`)
     } catch (e) {
-      window.alert(serializeError(e))
-    }
-  };
-  
- const _deleteGroup = async () => {
-    if (currentUser?.uid !== chat.owner) return;
-
-    const shouldDelete = window.confirm('Are you sure you want to delete this group?')
-    if (!shouldDelete) return;
-
-    try {
-      await deleteGroup(chat);
-      navigate('/');
-    } catch (e) {
-      window.alert(serializeError(e))
+      window.alert(e);
     }
   };
 
-  const { name, photoUrl } = chat;
   return (
-    <main>
-      <BackBtn className='block ml-4 mt-4' />
-      <div className='flex justify-center'>
-        <ProfileImage
-          className='!w-32 !h-32 !text-[!text-4rem]'
-          imgUrl={photoUrl}
-          name={name || ''}
+    <Routes>
+      <Route index element={<GroupProfile />} />
+      <Route
+        element={
+          <PrivateRoute
+            redirectPath='./'
+            isAuthorized={chat && currentUser?.uid === chat?.owner}
+          />
+        }
+      >
+        <Route
+          path='add_participants'
+          element={
+            <SelectUsers
+              participants={participants}
+              header={<Header heading='Add participants' />}
+              shouldExclude={shouldExclude}
+              onSelectUser={onSelectUser}
+              onNext={onNext}
+            />
+          }
         />
-      </div>
-      
-      <h1 className='text-xl font-bold px-4 text-center mt-4'>
-        {name}
-      </h1>
- 
-      <section className='mt-2 px-4 mb-8'>
-        <h2 className='font-bold'>Description</h2>
-        <p className='text-sm'>
-          Group description which can have many letters is here
-        </p>
-      </section>
-      
-      <Participants chat={chat} />
-      
-      <section className='mt-8 font-bold text-red-600'>
-        <button 
-          onClick={leaveGroup}
-          className='flex items-center px-4 py-3'
-        >
-          <MdExit className='text-2xl ml-2 mr-6' />
-          <span>Leave Group</span>
-        </button>
-        
-        {currentUser?.uid === chat.owner && (
-          <button
-            onClick={_deleteGroup}
-            className='flex items-center px-4 py-3'
-          >
-            <MdDelete className='text-2xl ml-2 mr-6' />
-            <span>Delete Group</span>
-          </button>
-        )}
-      </section>
-    </main>
+      </Route>
+    </Routes>
   )
 };
 
-export default GroupProfile;
+export default Main;

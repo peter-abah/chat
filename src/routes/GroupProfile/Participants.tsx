@@ -1,5 +1,5 @@
 import useSWR, { useSWRConfig } from 'swr';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
 
 import { removeUserFromGroup, deleteGroup } from '@/firebase/chats';
@@ -9,7 +9,7 @@ import { GroupChat } from '@/types';
 
 import User from '@/components/User';
 import Loader from '@/components/Loader';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdPersonAdd } from 'react-icons/md';
 
 const Participants = ({chat}: {chat: GroupChat}) => {
   const { mutate } = useSWRConfig();
@@ -45,7 +45,7 @@ const Participants = ({chat}: {chat: GroupChat}) => {
       await removeUserFromGroup(chat, uid);
       
       // refetching chat data
-      mutate(`${chat.id}/participants`);
+      mutate([chat.participants]);
       mutate(chat.id);
     } catch (e) {
       window.alert(serializeError(e))
@@ -55,6 +55,15 @@ const Participants = ({chat}: {chat: GroupChat}) => {
   return (
     <section className='pr-4'>
       <h2 className='font-bold mb-2 px-4'>Participants</h2>
+
+      <Link 
+        to='add_participants'
+        className='flex items-center px-4 py-2 font-bold'
+      >
+        <MdPersonAdd className='text-4xl p-2 mr-4' />
+        <span>Add Participants</span>
+      </Link>
+ 
       {participants.map((user) => (
         <div key={user.uid} className='flex items-center'>
           <User
