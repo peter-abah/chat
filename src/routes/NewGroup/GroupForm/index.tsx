@@ -6,9 +6,9 @@ import useUploadImage from '@/hooks/useUploadImage';
 import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
 
-import CropImage from './CropImage';
 import Form from './Form';
 import Loader from '@/components/Loader';
+import CropImage from '@/components/CropImage';
 
 interface Props {
   participants: {[index: string]: boolean};
