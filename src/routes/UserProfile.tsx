@@ -1,6 +1,7 @@
 import useSwr from 'swr';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext'
+import toast from 'react-hot-toast';
 
 import { getUser } from '@/firebase/users';
 import { deleteChat, createChat } from '@/firebase/chats';
@@ -35,16 +36,23 @@ const UserProfile = () => {
   
   const startChat = async () => {
     if (!chatId || user_id === currentUser?.uid) return;
-    
-    if (!chat) await createChat(chatId);
-    navigate(`/chats/${chatId}`, { replace: true });
+    try {
+      if (!chat) await createChat(chatId);
+      navigate(`/chats/${chatId}`, { replace: true });
+    } catch {
+      toast.error('An error occured')
+    }
   };
   
   const _deleteChat = async () => {
     if (!chat) return;
-
-    await deleteChat(chat);
-    navigate('/', { replace: true });
+    try {
+      await deleteChat(chat);
+      navigate('/', { replace: true });
+      toast.success('Chat deleted');
+    } catch {
+      toast.error('An error occured');
+    }
   };
 
   const { displayName, photoUrl, about } = user;

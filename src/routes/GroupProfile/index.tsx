@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import { useAppContext } from '@/context/AppContext';
 import useSelectParticipants from '@/hooks/useSelectParticipants';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import GroupProfile from './GroupProfile';
 import PrivateRoute from '@/routes/PrivateRoute';
@@ -30,9 +31,10 @@ const Main = () => {
     
     try {
       await addUsersToGroup(chat, uids);
-      navigate(`/chats/${chat.id}`)
+      navigate(`/chats/${chat.id}`, { replace: true });
+      toast.success('Participants added');
     } catch (e) {
-      window.alert(e);
+      toast.error('An error occured');
     }
   };
 

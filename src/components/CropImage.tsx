@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactCrop, { PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css'
 
+import toast from 'react-hot-toast';
 import { getCroppedImage, serializeError } from '@/lib/utils';
 
 interface Props {
@@ -38,7 +39,8 @@ function CropDemo({ src, onSaveCrop }: Props) {
       onSaveCrop(croppedImage, crop);
       navigate(-1);
     } catch (e) {
-      window.alert(serializeError(e))
+      toast.error('Unable to crop');
+      navigate(-1);
     }
   };
 

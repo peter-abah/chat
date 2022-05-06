@@ -1,6 +1,7 @@
 import useSWR, { useSWRConfig } from 'swr';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
+import toast from 'react-hot-toast';
 
 import { removeUserFromGroup, deleteGroup } from '@/firebase/chats';
 import { getParticipants } from '@/firebase/users';
@@ -47,8 +48,9 @@ const Participants = ({chat}: {chat: GroupChat}) => {
       // refetching chat data
       mutate([chat.participants]);
       mutate(chat.id);
+      toast.success('User removed');
     } catch (e) {
-      window.alert(serializeError(e))
+      toast.error('Unable to remove user')
     }
   }
 

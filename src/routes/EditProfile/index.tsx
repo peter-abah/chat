@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Routes, Route } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import { useAppContext } from '@/context/AppContext';
 import useAsync from '@/hooks/useAsync';
@@ -31,7 +32,7 @@ const EditProfile = () => {
       refetchUser();
       navigate(`/users/${currentUser?.uid}`, { replace: true });
     } catch (e) {
-      window.alert(serializeError(e))
+      toast.error('An error occured');
     }
   };
   

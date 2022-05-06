@@ -3,6 +3,7 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 import useAsync from '@/hooks/useAsync';
 import useUploadImage from '@/hooks/useUploadImage';
 
+import toast from 'react-hot-toast';
 import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
 
@@ -31,8 +32,9 @@ const GroupForm = ({participants}: Props) => {
         picture: image
       });
       navigate('/', {replace: true});
+      toast.success('Group created');
     } catch (e) {
-      window.alert(serializeError(e));
+      toast.error('An error occured')
     }
   };
   

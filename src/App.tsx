@@ -15,6 +15,7 @@ import {
 } from '@/routes';
 import { AppContextProvider } from '@/context/AppContext';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
         </Routes>
+        <Toaster toastOptions={{className: 'toast'}} />
       </AppContextProvider>
     </ErrorBoundary>
   )

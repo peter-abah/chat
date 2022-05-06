@@ -90,7 +90,6 @@ export const errorToMsg = (e: AuthError) => {
     case AuthErrorCodes.INVALID_PASSWORD:
       return { password: { message: "Password is incorrect" }};
     default:
-      window.alert(JSON.stringify(e));
       return { unknown: { message: "An unexpected error occured" }};
   }
 };

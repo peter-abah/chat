@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import { signInWithEmail, signInWithProvider, ProviderName, errorToMsg } from '@/firebase/auth';
 import { serializeError } from '@/lib/utils';
@@ -33,7 +34,7 @@ const Login = () => {
       await signInWithProvider(name);
       navigate('/', { replace: true });
     } catch (e) {
-      window.alert(serializeError(e));
+      toast.error('Unable to login');
     }
   };
 

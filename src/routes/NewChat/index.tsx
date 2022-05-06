@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import useSwr from 'swr';
 import useAsync from '@/hooks/useAsync';
 import { useAppContext } from '@/context/AppContext';
+import toast from 'react-hot-toast';
 
 import { auth } from '@/firebase';
 import { getUsers } from '@/firebase/users';
@@ -37,7 +38,7 @@ const NewChat = () => {
       await createChat(uid);
       navigate(`/chats/${chatId}`, {replace: true});
     } catch (e) {
-      window.alert(serializeError(e))
+      toast.error('An error occured')
     }
   };
 

@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
+import toast from 'react-hot-toast';
 
 import { getChat, removeUserFromGroup, deleteGroup } from '@/firebase/chats';
 import { serializeError } from '@/lib/utils';
@@ -32,9 +33,10 @@ const GroupProfile = () => {
 
     try {
       await removeUserFromGroup(chat, currentUser.uid);
-      navigate('/')
+      navigate('/');
+      toast.success('Group exited');
     } catch (e) {
-      window.alert(serializeError(e))
+      toast.error('Unable to exit group');
     }
   };
   
@@ -47,8 +49,9 @@ const GroupProfile = () => {
     try {
       await deleteGroup(chat);
       navigate('/');
+      toast.success('Group deleted');
     } catch (e) {
-      window.alert(serializeError(e))
+      toast.error('Unable to delete group')
     }
   };
 

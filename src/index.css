@@ -21,7 +21,7 @@ html[data-theme='light'] {
 }
 
 html[data-theme='dark'] {
-  --color-bg: 40 40 40;
+  --color-bg: 35 35 35;
   --color-text: 235 235 235;
   --color-primary: 179 26 15;
   --color-msg-other: 70 70 70;
@@ -29,7 +29,7 @@ html[data-theme='dark'] {
   --color-meta-user: 235 235 235;
 }
 
-body, input, textarea, {
+body, input, ttextarea .toast {
   @apply text-text bg-bg;
 }
 

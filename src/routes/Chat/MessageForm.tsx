@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form';
 import TextArea from 'react-textarea-autosize';
+import toast from 'react-hot-toast';
+
 import { sendMessage } from '@/firebase/messages';
 import { Chat } from '@/types';
 import { useAppContext } from '@/context/AppContext'
@@ -19,7 +21,7 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
       await sendMessage(chat, currentUser, body);
       reset();
     } catch (e) {
-      window.alert(serializeError(e));
+      toast.error('An error occured');
     }
   };
  
