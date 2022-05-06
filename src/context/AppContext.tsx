@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
   ReactNode } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 import { useNavigate } from 'react-router-dom';
 import { Chat, User } from '@/types';
 
@@ -17,18 +18,26 @@ import Loader from '@/components/Loader';
 export interface AppContextInterface {
   chats: Chat[];
   currentUser: User | null;
+  theme: 'light' | 'dark',
+  toggleTheme: () => void;
 }
-const AppContext = createContext<AppContextInterface>({ 
-  chats: [],
-  currentUser: null
-});
+const AppContext = createContext<AppContextInterface | null>(null);
 
 export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [authLoading, setAuthLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-
+  const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('theme', 'light')
   const navigate = useNavigate();
+  
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  };
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme]);
 
   useEffect(() => {
     if (!auth.currentUser) return;
@@ -60,8 +69,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   
   if (authLoading) return <Loader />;
   
+  const values = {chats, currentUser, theme, toggleTheme} 
   return (
-    <AppContext.Provider value={{chats, currentUser}}>
+    <AppContext.Provider value={values}>
       {children}
     </AppContext.Provider>
   )

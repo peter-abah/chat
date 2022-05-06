@@ -3,16 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: 255 255 255;
-  --color-text: 0 0 0;
+  --color-bg: 250 250 250;
+  --color-text: 17 17 17;
   --color-primary: 146 20 12;
   --color-msg-other: 240 240 240;
   --color-msg-user: var(--color-primary);
-  --color-meta: 90 90 90;
-  --color-meta-light: 220 220 220;
+  --color-meta-user: 235 235 235;
 }
 
-body {
+html[data-theme='light'] {
+  --color-bg: 250 250 250;
+  --color-text: 17 17 17;
+  --color-primary: 146 20 12;
+  --color-msg-other: 240 240 240;
+  --color-msg-user: var(--color-primary);
+  --color-meta-user: 235 235 235;
+}
+
+html[data-theme='dark'] {
+  --color-bg: 40 40 40;
+  --color-text: 235 235 235;
+  --color-primary: 179 26 15;
+  --color-msg-other: 70 70 70;
+  --color-msg-user: 146 20 12;
+  --color-meta-user: 235 235 235;
+}
+
+body, input, textarea, {
   @apply text-text bg-bg;
 }
 

@@ -26,7 +26,7 @@ const Message = ({ message, chat }: Props) => {
       <small 
         className={classnames(
           'ml-auto text-xs',
-          { 'text-meta': !isUser, 'text-meta-light': isUser })
+          {'text-meta-user': isUser })
         }>
         {formatTimestamp(message.timestamp*1000, 'd LLL p')}
       </small>

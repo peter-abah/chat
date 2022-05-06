@@ -29,7 +29,7 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
       className='sticky bottom-0 z-10 flex items-start px-4 p-2 bg-bg'
     >
       <TextArea 
-        className='border rounded-md px-4 py-2 grow'
+        className='border rounded-md bg-bg text-text px-4 py-2 grow'
         maxRows={5}
         {...register('body', { required: 'Enter Message' })}
       />
