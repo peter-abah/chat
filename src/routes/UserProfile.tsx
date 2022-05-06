@@ -1,13 +1,16 @@
 import useSwr from 'swr';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { useAppContext } from '@/context/AppContext'
 import { getUser } from '@/firebase/users';
 import { serializeError } from '@/lib/utils';
 
+import { MdEdit } from 'react-icons/md';
 import BackBtn from '@/components/BackBtn';
 import Loader from '@/components/Loader';
 import ProfileImage from '@/components/ProfileImage';
 
 const UserProfile = () => {
+  const { currentUser } = useAppContext();
   const { user_id } = useParams() as { user_id: string };
   const { data: user, error } = useSwr(user_id, getUser);
   
@@ -36,6 +39,14 @@ const UserProfile = () => {
       </h1>
       
       <p className='text-center px-4 mt-2'>About is here</p>
+      {currentUser?.uid === user_id && (
+        <Link
+          to='users/edit'
+          className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
+        >
+          <MdEdit className='text-3xl' />
+        </Link>
+      )}
     </main>
   )
 };
