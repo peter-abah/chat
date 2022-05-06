@@ -33,6 +33,23 @@ body, input, textarea .toast {
   @apply text-text bg-bg;
 }
 
+/** Animate loader bar **/
+.animate-bar {
+  animation: 2s ease-in infinite alternate grow-x;
+  width: 100vw;
+  transform-origin: 0;
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /*.theme {*/
 /*  --forest-green100aditional: 4, 71, 28;*/
 /*  --ivory: 246, 247, 235;*/

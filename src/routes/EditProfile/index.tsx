@@ -4,7 +4,6 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import { useAppContext } from '@/context/AppContext';
-import useAsync from '@/hooks/useAsync';
 import useUploadImage from '@/hooks/useUploadImage';
 import { updateUser } from '@/firebase/users';
 import { serializeError } from '@/lib/utils';
@@ -16,14 +15,13 @@ import CropImage from '@/components/CropImage';
 const EditProfile = () => {
   const { currentUser, refetchUser } = useAppContext();
   const navigate = useNavigate();
-  const { func: _updateUser, loading } = useAsync(updateUser);
 
   const {image, setImage, imgUrl, handleImageChange} = useUploadImage();
   const [userImgUrl, setUserImgUrl] = useState<string | null>(currentUser?.photoUrl || null)
  
   const onSubmit = async ({displayName, about}: FormData) => {
     try {
-      await _updateUser({
+      await updateUser({
         displayName,
         about,
         picture: image,
@@ -35,9 +33,7 @@ const EditProfile = () => {
       toast.error('An error occured');
     }
   };
-  
-  if (loading) return <Loader />
-  
+
   const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleImageChange(e);
     navigate('crop')

@@ -3,6 +3,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useForm } from 'react-hook-form';
 import Header from '@/components/Header';
 import ProfileImage from '@/components/ProfileImage';
+import LoadingBar from '@/components/LoadingBar';
 
 export interface FormData {
   displayName: string;
@@ -32,6 +33,8 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
 
   return (
     <section>
+      {isSubmitting && <LoadingBar overlay /> }
+
       <Header heading='Edit Profile' />
  
       <form className='px-4' onSubmit={handleSubmit(onSubmit)}>

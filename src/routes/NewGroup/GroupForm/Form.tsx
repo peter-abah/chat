@@ -1,8 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+
 import TextArea from 'react-textarea-autosize';
 import Header from '@/components/Header';
 import ProfileImage from '@/components/ProfileImage';
+import LoadingBar from '@/components/LoadingBar';
 
 export interface FormData {
   name: string;
@@ -22,6 +24,7 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
 
   return (
     <section>
+    {isSubmitting && <LoadingBar overlay />}
       <Header heading='Create group' subheading='Name group' />
  
       <form className='px-4' onSubmit={handleSubmit(onSubmit)}>

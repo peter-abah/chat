@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
+import useAsync from '@/hooks/useAsync';
 import toast from 'react-hot-toast';
 
 import { getChat, removeUserFromGroup, deleteGroup } from '@/firebase/chats';
@@ -11,12 +12,16 @@ import Participants from './Participants';
 import BackBtn from '@/components/BackBtn';
 import Loader from '@/components/Loader';
 import ProfileImage from '@/components/ProfileImage';
+import LoadingBar from '@/components/LoadingBar';
 
 const GroupProfile = () => {
   const navigate = useNavigate();
   const { currentUser } = useAppContext();
   const { id } = useParams() as { id: string };
   const { data: chat, error } = useSWR(id, getChat);
+  
+  const { func: _removeUserFromGroup, loading: loadingRemoveUser } = useAsync(removeUserFromGroup);
+  const { func: _deleteGroup, loading: loadingDeleteGroup } = useAsync(deleteGroup);
 
   if (error) {
     return (
@@ -32,7 +37,7 @@ const GroupProfile = () => {
     if (!shouldLeave || !currentUser) return;
 
     try {
-      await removeUserFromGroup(chat, currentUser.uid);
+      await _removeUserFromGroup(chat, currentUser.uid);
       navigate('/');
       toast.success('Group exited');
     } catch (e) {
@@ -40,14 +45,14 @@ const GroupProfile = () => {
     }
   };
   
- const _deleteGroup = async () => {
+ const removeGroup = async () => {
     if (currentUser?.uid !== chat.owner) return;
 
     const shouldDelete = window.confirm('Are you sure you want to delete this group?')
     if (!shouldDelete) return;
 
     try {
-      await deleteGroup(chat);
+      await _deleteGroup(chat);
       navigate('/');
       toast.success('Group deleted');
     } catch (e) {
@@ -58,6 +63,8 @@ const GroupProfile = () => {
   const { name, photoUrl, description } = chat;
   return (
     <main>
+      {(loadingDeleteGroup || loadingRemoveUser) && <LoadingBar overlay />}
+
       <BackBtn className='block ml-4 mt-4' />
       <div className='flex justify-center'>
         <ProfileImage
@@ -91,7 +98,7 @@ const GroupProfile = () => {
         
         {currentUser?.uid === chat.owner && (
           <button
-            onClick={_deleteGroup}
+            onClick={removeGroup}
             className='flex items-center px-4 py-3'
           >
             <MdDelete className='text-2xl ml-2 mr-6' />

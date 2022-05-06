@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import TextArea from 'react-textarea-autosize';
 import toast from 'react-hot-toast';
+import LoadingBar from '@/components/LoadingBar';
 
 import { sendMessage } from '@/firebase/messages';
 import { Chat } from '@/types';
@@ -42,6 +43,7 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
       >
         <MdSend className='text-2xl'/>
       </button>
+      {isSubmitting && <LoadingBar />}
     </form>
   )
 };

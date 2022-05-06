@@ -15,17 +15,18 @@ import { MdGroupAdd } from 'react-icons/md';
 import Header from '@/components/Header';
 import User from '@/components/User';
 import Loader from'@/components/Loader';
+import LoadingBar from '@/components/LoadingBar';
 
 const NewChat = () => {
   const navigate = useNavigate();
   const { chats, currentUser } = useAppContext();
   let { data: users, error } = useSwr('users', () => getUsers());
 
-  const { func: createChat, loading } = useAsync(_createChat);
+  const { func: createChat, loading: loadingCreateChat } = useAsync(_createChat);
   
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
-      if (loading || !auth.currentUser) return;
+      if (!auth.currentUser) return;
 
       const { uid } = e.currentTarget.dataset as { uid: string };
       const chatId = getChatId(uid, auth.currentUser!.uid);
@@ -50,6 +51,7 @@ const NewChat = () => {
   
   return (
     <main>
+      {loadingCreateChat && <LoadingBar overlay />}
       <Header heading='New Chat' subheading='Select user' />
       <Link 
         to='/groups/new'

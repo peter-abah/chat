@@ -1,6 +1,7 @@
 import useSWR, { useSWRConfig } from 'swr';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
+import useAsync from '@/hooks/useAsync';
 import toast from 'react-hot-toast';
 
 import { removeUserFromGroup, deleteGroup } from '@/firebase/chats';
@@ -10,6 +11,7 @@ import { GroupChat } from '@/types';
 
 import User from '@/components/User';
 import Loader from '@/components/Loader';
+import LoadingBar from '@/components/LoadingBar';
 import { MdDelete, MdPersonAdd } from 'react-icons/md';
 
 const Participants = ({chat}: {chat: GroupChat}) => {
@@ -19,6 +21,8 @@ const Participants = ({chat}: {chat: GroupChat}) => {
   );
   const navigate = useNavigate();
   const { currentUser } = useAppContext();
+  
+  const { func: _removeUserFromGroup, loading: loadingRemoveUser } = useAsync(removeUserFromGroup);
 
   if (error) {
     return (
@@ -43,7 +47,7 @@ const Participants = ({chat}: {chat: GroupChat}) => {
     if (!shouldDelete) return;
   
     try {
-      await removeUserFromGroup(chat, uid);
+      await _removeUserFromGroup(chat, uid);
       
       // refetching chat data
       mutate([chat.participants]);
@@ -56,6 +60,7 @@ const Participants = ({chat}: {chat: GroupChat}) => {
 
   return (
     <section className='pr-4'>
+      {loadingRemoveUser && <LoadingBar />  }
       <h2 className='font-bold mb-2 px-4'>Participants</h2>
 
       <Link 

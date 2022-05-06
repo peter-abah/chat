@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import useAsync from '@/hooks/useAsync';
 import useUploadImage from '@/hooks/useUploadImage';
 
 import toast from 'react-hot-toast';
@@ -8,7 +7,6 @@ import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
 
 import Form, { FormData } from './Form';
-import Loader from '@/components/Loader';
 import CropImage from '@/components/CropImage';
 
 interface Props {
@@ -17,13 +15,12 @@ interface Props {
 
 const GroupForm = ({participants}: Props) => {
   const navigate = useNavigate();
-  const { loading, func: createGroup } = useAsync(createGroupChat);
   const {image, setImage, imgUrl, handleImageChange} = useUploadImage();
 
   const onSubmit = async ({name, description}: FormData) => {
     try {
       const participantsIds = Object.keys(participants);
-      await createGroup({
+      await createGroupChat({
         name,
         description,
         participants: participantsIds,
@@ -40,8 +37,6 @@ const GroupForm = ({participants}: Props) => {
     handleImageChange(e);
     navigate('crop')
   };
-
-  if (loading) return <Loader />
 
   return (
     <Routes>
