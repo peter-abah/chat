@@ -1,10 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import TextArea from 'react-textarea-autosize';
 import Header from '@/components/Header';
 import ProfileImage from '@/components/ProfileImage';
 
-interface FormData {
+export interface FormData {
   name: string;
+  description: string;
 };
 
 interface Props {
@@ -49,7 +51,7 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
           </div>
         </div>
  
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-4">
           <label className="font-bold">Group Name</label>
           <input 
             className="px-3 py-2 border rounded-md"
@@ -57,6 +59,16 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
             {...register('name', { required: 'Name cannot be empty' })}
           />
           {errors.name && <small className="pl-2 text-sm">{errors.name.message}</small>}
+        </div>
+        
+        <div className="flex flex-col">
+          <label className="font-bold">Description</label>
+          <TextArea
+            className="px-3 py-2 border rounded-md bg-bg text-text"
+            maxRows={5}
+            {...register('description', { required: 'Description cannot be empty' })}
+          />
+          {errors.description && <small className="pl-2 text-sm">{errors.description.message}</small>}
         </div>
         
         <button

@@ -31,6 +31,7 @@ export interface GroupChat extends BaseChat {
   type: 'group';
   name: string;
   owner: string;
+  description?: string;
   photoUrl?: string | null;
 };
 

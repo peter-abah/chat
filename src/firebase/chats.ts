@@ -121,11 +121,15 @@ interface GroupData {
   name: string;
   picture?: File | null;
   participants: string[];
+  description: string;
 }
 
-export const createGroupChat = async ({name, picture, participants}: GroupData) => {
+export const createGroupChat = async (data: GroupData) => {
   authenticate();
+
+  const {name, picture, participants, description} = data;
   const photoUrl = picture ? await saveFile(picture) : undefined;
+
   await addDoc(collection(db, 'chats'), {
     participants: [...participants, auth.currentUser!.uid],
     owner: auth.currentUser!.uid,
@@ -133,6 +137,7 @@ export const createGroupChat = async ({name, picture, participants}: GroupData) 
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
     name,
+    description,
     ...(photoUrl) && { photoUrl }
   });
 }

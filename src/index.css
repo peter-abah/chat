@@ -29,7 +29,7 @@ html[data-theme='dark'] {
   --color-meta-user: 235 235 235;
 }
 
-body, input, ttextarea .toast {
+body, input, textarea .toast {
   @apply text-text bg-bg;
 }
 

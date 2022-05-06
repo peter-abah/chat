@@ -7,15 +7,12 @@ import toast from 'react-hot-toast';
 import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
 
-import Form from './Form';
+import Form, { FormData } from './Form';
 import Loader from '@/components/Loader';
 import CropImage from '@/components/CropImage';
 
 interface Props {
   participants: {[index: string]: boolean};
-};
-interface FormData {
-  name: string;
 };
 
 const GroupForm = ({participants}: Props) => {
@@ -23,11 +20,12 @@ const GroupForm = ({participants}: Props) => {
   const { loading, func: createGroup } = useAsync(createGroupChat);
   const {image, setImage, imgUrl, handleImageChange} = useUploadImage();
 
-  const onSubmit = async ({name}: FormData) => {
+  const onSubmit = async ({name, description}: FormData) => {
     try {
       const participantsIds = Object.keys(participants);
       await createGroup({
         name,
+        description,
         participants: participantsIds,
         picture: image
       });

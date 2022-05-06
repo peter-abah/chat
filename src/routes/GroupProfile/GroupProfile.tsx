@@ -55,7 +55,7 @@ const GroupProfile = () => {
     }
   };
 
-  const { name, photoUrl } = chat;
+  const { name, photoUrl, description } = chat;
   return (
     <main>
       <BackBtn className='block ml-4 mt-4' />
@@ -74,7 +74,7 @@ const GroupProfile = () => {
       <section className='mt-2 px-4 mb-8'>
         <h2 className='font-bold'>Description</h2>
         <p className='text-sm'>
-          Group description which can have many letters is here
+          {description || '...'}
         </p>
       </section>
       
