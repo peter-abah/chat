@@ -12,12 +12,12 @@ const useUploadImage = () => {
     setImgUrl(url);
   }, [image]);
   
-  const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const img = e.currentTarget.files?.[0];
     if (img) setImage(img);
   };
   
-  return { image, setImage, imgUrl, onImgChange };
+  return { image, setImage, imgUrl, handleImageChange };
 };
 
 export default useUploadImage;

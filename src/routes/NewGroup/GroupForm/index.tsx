@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import useAsync from '@/hooks/useAsync';
+import useUploadImage from '@/hooks/useUploadImage';
 
 import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
@@ -20,16 +20,7 @@ interface FormData {
 const GroupForm = ({participants}: Props) => {
   const navigate = useNavigate();
   const { loading, func: createGroup } = useAsync(createGroupChat);
-  const [image, setImage] = useState<File | null>(null);
-  const [imgUrl, setImgUrl] = useState<string | null>(null);
-  
-  useEffect(() => {
-    if (imgUrl) {
-      URL.revokeObjectURL(imgUrl)
-    }
-    const url = image ? URL.createObjectURL(image) : null;
-    setImgUrl(url);
-  }, [image]);
+  const {image, setImage, imgUrl, handleImageChange} = useUploadImage();
 
   const onSubmit = async ({name}: FormData) => {
     try {
@@ -46,9 +37,8 @@ const GroupForm = ({participants}: Props) => {
   };
   
   const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const img = e.currentTarget.files?.[0];
-    if (img) setImage(img);
-    navigate('crop');
+    handleImageChange(e);
+    navigate('crop')
   };
 
   if (loading) return <Loader />
