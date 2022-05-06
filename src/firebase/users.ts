@@ -1,7 +1,9 @@
-import { db } from '.'
+import { db, auth } from '.'
 import { 
   getDoc, 
   getDocs,
+  updateDoc,
+  deleteField,
   collection,
   doc,
   query,
@@ -10,6 +12,8 @@ import {
   limit,
   orderBy
 } from 'firebase/firestore';
+import { authenticate } from './auth';
+import { saveFile } from './storage';
 
 import { partitionArray } from '@/lib/utils';
 import { User } from '@/types';
@@ -27,6 +31,23 @@ export const getUser = async (uid: string) => {
   }
   
   throw new Error('User not found');
+};
+
+interface UserData {
+  displayName: string;
+  about: string;
+  picture?: File
+}
+export const updateUser = async ({displayName, about, picture}: UserData) => {
+  authenticate();
+  
+  const photoUrl = picture ? await saveFile(picture) : undefined;
+  
+  await updateDoc(doc(db, 'users', auth.currentUser!.uid), {
+    displayName,
+    about,
+    photoUrl: photoUrl ? photoUrl : deleteField()
+  })
 };
 
 const usersQuery = () => {
