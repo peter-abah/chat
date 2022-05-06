@@ -2,6 +2,7 @@ export interface User {
   uid: string;
   displayName: string;
   photoUrl?: string | null;
+  about?: string;
 };
 
 export interface Message {

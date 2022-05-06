@@ -22,7 +22,7 @@ const UserProfile = () => {
 
   if (!user) return <Loader />;
 
-  const { displayName, photoUrl } = user;
+  const { displayName, photoUrl, about } = user;
   return (
     <main>
       <BackBtn className='block ml-4 mt-4' />
@@ -38,7 +38,7 @@ const UserProfile = () => {
         {displayName}
       </h1>
       
-      <p className='text-center px-4 mt-2'>About is here</p>
+      <p className='text-center px-4 mt-2'>{about || '...'}</p>
       {currentUser?.uid === user_id && (
         <Link
           to='/users/edit'

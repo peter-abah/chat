@@ -33,7 +33,11 @@ export const signUpWithEmail = async (userData: UserData) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
 
   if (auth.currentUser) {
-    await addUserToDb({ uid: auth.currentUser.uid, displayName: name });
+    await addUserToDb({
+      uid: auth.currentUser.uid,
+      displayName: name,
+      about: '...'
+    });
     return auth.currentUser;
   }
   throw new Error('Unknown Error')

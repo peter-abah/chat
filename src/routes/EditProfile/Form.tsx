@@ -20,7 +20,7 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
   const { currentUser } = useAppContext();
   const defaultValues = {
     displayName: currentUser?.displayName,
-    about: ''
+    about: currentUser?.about || '...'
   };
   const {
     register,
@@ -78,8 +78,9 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
             id='about'
             className="px-3 py-2 border rounded-md"
             type='text'
-            {...register('about')}
+            {...register('about', { required: 'About can not be empty' })}
           />
+          {errors.about && <small className="pl-2 text-sm">{errors.about.message}</small>}
         </div>
         
         <button
