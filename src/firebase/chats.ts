@@ -17,7 +17,7 @@ import {
 import { db, auth } from '.';
 import { authenticate, authorize } from './auth'
 import { saveFile } from './storage';
-import { Chat, GroupChat } from '@/types';
+import { Chat, GroupChat, PrivateChat } from '@/types';
 import { getChatId } from '@/lib/chats';
 
 export const getChats = (callbackFn: (chats: Chat[]) => void) => {
@@ -85,7 +85,16 @@ export const deleteGroup = async (chat: GroupChat) => {
   );
 
   await deleteDoc(doc(db, 'chats', chat.id));
-}
+};
+
+export const deleteChat = async (chat: PrivateChat) => {
+  authenticate();
+  authorize(
+    chat.participants.includes(auth.currentUser!.uid)
+  );
+
+  await deleteDoc(doc(db, 'chats', chat.id));
+};
 
 export const chatsQuery = () => {
   authenticate();
