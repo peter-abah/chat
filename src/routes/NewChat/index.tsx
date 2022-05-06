@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import useSwr from 'swr';
 import useAsync from '@/hooks/useAsync';
 import { useAppContext } from '@/context/AppContext';
@@ -10,6 +10,7 @@ import { createChat as _createChat } from '@/firebase/chats';
 import { getChatId } from '@/lib/chats';
 import { serializeError } from '@/lib/utils';
 
+import { MdGroupAdd } from 'react-icons/md';
 import Header from '@/components/Header';
 import User from '@/components/User';
 import Loader from'@/components/Loader';
@@ -49,6 +50,14 @@ const NewChat = () => {
   return (
     <main>
       <Header heading='New Chat' subheading='Select user' />
+      <Link 
+        to='/groups/new'
+        replace
+        className='flex items-center px-4 py-2 font-bold'
+      >
+        <MdGroupAdd className='text-4xl p-2 mr-4' />
+        <span>Create Group</span>
+      </Link>
       {users.map((user) => (
         <User 
           key={user.uid}

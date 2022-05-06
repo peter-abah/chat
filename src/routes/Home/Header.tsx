@@ -7,7 +7,7 @@ const Header = () => {
   const navigate = useNavigate();
   const options: [string, () => void][] = [
     ['Log out', signOutUser],
-    ['Create group', () => navigate('/chats/new_group')]
+    ['Create group', () => navigate('/groups/new')]
   ];
   return (
     <header className='sticky top-0 left-0 bg-bg z-10 flex p-4'>

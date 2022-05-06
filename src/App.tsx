@@ -23,7 +23,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/chats/:id' element={<Chat />} />
             <Route path='/chats/new' element={<NewChat />} />
-            <Route path='/chats/new_group/*' element={<NewGroup />} />
+            <Route path='/groups/new/*' element={<NewGroup />} />
             <Route path='/users/:user_id' element={<UserProfile />} />
             <Route path='/groups/:id/*' element={<GroupProfile />} /> 
           </Route>
