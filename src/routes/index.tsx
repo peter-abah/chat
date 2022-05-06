@@ -3,6 +3,7 @@ export { default as Chat } from './Chat';
 export { default as NewChat } from './NewChat';
 export { default as NewGroup } from './NewGroup';
 export { default as UserProfile } from './UserProfile';
+export { default as EditProfile } from './EditProfile';
 export { default as GroupProfile } from './GroupProfile';
 export { default as Settings } from './Settings';
 export { default as Login } from './Login';

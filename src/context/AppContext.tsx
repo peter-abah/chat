@@ -8,7 +8,7 @@ import { useLocalStorage } from 'usehooks-ts';
 import { useNavigate } from 'react-router-dom';
 import { Chat, User } from '@/types';
 
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { auth } from '@/firebase'
 import { getChats } from '@/firebase/chats';
 import { getUser } from '@/firebase/users';
@@ -20,6 +20,7 @@ export interface AppContextInterface {
   currentUser: User | null;
   theme: 'light' | 'dark',
   toggleTheme: () => void;
+  refetchUser: () => void;
 }
 const AppContext = createContext<AppContextInterface | null>(null);
 
@@ -33,6 +34,13 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
+  };
+  
+  const refetchUser = async () => {
+    if (!currentUser) return;
+    
+    const user = await getUser(currentUser.uid);
+    setCurrentUser(user);
   };
 
   useEffect(() => {
@@ -51,14 +59,10 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   }, [currentUser]);
   
   useEffect(() => {
-    onAuthStateChanged(auth, async (user: User | null) => {
+    onAuthStateChanged(auth, async (user: FirebaseUser | null) => {
       setAuthLoading(false);
       if (user) {
-        // setting it to user in firebase auth to avoid delay in signing in
-        setCurrentUser(user)
         const _user = await getUser(user.uid);
-        // setting it to user in firestore to access other properties and prevent 
-        // sensitive user info from being stored in local storage
         setCurrentUser(_user);
       } else {
         setCurrentUser(null);
@@ -69,7 +73,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode}) => {
   
   if (authLoading) return <Loader />;
   
-  const values = {chats, currentUser, theme, toggleTheme} 
+  const values = {chats, currentUser, refetchUser, theme, toggleTheme} 
   return (
     <AppContext.Provider value={values}>
       {children}

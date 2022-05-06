@@ -41,7 +41,7 @@ const UserProfile = () => {
       <p className='text-center px-4 mt-2'>About is here</p>
       {currentUser?.uid === user_id && (
         <Link
-          to='users/edit'
+          to='/users/edit'
           className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
         >
           <MdEdit className='text-3xl' />

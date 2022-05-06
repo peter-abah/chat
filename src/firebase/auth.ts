@@ -52,7 +52,11 @@ export const signInWithProvider = async (providerName: ProviderName) => {
   if (!auth.currentUser) throw new Error('Unknown error');
   
   const { displayName, photoURL, uid } = auth.currentUser;
-  addUserToDb({displayName, photoUrl: photoURL, uid});
+  addUserToDb({
+    displayName: displayName || 'Anonymous',
+    photoUrl: photoURL,
+    uid
+  });
   return auth.currentUser;
 };
 

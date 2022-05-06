@@ -18,15 +18,10 @@ import { saveFile } from './storage';
 import { partitionArray } from '@/lib/utils';
 import { User } from '@/types';
 
-const usersCache : { [index: string]: User } = {}
-
 export const getUser = async (uid: string) => {
-  if (usersCache[uid]) return usersCache[uid];
-  
   const snapshot = await getDoc(doc(db, 'users', uid));
   if (snapshot.exists()) {
     const user = snapshot.data() as User;
-    usersCache[uid] = user;
     return user;
   }
   
@@ -36,12 +31,12 @@ export const getUser = async (uid: string) => {
 interface UserData {
   displayName: string;
   about: string;
-  picture?: File
+  picture?: File | null;
+  imgUrl?: string | null;
 }
-export const updateUser = async ({displayName, about, picture}: UserData) => {
+export const updateUser = async ({displayName, about, picture, imgUrl}: UserData) => {
   authenticate();
-  
-  const photoUrl = picture ? await saveFile(picture) : undefined;
+  const photoUrl = picture ? await saveFile(picture) : imgUrl;
   
   await updateDoc(doc(db, 'users', auth.currentUser!.uid), {
     displayName,

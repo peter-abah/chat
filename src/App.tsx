@@ -10,7 +10,8 @@ import {
   Settings,
   Login,
   SignUp,
-  PrivateRoute
+  PrivateRoute,
+  EditProfile
 } from '@/routes';
 import { AppContextProvider } from '@/context/AppContext';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -26,6 +27,7 @@ function App() {
             <Route path='/chats/new' element={<NewChat />} />
             <Route path='/groups/new/*' element={<NewGroup />} />
             <Route path='/users/:user_id' element={<UserProfile />} />
+            <Route path='/users/edit/*' element={<EditProfile />} />
             <Route path='/groups/:id/*' element={<GroupProfile />} /> 
             <Route path='/settings' element={<Settings />} /> 
           </Route>
