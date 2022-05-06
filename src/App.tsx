@@ -7,6 +7,7 @@ import {
   NewGroup,
   UserProfile,
   GroupProfile,
+  Settings,
   Login,
   SignUp,
   PrivateRoute
@@ -26,6 +27,7 @@ function App() {
             <Route path='/groups/new/*' element={<NewGroup />} />
             <Route path='/users/:user_id' element={<UserProfile />} />
             <Route path='/groups/:id/*' element={<GroupProfile />} /> 
+            <Route path='/settings' element={<Settings />} /> 
           </Route>
   
           <Route path='/login' element={<Login />} />
