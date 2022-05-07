@@ -34,7 +34,9 @@ const ChangeEmail = () => {
       toast.success('Email updated');
     } catch (e: any) {
       const [key, message] = Object.entries(errorToMsg(e))[0];
-      if (key === 'password') setError(key, message);
+      if (key === 'password' || key === 'email') { 
+        setError(key, message);
+      }
 
       toast.error('Unable to change email')
     }

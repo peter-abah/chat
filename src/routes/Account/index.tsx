@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Account from './Account';
 import ChangePassword from './ChangePassword';
 import ChangeEmail from './ChangeEmail';
+import DeleteAccount from './DeleteAccount';
 
 const Main = () => {
   return (
@@ -9,7 +10,7 @@ const Main = () => {
       <Route index element={<Account />} />
       <Route path='email' element={<ChangeEmail />} />
       <Route path='password' element={<ChangePassword />} />
-      <Route path='delete' element={<p>Delete account</p>} />
+      <Route path='delete' element={<DeleteAccount />} />
     </Routes>
   );
 };

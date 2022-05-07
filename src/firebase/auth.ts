@@ -7,7 +7,7 @@ import {
   signOut,
   updateEmail,
   updatePassword,
-  deleteUser as deleteUserFirebase,
+  deleteUser,
   reauthenticateWithCredential,
   AuthError,
   AuthErrorCodes,
@@ -132,10 +132,12 @@ const deleteAllUserData = async () => {
   userMessages.forEach((doc) => deleteDoc(doc.ref));
 };
 
-export const deleteUser = async (password: string) => {
+export const deleteAccount = async (password: string) => {
   await reAuthenticateUser(password);
+
   deleteAllUserData();
-  await deleteUserFirebase(auth.currentUser!);
+  await deleteDoc(doc(db, 'users', auth.currentUser!.uid));
+  await deleteUser(auth.currentUser!);
 };
 
 export const errorToMsg = (e: AuthError) => {
