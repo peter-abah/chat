@@ -7,6 +7,7 @@ import {
   NewGroup,
   UserProfile,
   GroupProfile,
+  Account,
   Settings,
   Login,
   SignUp,
@@ -30,6 +31,7 @@ function App() {
             <Route path='/users/:user_id' element={<UserProfile />} />
             <Route path='/users/edit/*' element={<EditProfile />} />
             <Route path='/groups/:id/*' element={<GroupProfile />} /> 
+            <Route path='/account/*' element={<Account />} /> 
             <Route path='/settings' element={<Settings />} /> 
           </Route>
   

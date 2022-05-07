@@ -5,6 +5,7 @@ export { default as NewGroup } from './NewGroup';
 export { default as UserProfile } from './UserProfile';
 export { default as EditProfile } from './EditProfile';
 export { default as GroupProfile } from './GroupProfile';
+export { default as Account } from './Account';
 export { default as Settings } from './Settings';
 export { default as Login } from './Login';
 export { default as SignUp } from './SignUp';
