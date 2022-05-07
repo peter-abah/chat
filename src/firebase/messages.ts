@@ -1,10 +1,13 @@
 import {
   addDoc,
   updateDoc,
+  getDocs,
   collection,
+  collectionGroup,
   doc,
   serverTimestamp,
   query,
+  where,
   orderBy,
   DocumentData
 } from 'firebase/firestore';
@@ -35,6 +38,16 @@ export const messagesQuery = (chat: Chat) => {
     collection(db, 'chats', chat.id, 'messages'),
     orderBy('timestamp')
   )
+};
+
+export const getAllUserMessages = async () => {
+  authenticate();
+  
+  const q = query(collectionGroup(db, 'messages'),
+    where('userId', '==', auth.currentUser!.uid)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs;
 };
 
 export const transformData = (msgDoc: DocumentData) => {

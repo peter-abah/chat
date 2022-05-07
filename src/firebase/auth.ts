@@ -1,17 +1,24 @@
 import { auth, db } from '.';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 import { 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateEmail,
+  updatePassword,
+  deleteUser as deleteUserFirebase,
+  reauthenticateWithCredential,
   AuthError,
   AuthErrorCodes,
+  EmailAuthProvider,
   GoogleAuthProvider
 } from "firebase/auth";
 
-import { User } from '@/types';
+import { getAllUserChats, removeUserFromGroup } from './chats';
+import { getAllUserMessages } from './messages';
 
+import { User, Chat } from '@/types';
 export const providers = {
   google: new GoogleAuthProvider()
 };
@@ -77,7 +84,59 @@ export const authenticate = (message?: string) => {
 
 export const authorize = (isAuthorized: boolean, message = 'Not authorized') => {
   if (!isAuthorized) throw new Error(message);
-}
+};
+
+const reAuthenticateUser = async (password: string) => {
+  authorize(!!auth.currentUser?.email, 'User does not have email');
+  
+  const credential = EmailAuthProvider.credential(
+    auth.currentUser!.email!,
+    password
+  );
+  
+  await reauthenticateWithCredential(auth.currentUser!, credential)
+};
+
+export const updateUserEmail = async (email: string, password: string) => {
+  await reAuthenticateUser(password);
+  
+  await updateEmail(auth.currentUser!, email);
+};
+
+export const updateUserPassword = async (prevPassword: string, newPassword: string) => {
+  await reAuthenticateUser(prevPassword);
+  
+  await updatePassword(auth.currentUser!, newPassword);
+};
+
+const deleteChats = (userChats: QueryDocumentSnapshot[]) => {
+  for (let chatDoc of userChats) {
+    const data = chatDoc.data() as Chat;
+    if (data.type === 'private') {
+      deleteDoc(chatDoc.ref);
+    } else {
+      removeUserFromGroup(data, auth.currentUser!.uid);
+    }
+  }
+};
+
+const deleteAllUserData = async () => {
+  authenticate();
+
+  const [userChats, userMessages] = await Promise.all([
+    getAllUserChats(),
+    getAllUserMessages()
+  ]);
+
+  deleteChats(userChats);
+  userMessages.forEach((doc) => deleteDoc(doc.ref));
+};
+
+export const deleteUser = async (password: string) => {
+  await reAuthenticateUser(password);
+  deleteAllUserData();
+  await deleteUserFirebase(auth.currentUser!);
+};
 
 export const errorToMsg = (e: AuthError) => {
   switch (e.code) {

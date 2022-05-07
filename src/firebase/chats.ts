@@ -2,6 +2,7 @@ import {
   addDoc,
   setDoc,
   getDoc,
+  getDocs,
   updateDoc,
   deleteDoc,
   collection,
@@ -52,14 +53,23 @@ export const getChat = async (id: string) => {
   throw new Error('Chat not found');
 };
 
+export const getAllUserChats = async () => {
+  authenticate();
+  
+  const q = query(collection(db, 'chats'),
+    where('participants', 'array-contains', auth.currentUser!.uid)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs;
+};
+
 export const removeUserFromGroup = async (chat: GroupChat, userId: string) => {
   authenticate();
-  authorize(
-    chat.owner === auth.currentUser?.uid,
-    'Not authorized. Must own group to edit'
-  );
-  
-  
+
+  const isAuthorized = (chat.owner === auth.currentUser?.uid) ||
+    (userId === auth.currentUser?.uid)
+  authorize(isAuthorized);
+
   await updateDoc(doc(db, 'chats', chat.id), {
     participants: arrayRemove(userId)
   });
