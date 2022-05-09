@@ -151,6 +151,7 @@ export const errorToMsg = (e: AuthError) => {
     case AuthErrorCodes.INVALID_PASSWORD:
       return { password: { message: "Password is incorrect" }};
     default:
+      // Add message for too many requests to account
       return { unknown: { message: "An unexpected error occured" }};
   }
 };

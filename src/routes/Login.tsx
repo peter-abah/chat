@@ -73,7 +73,6 @@ const Login = () => {
             <button
               className="flex items-center justify-center mx-auto px-4 py-2 min-w-[15rem] rounded-lg bg-primary text-white"
               type='submit'
-              disabled={isSubmitting}
             >
               <Spinner loading={isSubmitting} className='!fill-white mr-4' />
               <span className='font-bold'>Login</span>

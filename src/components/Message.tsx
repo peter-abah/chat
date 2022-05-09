@@ -3,6 +3,8 @@ import { useAppContext } from'@/context/AppContext';
 import { Message as MsgType, Chat} from '@/types';
 import { formatTimestamp } from '@/lib/utils';
 
+import ImageWithView from './ImageWithView'
+
 interface Props {
   message: MsgType;
   chat: Chat;
@@ -24,7 +26,7 @@ const Message = ({ message, chat }: Props) => {
   return (
     <>
       {attachment?.type === 'image' && (
-        <img 
+        <ImageWithView
           src={attachment.url}
           className={className}
         />
