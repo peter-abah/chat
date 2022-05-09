@@ -11,6 +11,10 @@ export interface Message {
   userName: string;
   userId: string;
   timestamp: number;
+  attachment?: {
+    type: 'image';
+    url: string;
+  }
 }
 
 export type ChatType = 'private' | 'group';

@@ -18,19 +18,30 @@ const Message = ({ message, chat }: Props) => {
     }
   );
   
+  const { attachment } = message;
   const showName = chat.type === 'group' && message.userId !== currentUser?.uid;
+
   return (
-    <div className={className}>
-      {showName && <span className='font-bold mb-1'>{message.userName}</span>}
-      <p>{message.body}</p>
-      <small 
-        className={classnames(
-          'ml-auto text-xs',
-          {'text-meta-user': isUser })
-        }>
-        {formatTimestamp(message.timestamp*1000, 'd LLL p')}
-      </small>
-    </div>
+    <>
+      {attachment?.type === 'image' && (
+        <img 
+          src={attachment.url}
+          className={className}
+        />
+      )}
+
+      <div className={className}>
+        {showName && <span className='font-bold mb-1'>{message.userName}</span>}
+        <p>{message.body}</p>
+        <small 
+          className={classnames(
+            'ml-auto text-xs',
+            {'text-meta-user': isUser })
+          }>
+          {formatTimestamp(message.timestamp*1000, 'd LLL p')}
+        </small>
+      </div>
+    </>
   )
 };
 

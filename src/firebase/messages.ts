@@ -13,15 +13,29 @@ import {
 } from 'firebase/firestore';
 import { auth, db } from '.';
 import { authenticate } from './auth'
+import { saveFile } from './storage';
 import { Chat, User, Message } from '@/types';
 
-export const sendMessage = async (chat: Chat, currentUser: User, body: string) => {
+interface MsgData {
+  body: string;
+  image?: File | null;
+}
+export const sendMessage = async (chat: Chat, currentUser: User, data: MsgData) => {
   authenticate();
+
+  const { body, image } = data;
+  const photoUrl = image ? await saveFile(image) : null;
   const message = {
     userName: currentUser.displayName, // displayName in auth user can be null
     userId: auth.currentUser!.uid,
     timestamp: serverTimestamp(),
-    body
+    body,
+    ...(photoUrl && {
+      attachment: {
+        type: 'image',
+        url: photoUrl
+      }
+    })
   }
   const collectionRef = collection(db, 'chats', chat.id, 'messages');
   await Promise.all([
