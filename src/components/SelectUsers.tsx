@@ -31,6 +31,13 @@ const SelectUsers = (props: Props) => {
 
   users = users.filter(({uid}) => !shouldExclude(uid));
   
+  if (users.length <= 0) {
+    return (
+      <p
+        className='px-4 md:px-12 text-lg md:text-2xl text-center'
+      >Not users to show</p>
+    )
+  }
   return (
    <section>
      {header}

@@ -62,13 +62,20 @@ const NewChat = () => {
           <MdGroupAdd className='text-4xl p-2 mr-4' />
           <span>Create Group</span>
         </Link>
-        {users.map((user) => (
+  
+        {users.length > 0 && users.map((user) => (
           <User 
             key={user.uid}
             user={user}
             onClick={handleClick}
           />
         ))}
+        
+        {users.length <= 0 && (
+          <p
+            className='px-4 md:px-12 text-lg md:text-2xl text-center'
+          >Not users to show</p>
+        )}
       </div>
     </main>
   );

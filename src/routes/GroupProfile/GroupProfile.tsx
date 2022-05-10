@@ -26,7 +26,7 @@ const GroupProfile = () => {
   const { func: _deleteGroup, loading: loadingDeleteGroup } = useAsync(deleteGroup);
   
   if (error) {
-    const message = error instanceof NotFoundError ? 'Grouo not found' : undefined;
+    const message = error instanceof NotFoundError ? 'Group not found' : undefined;
     return <ErrorPage message={message} />
   }
 

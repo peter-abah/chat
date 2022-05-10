@@ -12,6 +12,14 @@ const ChatsList = () => {
   
   if (loading) return <Loader />;
   if (error) return <ErrorPage />;
+  
+  if (chats.length <= 0) {
+    return (
+      <p
+        className='px-4 md:px-12 text-lg md:text-2xl text-center'
+      >Not chats yets</p>
+    )
+  }
 
   return (
     <div className='px-4 md:px-12'>
