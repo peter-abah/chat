@@ -5,6 +5,7 @@ import useScrollToBottom from '@/hooks/useScrollToBottom';
 import { messagesQuery, transformData } from '@/firebase/messages'
 import Message from '@/components/Message';
 import Loader from '@/components/Loader';
+import ErrorPage from '@/components/ErrorPage';
 import { serializeError } from '@/lib/utils';
 import { Chat } from '@/types';
 
@@ -18,7 +19,7 @@ const Messages = ({ chat }: { chat: Chat }) => {
   useEffect(executeScroll, [messages])
 
   if (loading) return <Loader />
-  if (error) return <p className='p-4'>{serializeError(error)}</p>
+  if (error) return <ErrorPage />
 
   return (
     <div ref={ref} className='px-4 grow overflow-y-auto md:px-12'>

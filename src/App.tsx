@@ -11,6 +11,7 @@ import {
   Settings,
   Login,
   SignUp,
+  NotFound,
   PrivateRoute,
   EditProfile
 } from '@/routes';
@@ -37,6 +38,7 @@ function App() {
   
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <Toaster toastOptions={{className: 'toast'}} />
       </AppContextProvider>

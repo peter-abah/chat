@@ -9,6 +9,7 @@ import { deleteChat, createChat } from '@/firebase/chats';
 
 import { getChatId } from '@/lib/chats';
 import { serializeError } from '@/lib/utils';
+import { NotFoundError } from '@/lib/errors';
 import { PrivateChat } from '@/types';
 
 import { MdEdit, MdDelete, MdChat } from 'react-icons/md';
@@ -16,6 +17,7 @@ import BackBtn from '@/components/BackBtn';
 import Loader from '@/components/Loader';
 import LoadingBar from '@/components/LoadingBar';
 import ProfileImage from '@/components/ProfileImage';
+import ErrorPage from '@/components/ErrorPage';
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -27,11 +29,9 @@ const UserProfile = () => {
   const { func: _deleteChat, loading: loadingDeleteChat } = useAsync(deleteChat);
   
   if (error) {
-    return (
-      <p className='p-6 text-lg'>{serializeError(error)}</p>
-    );
+    const message = error instanceof NotFoundError ? 'User not found' : undefined;
+    return <ErrorPage message={message} />
   }
-
   if (!user) return <Loader />;
   
   const chatId = currentUser?.uid === user_id ?

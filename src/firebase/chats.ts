@@ -20,6 +20,7 @@ import { authenticate, authorize } from './auth'
 import { saveFile } from './storage';
 import { Chat, GroupChat, PrivateChat } from '@/types';
 import { getChatId } from '@/lib/chats';
+import { NotFoundError } from '@/lib/errors';
 
 export const getChats = (callbackFn: (chats: Chat[]) => void) => {
   authenticate();
@@ -50,7 +51,7 @@ export const getChat = async (id: string) => {
     return chat;
   }
   
-  throw new Error('Chat not found');
+  throw new NotFoundError('Chat not found');
 };
 
 export const getAllUserChats = async () => {

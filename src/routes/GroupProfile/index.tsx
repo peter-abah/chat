@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import GroupProfile from './GroupProfile';
 import PrivateRoute from '@/routes/PrivateRoute';
 import SelectUsers from '@/components/SelectUsers';
+import NotFound from '@/routes/NotFound';
 import Header from '@/components/Header';
 
 import { GroupChat } from '@/types';
@@ -62,6 +63,7 @@ const Main = () => {
           }
         />
       </Route>
+      <Route path='*' element={<NotFound />} />
     </Routes>
   )
 };

@@ -12,6 +12,7 @@ import { GroupChat } from '@/types';
 import User from '@/components/User';
 import Loader from '@/components/Loader';
 import LoadingBar from '@/components/LoadingBar';
+import ErrorPage from '@/components/ErrorPage';
 import { MdDelete, MdPersonAdd } from 'react-icons/md';
 
 const Participants = ({chat}: {chat: GroupChat}) => {
@@ -24,12 +25,7 @@ const Participants = ({chat}: {chat: GroupChat}) => {
   
   const { func: _removeUserFromGroup, loading: loadingRemoveUser } = useAsync(removeUserFromGroup);
 
-  if (error) {
-    return (
-      <p className='p-6 text-lg'>{serializeError(error)}</p>
-    );
-  }
-
+  if (error) return <ErrorPage />;
   if (!participants) return <Loader />
   
   const handleUserClick = (uid: string) => {

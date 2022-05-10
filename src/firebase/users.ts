@@ -16,6 +16,7 @@ import { authenticate } from './auth';
 import { saveFile } from './storage';
 
 import { partitionArray } from '@/lib/utils';
+import { NotFoundError } from '@/lib/errors';
 import { User } from '@/types';
 
 export const getUser = async (uid: string) => {
@@ -25,7 +26,7 @@ export const getUser = async (uid: string) => {
     return user;
   }
   
-  throw new Error('User not found');
+  throw new NotFoundError('User not found');
 };
 
 interface UserData {

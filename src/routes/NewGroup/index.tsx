@@ -6,6 +6,7 @@ import PrivateRoute from '@/routes/PrivateRoute';
 import Header from '@/components/Header'
 import SelectUsers from '@/components/SelectUsers';
 import GroupForm from './GroupForm';
+import NotFound from '@/routes/NotFound';
 
 const NewGroup = () => {
   const { currentUser } = useAppContext();
@@ -44,6 +45,7 @@ const NewGroup = () => {
           }
         />
       </Route>
+      <Route path='*' element={<NotFound />} />
     </Routes>
 )
 };

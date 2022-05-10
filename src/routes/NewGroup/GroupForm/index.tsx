@@ -7,6 +7,7 @@ import { createGroupChat } from '@/firebase/chats';
 import  { serializeError } from '@/lib/utils';
 
 import Form, { FormData } from './Form';
+import NotFound from '@/routes/NotFound';
 import CropImage from '@/components/CropImage';
 
 interface Props {
@@ -60,6 +61,7 @@ const GroupForm = ({participants}: Props) => {
           />
         }
       />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   )
 };

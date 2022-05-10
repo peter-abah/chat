@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 
 import { getChat, removeUserFromGroup, deleteGroup } from '@/firebase/chats';
 import { serializeError } from '@/lib/utils';
+import { NotFoundError } from '@/lib/errors';
 
 import { MdExitToApp as MdExit, MdDelete } from 'react-icons/md';
 import Participants from './Participants';
@@ -13,6 +14,7 @@ import BackBtn from '@/components/BackBtn';
 import Loader from '@/components/Loader';
 import ProfileImage from '@/components/ProfileImage';
 import LoadingBar from '@/components/LoadingBar';
+import ErrorPage from '@/components/ErrorPage';
 
 const GroupProfile = () => {
   const navigate = useNavigate();
@@ -22,12 +24,11 @@ const GroupProfile = () => {
   
   const { func: _removeUserFromGroup, loading: loadingRemoveUser } = useAsync(removeUserFromGroup);
   const { func: _deleteGroup, loading: loadingDeleteGroup } = useAsync(deleteGroup);
-
+  
   if (error) {
-    return (
-      <p className='p-6 text-lg'>{serializeError(error)}</p>
-    );
-  };
+    const message = error instanceof NotFoundError ? 'Grouo not found' : undefined;
+    return <ErrorPage message={message} />
+  }
 
   if (!chat) return <Loader />;
   if (chat.type !== 'group' ) return null;

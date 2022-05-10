@@ -11,6 +11,7 @@ import { serializeError } from '@/lib/utils';
 import Form, { FormData } from './Form';
 import Loader from '@/components/Loader';
 import CropImage from '@/components/CropImage';
+import NotFound from '@/routes/NotFound';
 
 const EditProfile = () => {
   const { currentUser, refetchUser } = useAppContext();
@@ -66,6 +67,7 @@ const EditProfile = () => {
           />
         }
       />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   )
 };
