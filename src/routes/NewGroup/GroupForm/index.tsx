@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import useUploadImage from '@/hooks/useUploadImage';
+import useUploadFile from '@/hooks/useUploadFile';
 
 import toast from 'react-hot-toast';
 import { createGroupChat } from '@/firebase/chats';
@@ -16,7 +16,7 @@ interface Props {
 
 const GroupForm = ({participants}: Props) => {
   const navigate = useNavigate();
-  const {image, setImage, imgUrl, handleImageChange} = useUploadImage();
+  const {file, setFile, fileUrl, handleFileChange} = useUploadFile();
 
   const onSubmit = async ({name, description}: FormData) => {
     try {
@@ -25,7 +25,7 @@ const GroupForm = ({participants}: Props) => {
         name,
         description,
         participants: participantsIds,
-        picture: image
+        picture: file
       });
       navigate('/', {replace: true});
       toast.success('Group created');
@@ -34,8 +34,8 @@ const GroupForm = ({participants}: Props) => {
     }
   };
   
-  const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleImageChange(e);
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileChange(e);
     navigate('crop')
   };
 
@@ -46,9 +46,9 @@ const GroupForm = ({participants}: Props) => {
         element={
           <Form
             onSubmit={onSubmit}
-            onImgChange={onImgChange}
-            clearImage={() => setImage(null)}
-            imgUrl={imgUrl}
+            onImgChange={onFileChange}
+            clearImage={() => setFile(null)}
+            imgUrl={fileUrl}
           />
         }
       />
@@ -56,8 +56,8 @@ const GroupForm = ({participants}: Props) => {
         path='crop'
         element={
           <CropImage
-            src={imgUrl}
-            onSaveCrop={(croppedImage) => setImage(croppedImage)}
+            src={fileUrl}
+            onSaveCrop={(croppedImage) => setFile(croppedImage)}
           />
         }
       />

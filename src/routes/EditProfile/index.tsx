@@ -4,7 +4,7 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import { useAppContext } from '@/context/AppContext';
-import useUploadImage from '@/hooks/useUploadImage';
+import useUploadFile from '@/hooks/useUploadFile';
 import { updateUser } from '@/firebase/users';
 import { serializeError } from '@/lib/utils';
 
@@ -17,7 +17,7 @@ const EditProfile = () => {
   const { currentUser, refetchUser } = useAppContext();
   const navigate = useNavigate();
 
-  const {image, setImage, imgUrl, handleImageChange} = useUploadImage();
+  const {file, setFile, fileUrl, handleFileChange} = useUploadFile();
   const [userImgUrl, setUserImgUrl] = useState<string | null>(currentUser?.photoUrl || null)
  
   const onSubmit = async ({displayName, about}: FormData) => {
@@ -25,7 +25,7 @@ const EditProfile = () => {
       await updateUser({
         displayName,
         about,
-        picture: image,
+        picture: file,
         imgUrl: userImgUrl
       });
       refetchUser();
@@ -36,12 +36,12 @@ const EditProfile = () => {
   };
 
   const onImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleImageChange(e);
+    handleFileChange(e);
     navigate('crop')
   };
   
-  const clearImage = () => {
-    setImage(null);
+  const clearFile = () => {
+    setFile(null);
     setUserImgUrl(null);
   }
 
@@ -53,8 +53,8 @@ const EditProfile = () => {
           <Form
             onSubmit={onSubmit}
             onImgChange={onImgChange}
-            clearImage={clearImage}
-            imgUrl={imgUrl || userImgUrl}
+            clearImage={clearFile}
+            imgUrl={fileUrl || userImgUrl}
           />
         }
       />
@@ -62,8 +62,8 @@ const EditProfile = () => {
         path='crop'
         element={
           <CropImage
-            src={imgUrl}
-            onSaveCrop={(croppedImage) => setImage(croppedImage)}
+            src={fileUrl}
+            onSaveCrop={(croppedImage) => setFile(croppedImage)}
           />
         }
       />

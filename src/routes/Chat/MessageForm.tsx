@@ -3,7 +3,7 @@ import TextArea from 'react-textarea-autosize';
 import toast from 'react-hot-toast';
 import Spinner from '@/components/Spinner';
 
-import useUploadImage from '@/hooks/useUploadImage';
+import useUploadFile from '@/hooks/useUploadFile';
 import { sendMessage } from '@/firebase/messages';
 import { Chat } from '@/types';
 import { useAppContext } from '@/context/AppContext'
@@ -15,16 +15,16 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
   const { register, formState, reset, handleSubmit } = useForm<FormData>();
   const { isSubmitting, errors } = formState;
   const { currentUser } = useAppContext();
-  const { image, handleImageChange, imgUrl, setImage } = useUploadImage();
+  const { file, handleFileChange, fileUrl, setFile } = useUploadFile();
 
   const onSubmit = async ({ body }: FormData) => {
     try {
       if (!currentUser) return;
 
-      const data = { body, image };
+      const data = { body, file };
       await sendMessage(chat, currentUser, data);
       reset();
-      setImage(null);
+      setFile(null);
     } catch (e) {
       toast.error('An error occured');
     }
@@ -50,7 +50,7 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
               id='group-image'
               type='file'
               accept=".jpg,.png,.gif,.jpeg"
-              onChange={handleImageChange}
+              onChange={handleFileChange}
             />
             <label 
               htmlFor='group-image'
@@ -58,16 +58,16 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
             ><MdImage className='text-xl text-gray-600' /></label>
           </div>
           
-          {imgUrl && (
+          {fileUrl && (
             <div 
               className='relative w-20 h-20 overflow-hidden rounded-md mt-2'
             >
               <img
-                src={imgUrl}
+                src={fileUrl}
                 className='w-full object-cover max-h-full'
               />
               <button
-                onClick={() => setImage(null)}
+                onClick={() => setFile(null)}
                 className='absolute right-0 top-0 p-1 rounded-full bg-msg-other border-text'
               >
                 <MdClose />

@@ -18,22 +18,25 @@ import { Chat, User, Message } from '@/types';
 
 interface MsgData {
   body: string;
-  image?: File | null;
+  file?: File | null;
 }
 export const sendMessage = async (chat: Chat, currentUser: User, data: MsgData) => {
   authenticate();
 
-  const { body, image } = data;
-  const photoUrl = image ? await saveFile(image) : null;
+  const { body, file } = data;
+  const contentUrl = file ? await saveFile(file) : null;
+
   const message = {
     userName: currentUser.displayName, // displayName in auth user can be null
     userId: auth.currentUser!.uid,
     timestamp: serverTimestamp(),
     body,
-    ...(photoUrl && {
+    ...((contentUrl && file) && {
       attachment: {
-        type: 'image',
-        url: photoUrl
+        type: file.type.split('/')[0],
+        url: contentUrl,
+        name: file.name,
+        size: file.size,
       }
     })
   }

@@ -5,16 +5,19 @@ export interface User {
   about?: string;
 };
 
+interface Attachment {
+  type: 'image' | 'audio';
+  url: string;
+  name?: string;
+  size?: number;
+}
 export interface Message {
   id: string;
   body: string;
   userName: string;
   userId: string;
   timestamp: number;
-  attachment?: {
-    type: 'image';
-    url: string;
-  }
+  attachment?: Attachment;
 }
 
 export type ChatType = 'private' | 'group';
