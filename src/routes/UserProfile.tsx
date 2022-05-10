@@ -79,33 +79,35 @@ const UserProfile = () => {
       </h1>
       
       <p className='text-center px-4 mt-2'>{about || '...'}</p>
-      
-      <section className='mt-8'>
-        <button
-          onClick={startChat}
-          className='w-full flex items-center px-4 py-2 font-bold'
-        >
-          <MdChat className='text-4xl p-2 mr-4' />
-          <span>Message</span>
-        </button>
 
-        {chat && (
+      {currentUser?.uid !== user_id && 
+        <section className='mt-8'>
           <button
-            onClick={clearChat}
-            className='w-full flex items-center px-4 py-2 font-bold text-red-600'
+            onClick={startChat}
+            className='w-full flex items-center px-4 py-2 font-bold'
           >
-            <MdDelete className='text-4xl p-2 mr-4' />
-            <span>Delete Chat</span>
+            <MdChat className='text-4xl p-2 mr-4' />
+            <span>Message</span>
           </button>
-        )}
-      </section>
+  
+          {chat && (
+            <button
+              onClick={clearChat}
+              className='w-full flex items-center px-4 py-2 font-bold text-red-600'
+            >
+              <MdDelete className='text-4xl p-2 mr-4' />
+              <span>Delete Chat</span>
+            </button>
+          )}
+        </section>
+      }
    
       {currentUser?.uid === user_id && (
         <Link
           to='/users/edit'
           className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
         >
-          <MdEdit className='text-3xl' />
+          <MdEdit className='text-3xl md:text-4xl' />
         </Link>
       )}
     </main>

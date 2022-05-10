@@ -31,10 +31,10 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
   };
  
   return (
-    <section className='sticky bottom-0 bg-transparent z-10 px-4'>
+    <section className='sticky bottom-0 bg-transparent z-10 px-4 md:px-12'>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='flex items-start bg-bg py-2'
+        className='flex items-start bg-bg py-2 md:py-6'
       >
         <div className='grow'>
           <div className='flex items-end p-2 rounded-3xl bg-msg-other'>
@@ -75,14 +75,13 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
             </div>
           )}
         </div>
-        <button 
-          disabled={isSubmitting || !!errors.body}
-          className='ml-2 px-3 py-1 bg-primary text-white rounded-xl font-bold disabled:opacity-75'
+        <button
+          className='ml-2 px-3 py-1 bg-primary text-white rounded-xl font-bold'
           type='submit'
         >{
           isSubmitting ?
             <Spinner className='fill-white' loading /> :
-            <MdSend className='text-2xl'/>
+            <MdSend className='text-2xl md:text-3xl'/>
           }
         </button>
       </form>

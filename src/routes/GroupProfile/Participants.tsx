@@ -61,7 +61,7 @@ const Participants = ({chat}: {chat: GroupChat}) => {
   return (
     <section className='pr-4'>
       {loadingRemoveUser && <LoadingBar />  }
-      <h2 className='font-bold mb-2 px-4'>Participants</h2>
+      <h2 className='font-bold mb-2'>Participants</h2>
 
       <Link 
         to='add_participants'
@@ -79,7 +79,7 @@ const Participants = ({chat}: {chat: GroupChat}) => {
           />
           {canRemoveUser(user.uid) &&
             <button onClick={() => removeUser(user.uid)}>
-              <MdDelete className='text-xl text-red-600' />
+              <MdDelete className='text-xl md:text-2xl text-red-600' />
             </button>
           }
         </div>

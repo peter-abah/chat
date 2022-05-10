@@ -53,21 +53,23 @@ const NewChat = () => {
     <main>
       {loadingCreateChat && <LoadingBar overlay />}
       <Header heading='New Chat' subheading='Select user' />
-      <Link 
-        to='/groups/new'
-        replace
-        className='flex items-center px-4 py-2 font-bold'
-      >
-        <MdGroupAdd className='text-4xl p-2 mr-4' />
-        <span>Create Group</span>
-      </Link>
-      {users.map((user) => (
-        <User 
-          key={user.uid}
-          user={user}
-          onClick={handleClick}
-        />
-      ))}
+      <div className='md:px-8'>
+        <Link 
+          to='/groups/new'
+          replace
+          className='flex items-center px-4 py-2 font-bold'
+        >
+          <MdGroupAdd className='text-4xl p-2 mr-4' />
+          <span>Create Group</span>
+        </Link>
+        {users.map((user) => (
+          <User 
+            key={user.uid}
+            user={user}
+            onClick={handleClick}
+          />
+        ))}
+      </div>
     </main>
   );
 };

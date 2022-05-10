@@ -42,16 +42,16 @@ const SignUp = () => {
   };
 
   return (
-    <main>
-      <h1 className="mx-4 my-6 text-2xl">Chat</h1>
+    <main className='mx-auto max-w-[40rem]'>
+      <h1 className="px-4 my-6 text-2xl md:text-3xl md:mt-10">Chat</h1>
       <section className="p-4">
-        <h2 className="mb-3 text-lg">Sign up on Chat</h2>
+        <h2 className="mb-3 text-lg md:text-xl">Sign up on Chat</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col mb-4">
-            <label className="font-bold">Name: </label>
+            <label className="font-bold mb-2">Name: </label>
             <input 
-              className="px-3 py-2 border rounded-md"
+              className="px-3 py-2 border border-gray-400 rounded-md"
               type='text'
               {...register('name')}
             />
@@ -63,9 +63,9 @@ const SignUp = () => {
           </div>
     
           <div className="flex flex-col mb-4">
-            <label className="font-bold">Email: </label>
+            <label className="font-bold mb-2">Email: </label>
             <input 
-              className="px-3 py-2 border rounded-md"
+              className="px-3 py-2 border border-gray-400 rounded-md"
               type='email'
               {...register('email')}
             />
@@ -77,9 +77,9 @@ const SignUp = () => {
           </div>
           
           <div className="flex flex-col mb-4">
-            <label className="font-bold">Password: </label>
+            <label className="font-bold mb-2">Password: </label>
             <input
-              className="px-3 py-2 border rounded-md"
+              className="px-3 py-2 border border-gray-400 rounded-md"
               type='password'
               {...register('password')} 
             />
@@ -91,9 +91,9 @@ const SignUp = () => {
           </div>
           
           <div className="flex flex-col">
-            <label className="font-bold">Confirm Password: </label>
+            <label className="font-bold mb-2">Confirm Password: </label>
             <input
-              className="px-3 py-2 border rounded-md"
+              className="px-3 py-2 border border-gray-400 rounded-md"
               type='password'
               {...register('passwordConfirmation')} 
             />

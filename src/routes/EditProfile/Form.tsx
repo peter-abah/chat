@@ -3,7 +3,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useForm } from 'react-hook-form';
 import Header from '@/components/Header';
 import ProfileImage from '@/components/ProfileImage';
-import LoadingBar from '@/components/LoadingBar';
+import Spinner from '@/components/Spinner';
 
 export interface FormData {
   displayName: string;
@@ -32,13 +32,11 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
   const { isSubmitting, errors } = formState;
 
   return (
-    <section>
-      {isSubmitting && <LoadingBar overlay /> }
-
+    <>
       <Header heading='Edit Profile' />
  
-      <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
-        <div className='mb-4 flex flex-col items-center'>
+      <form className='px-4 max-w-[35rem] mx-auto' onSubmit={handleSubmit(onSubmit)}>
+        <div className='mb-8 flex flex-col items-center'>
           <ProfileImage
             className='!w-32 !h-32'
             imgUrl={imgUrl}
@@ -64,11 +62,11 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
           </div>
         </div>
  
-        <div className="flex flex-col">
-          <label htmlFor='name' className="font-bold">Name</label>
+        <div className="flex flex-col mb-8">
+          <label htmlFor='name' className="font-bold mb-2">Name</label>
           <input
             id='name' 
-            className="px-3 py-2 border rounded-md"
+            className="px-3 py-2 border-2 border-gray-400 rounded-md"
             type='text'
             {...register('displayName', { required: 'Name cannot be empty' })}
           />
@@ -76,10 +74,10 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
         </div>
         
         <div className="flex flex-col">
-          <label htmlFor='about' className="font-bold">About</label>
+          <label htmlFor='about' className="font-bold mb-2">About</label>
           <input
             id='about'
-            className="px-3 py-2 border rounded-md"
+            className="px-3 py-2 border-2 border-gray-400 rounded-md"
             type='text'
             {...register('about', { required: 'About can not be empty' })}
           />
@@ -87,12 +85,16 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
         </div>
         
         <button
-          className="flex items-center justify-center mt-8 px-4 py-2 min-w-[10rem] rounded-lg bg-primary disabled:opacity-50 text-white"
+          className="flex items-center justify-center mt-8 px-4 py-2 min-w-[10rem] rounded-lg bg-primary text-white"
           type='submit'
-          disabled={isSubmitting}
-        >Save</button>
+        >
+          {isSubmitting ?
+            <Spinner loading/> :
+            <span>Save</span>
+          }
+        </button>
       </form>
-    </section>
+    </>
   )
 };
 

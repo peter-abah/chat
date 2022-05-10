@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 
 import Header from '@/components/Header';
-import LoadingBar from '@/components/LoadingBar';
+import Spinner from '@/components/Spinner';
 import { deleteAccount, errorToMsg } from '@/firebase/auth';
 import toast from 'react-hot-toast';
 import { serializeError } from '@/lib/utils';
@@ -27,10 +27,9 @@ const DeleteAccount = () => {
 
   return (
     <>
-      {isSubmitting && <LoadingBar overlay />}
       <Header heading='Account' subheading='Delete Account' />
       
-      <section className='mt-2 px-4 mb-8'>
+      <section className='mt-2 px-4 max-w-[35rem] mx-auto mb-8'>
         <h2 className='font-bold text-lg'>
           Are you sure you want to delete your account
         </h2>
@@ -38,7 +37,7 @@ const DeleteAccount = () => {
       </section>
 
       <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-8">
           <label
             htmlFor='password'
             className="font-bold mb-2"
@@ -47,7 +46,7 @@ const DeleteAccount = () => {
           </label>
           <input
             id='password' 
-            className="px-3 py-2 border rounded-md"
+            className="px-3 py-2 border-2 border-gray-400 rounded-md"
             type='password'
             {...register('password', { required: 'Password can not be blank'})}
           />
@@ -61,8 +60,12 @@ const DeleteAccount = () => {
         <button
           className="mt-8 flex bg-red-600 text-white font-bold items-center mx-auto justify-center px-4 py-2 rounded-lg"
           type='submit'
-          disabled={isSubmitting}
-        >Delete</button>
+        >
+          {isSubmitting ?
+            <Spinner loading /> :
+            <span>Delete</span>
+          }
+        </button>
       </form>
   </>
   )

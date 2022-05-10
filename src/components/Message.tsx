@@ -12,9 +12,18 @@ interface Props {
 const Message = ({ message, chat }: Props) => {
   const { currentUser } = useAppContext();
   const isUser = message.userId === currentUser?.uid;
-  const className = classnames(
-    'bg-msg-other grid max-w-[90%] rounded-lg w-fit my-2 p-2 whitespace-pre-wrap',
+
+  const imgClassName = classnames(
+    'max-w-[15rem] w-[90%] rounded-lg md: max-w-[25rem]',
     {
+      'ml-auto': isUser,
+      'mr-auto': !isUser
+    }
+  );
+  const msgClassName = classnames(
+    'bg-msg-other grid max-w-[90%] md:max-w-[60%]',
+    'rounded-lg w-fit my-2 p-2 whitespace-pre-wrap',
+    { 
       'bg-msg-other mr-auto': !isUser,
       'bg-msg-user text-white ml-auto': isUser
     }
@@ -28,11 +37,11 @@ const Message = ({ message, chat }: Props) => {
       {attachment?.type === 'image' && (
         <ImageWithView
           src={attachment.url}
-          className={className}
+          className={imgClassName}
         />
       )}
 
-      <div className={className}>
+      <div className={msgClassName}>
         {showName && <span className='font-bold mb-1'>{message.userName}</span>}
         <p>{message.body}</p>
         <small 

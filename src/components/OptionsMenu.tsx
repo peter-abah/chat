@@ -12,7 +12,7 @@ const OptionsMenu = ({items}: Props) => {
   const { theme } = useAppContext();
   const menuBtn = (
     <button>
-      <MdMoreVert className='text-xl' />
+      <MdMoreVert className='text-xl md:text-2xl' />
     </button>
   );
 

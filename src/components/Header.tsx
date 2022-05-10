@@ -8,16 +8,16 @@ interface Props {
 const Header = ({ heading, subheading }: Props) => {
   return (
     <header 
-      className='sticky top-0 bg-bg z-20 p-4 flex items-center'
+      className='sticky top-0 bg-bg z-20 p-4 flex items-center md:px-12 md:py-6'
     >
       <BackBtn className='mr-4' />
       <div className='mr-auto'>
-        <h1 className='text-lg font-bold'>{heading}</h1>
-        {subheading && <h2 className='text-sm'>{subheading}</h2>}
+        <h1 className='text-lg font-bold md:text-xl'>{heading}</h1>
+        {subheading && <h2 className='text-sm md:text-base'>{subheading}</h2>}
       </div>
 
       <button>
-        <MdSearch className='text-2xl'/>
+        <MdSearch className='text-2xl md:text-3xl'/>
       </button>
     </header>
   )

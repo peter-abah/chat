@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import TextArea from 'react-textarea-autosize';
 import Header from '@/components/Header';
 import ProfileImage from '@/components/ProfileImage';
-import LoadingBar from '@/components/LoadingBar';
+import Spinner from '@/components/Spinner';
 
 export interface FormData {
   name: string;
@@ -24,13 +24,12 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
 
   return (
     <section>
-    {isSubmitting && <LoadingBar overlay />}
       <Header heading='Create group' subheading='Name group' />
  
-      <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
+      <form className='px-4 max-w-[35rem] mx-auto' onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-4 flex flex-col items-center'>
           <ProfileImage
-            className='!w-32 !h-32'
+            className='!w-32 !h-32 !text-7xl !md:w-48 !md:h-48'
             imgUrl={imgUrl}
             name={getValues('name') || ''}
           />
@@ -55,9 +54,9 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
         </div>
  
         <div className="flex flex-col mb-4">
-          <label className="font-bold">Group Name</label>
+          <label className="font-bold mb-2">Group Name</label>
           <input 
-            className="px-3 py-2 border rounded-md"
+            className="px-3 py-2 border-2 border-gray-400 rounded-md"
             type='text'
             {...register('name', { required: 'Name cannot be empty' })}
           />
@@ -65,9 +64,9 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
         </div>
         
         <div className="flex flex-col">
-          <label className="font-bold">Description</label>
+          <label className="font-bold mb-2">Description</label>
           <TextArea
-            className="px-3 py-2 border rounded-md bg-bg text-text"
+            className="px-3 py-2 border-2 border-gray-400 rounded-md bg-bg text-text"
             maxRows={5}
             {...register('description', { required: 'Description cannot be empty' })}
           />
@@ -77,8 +76,12 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
         <button
           className="flex items-center justify-center mt-8 px-4 py-2 min-w-[10rem] rounded-lg bg-primary disabled:opacity-50 text-white"
           type='submit'
-          disabled={isSubmitting}
-        >Save</button>
+        >
+          {isSubmitting ?
+            <Spinner loading /> :
+            <span>Save</span>
+          }
+        </button>
       </form>
     </section>
   )

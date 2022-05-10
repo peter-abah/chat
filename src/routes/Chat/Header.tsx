@@ -15,19 +15,19 @@ const Header = ({ chat }: { chat: Chat }) => {
   
   const link = getChatLink(chat);
   return (
-    <header className='flex justify-between sticky top-0 bg-bg p-2'>
+    <header className='flex justify-between sticky top-0 bg-bg p-4 md:px-12 md:my-6'>
       <Link to={link} className='flex'>
         <BackBtn className='mr-2' />
         <ProfileImage
-          className='!w-8 !h-8 mr-2'
+          className='!w-8 !h-8 mr-2 !md:w-12 !md:h-12'
           name={name}
           imgUrl={data?.photoUrl}
         />
-        <h1 className='text-xl font-bold'>{data?.name}</h1>
+        <h1 className='text-xl md:text-2xl font-bold'>{data?.name}</h1>
       </Link>
   
       <button type='button'>
-        <MdSearch className='text-2xl' />
+        <MdSearch className='text-2xl md:text-3xl' />
       </button>
     </header>
   )

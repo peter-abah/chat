@@ -39,16 +39,16 @@ const Login = () => {
   };
 
   return (
-    <main>
-      <h1 className="mx-4 my-6 text-2xl">Chat</h1>
+    <main className='max-w-[35rem] mx-auto'>
+      <h1 className="px-4 my-6 text-2xl md:text-3xl md:mt-10">Chat</h1>
       <section className="p-4">
-        <h2 className="mb-3 text-lg">Sign in to Chat</h2>
+        <h2 className="mb-3 text-lg md:text-xl">Sign in to Chat</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col mb-4">
-            <label className="font-bold">Email: </label>
+            <label className="font-bold mb-2">Email: </label>
             <input 
-              className="px-3 py-2 border rounded-md"
+              className="px-3 py-2 border border-gray-400 rounded-md"
               type='email'
               {...register('email', { required: 'Email cannot be empty' })}
             />
@@ -56,9 +56,9 @@ const Login = () => {
           </div>
           
           <div className="flex flex-col">
-            <label className="font-bold">Password: </label>
+            <label className="font-bold mb-2">Password: </label>
             <input
-              className="px-3 py-2 border rounded-md"
+              className="px-3 py-2 border border-gray-400 rounded-md"
               type='password'
               {...register('password', { required: 'Enter your password.' })} 
             />
@@ -79,9 +79,11 @@ const Login = () => {
             </button>
           </div>
         </form>
+
         <div className="relative my-4 w-full px-4" >
           <span className="z-10 block mx-auto p-2 bg-bg w-fit">OR</span>
         </div>
+
         <div>
           <button
             className="flex items-center mx-auto px-4 py-2 min-w-[15rem] rounded-lg border"

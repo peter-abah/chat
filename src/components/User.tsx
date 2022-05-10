@@ -18,12 +18,12 @@ const User = ({ user, onClick, isSelected }: Props) => {
       data-uid={user.uid}
     >
       <ProfileImage
-        className='mr-3'
+        className='mr-3 md:w-12 md:h-12'
         imgUrl={user.photoUrl}
         name={name}
         isSelected={isSelected}
       />
-      <p className='font-bold'>{name}</p>
+      <p className='font-bold md:text-lg'>{name}</p>
     </button>
   )
 };

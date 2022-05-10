@@ -12,7 +12,7 @@ const Home = () => {
         to='/chats/new'
         className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
       >
-        <MdChat className='text-3xl' />
+        <MdChat className='text-3xl md:text-4xl' />
       </Link>
     </main>
   )

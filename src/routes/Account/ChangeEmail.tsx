@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import Header from '@/components/Header';
-import LoadingBar from '@/components/LoadingBar';
+import Spinner from '@/components/Spinner';
 import { updateUserEmail, errorToMsg } from '@/firebase/auth';
 import { auth } from '@/firebase';
 import toast from 'react-hot-toast';
@@ -44,10 +44,9 @@ const ChangeEmail = () => {
 
   return (
     <>
-      {isSubmitting && <LoadingBar overlay />}
       <Header heading='Account' subheading='Change email' />
       
-      <section className='mt-2 px-4 mb-8'>
+      <section className='mt-2 px-4 md:px-12 mb-8'>
         <h2 className='font-bold'>Current Email</h2>
         <p className='text-sm'>
           {auth.currentUser?.email || 'No email'}
@@ -55,7 +54,7 @@ const ChangeEmail = () => {
       </section>
 
       <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-8">
           <label
             htmlFor='email'
             className="font-bold mb-2"
@@ -64,7 +63,7 @@ const ChangeEmail = () => {
           </label>
           <input
             id='email'
-            className="px-3 py-2 border rounded-md"
+            className="px-3 py-2 border-2 border-gray-400 rounded-md"
             type='email'
             {...register('email')}
           />
@@ -75,7 +74,7 @@ const ChangeEmail = () => {
           }
         </div>
   
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-8">
           <label
             htmlFor='password'
             className="font-bold mb-2"
@@ -84,7 +83,7 @@ const ChangeEmail = () => {
           </label>
           <input
             id='password' 
-            className="px-3 py-2 border rounded-md"
+            className="px-3 py-2 border-2 border-gray-400 rounded-md"
             type='password'
             {...register('password')}
           />
@@ -98,8 +97,12 @@ const ChangeEmail = () => {
         <button
           className="mt-8 flex bg-primary text-white font-bold items-center justify-center px-4 py-2 rounded-lg"
           type='submit'
-          disabled={isSubmitting}
-        >Save</button>
+        >
+          {isSubmitting ?
+            <Spinner loading /> :
+            <span>Save</span>
+          }
+        </button>
       </form>
   </>
   )

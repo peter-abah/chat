@@ -34,19 +34,21 @@ const SelectUsers = (props: Props) => {
   return (
    <section>
      {header}
-     {users.map((user) => (
-       <User
-          key={user.uid}
-          user={user}
-          isSelected={participants.hasOwnProperty(user.uid)}
-          onClick={onSelectUser}
-        />
-     ))}
+     <div className='px-8'>
+       {users.map((user) => (
+         <User
+            key={user.uid}
+            user={user}
+            isSelected={participants.hasOwnProperty(user.uid)}
+            onClick={onSelectUser}
+          />
+       ))}
+     </div>
      <button
         onClick={onNext}
         className='fixed bg-primary text-white bottom-6 right-6 rounded-full p-3'
       >
-        <MdArrowForward className='text-3xl' />
+        <MdArrowForward className='text-3xl md:text-4xl' />
       </button>
    </section>
   )

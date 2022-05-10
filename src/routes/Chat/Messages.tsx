@@ -21,7 +21,7 @@ const Messages = ({ chat }: { chat: Chat }) => {
   if (error) return <p className='p-4'>{serializeError(error)}</p>
 
   return (
-    <div ref={ref} className='px-4 grow overflow-y-auto'>
+    <div ref={ref} className='px-4 grow overflow-y-auto md:px-12'>
       {messages.map((msg) => (
         <Message key={msg.id} message={msg} chat={chat} />
       ))}

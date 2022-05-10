@@ -62,25 +62,25 @@ const GroupProfile = () => {
 
   const { name, photoUrl, description } = chat;
   return (
-    <main>
+    <main className='md:px-12 p-4'>
       {(loadingDeleteGroup || loadingRemoveUser) && <LoadingBar overlay />}
 
-      <BackBtn className='block ml-4 mt-4' />
+      <BackBtn className='block' />
       <div className='flex justify-center'>
         <ProfileImage
-          className='!w-32 !h-32 !text-[!text-4rem]'
+          className='!w-32 !h-32 !text-7xl !md:w-48 !md:h-48'
           imgUrl={photoUrl}
           name={name || ''}
         />
       </div>
       
-      <h1 className='text-xl font-bold px-4 text-center mt-4'>
+      <h1 className='text-xl md:text-2xl font-bold text-center mt-4'>
         {name}
       </h1>
  
-      <section className='mt-2 px-4 mb-8'>
-        <h2 className='font-bold'>Description</h2>
-        <p className='text-sm'>
+      <section className='mt-2 md:mt-4 mb-8'>
+        <h2 className='font-bold md:text-lg'>Description</h2>
+        <p className='text-sm md:text-base'>
           {description || '...'}
         </p>
       </section>
@@ -92,7 +92,7 @@ const GroupProfile = () => {
           onClick={leaveGroup}
           className='flex items-center px-4 py-3'
         >
-          <MdExit className='text-2xl ml-2 mr-6' />
+          <MdExit className='text-2xl md:text-3xl ml-2 mr-6' />
           <span>Leave Group</span>
         </button>
         
@@ -101,7 +101,7 @@ const GroupProfile = () => {
             onClick={removeGroup}
             className='flex items-center px-4 py-3'
           >
-            <MdDelete className='text-2xl ml-2 mr-6' />
+            <MdDelete className='text-2xl md:text-3xl ml-2 mr-6' />
             <span>Delete Group</span>
           </button>
         )}

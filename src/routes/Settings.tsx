@@ -21,7 +21,7 @@ const Settings = () => {
   return (
     <>
       <Header heading='Settings' />
-      <section>
+      <section className='md:px-8'>
         <button
           onClick={toggleTheme}
           className='w-full flex items-center px-4 py-2 font-bold'

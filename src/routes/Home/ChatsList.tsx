@@ -17,7 +17,7 @@ const ChatsList = () => {
   }
 
   return (
-    <div className='px-4'>
+    <div className='px-4 md:px-12'>
       {chats.map((chat) => (
         <Chat key={chat.id} chat={chat} />
       ))}
