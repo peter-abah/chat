@@ -10,6 +10,9 @@ interface Props {
 
 const LastMessage = ({ message, type, className }: Props) => {
   const { currentUser } = useAppContext();
+  
+  if (message && !('body' in message)) return null;
+
   let userName = message?.userName || '';
   if (message?.userId && (message.userId === currentUser?.uid)) {
     userName = 'You';

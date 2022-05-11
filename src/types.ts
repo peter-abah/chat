@@ -11,14 +11,27 @@ interface Attachment {
   name?: string;
   size?: number;
 }
-export interface Message {
+
+export interface BaseMessage {
   id: string;
-  body: string;
+  timestamp: number;
   userName: string;
   userId: string;
-  timestamp: number;
+}
+
+export interface TextMessage extends BaseMessage {
+  body: string;
   attachment?: Attachment;
 }
+
+export interface FileMessage extends BaseMessage {
+  url: string;
+  fileName: string;
+  fileExtension: string;
+  fileType: string;
+}
+
+export type Message = FileMessage | TextMessage;
 
 export type ChatType = 'private' | 'group';
 

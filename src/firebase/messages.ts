@@ -16,17 +16,31 @@ import { authenticate } from './auth'
 import { saveFile } from './storage';
 import { Chat, User, Message } from '@/types';
 
-interface MsgData {
+interface TextData {
   body: string;
   file?: File | null;
-}
-export const sendMessage = async (chat: Chat, currentUser: User, data: MsgData) => {
-  authenticate();
+};
+type MsgData = TextData | File;
 
+const getFileMessage = async (currentUser: User, file: File) => {
+  const url = await saveFile(file);
+  
+  return {
+    userName: currentUser.displayName, // displayName in auth user can be null
+    userId: auth.currentUser!.uid,
+    timestamp: serverTimestamp(),
+    fileName: file.name,
+    fileSize: file.size,
+    fileType: file.type,
+    url
+  }
+}
+
+const getTextMessage = async (currentUser: User, data: TextData) => {
   const { body, file } = data;
   const contentUrl = file ? await saveFile(file) : null;
 
-  const message = {
+  return {
     userName: currentUser.displayName, // displayName in auth user can be null
     userId: auth.currentUser!.uid,
     timestamp: serverTimestamp(),
@@ -40,6 +54,15 @@ export const sendMessage = async (chat: Chat, currentUser: User, data: MsgData) 
       }
     })
   }
+}
+
+export const sendMessage= async (chat: Chat, currentUser: User, data: MsgData) => {
+  authenticate();
+
+  const message = data instanceof File ?
+    await getFileMessage(currentUser, data) :
+    await getTextMessage(currentUser, data)
+ 
   const collectionRef = collection(db, 'chats', chat.id, 'messages');
   await Promise.all([
     addDoc(collectionRef, message),
@@ -48,7 +71,7 @@ export const sendMessage = async (chat: Chat, currentUser: User, data: MsgData) 
       updatedAt: serverTimestamp()
     })
   ]);
-}
+};
 
 export const messagesQuery = (chat: Chat) => {
   return query(

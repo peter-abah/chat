@@ -28,7 +28,9 @@ const Message = ({ message, chat }: Props) => {
       'bg-msg-user text-white ml-auto': isUser
     }
   );
-  
+
+  if (!('body' in message)) return null;
+
   const { attachment } = message;
   const showName = chat.type === 'group' && message.userId !== currentUser?.uid;
 
@@ -42,13 +44,16 @@ const Message = ({ message, chat }: Props) => {
       )}
 
       <div className={msgClassName}>
-        {showName && <span className='font-bold mb-1'>{message.userName}</span>}
+        {showName &&
+          <span className='font-bold mb-1'>{message.userName}</span>
+        }
         <p>{message.body}</p>
         <small 
           className={classnames(
             'ml-auto text-xs',
             {'text-meta-user': isUser })
-          }>
+          }
+        >
           {formatTimestamp(message.timestamp*1000, 'd LLL p')}
         </small>
       </div>
