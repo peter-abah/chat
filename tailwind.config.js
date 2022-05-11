@@ -17,7 +17,8 @@ module.exports = {
         primary: withOpacityValue('--color-primary'),
         bg: withOpacityValue('--color-bg'),
         text: withOpacityValue('--color-text'),
-        'meta-user': withOpacityValue('--color-meta-user'),
+        icon: withOpacityValue('--color-icon'),
+        'icon-on-primary': withOpacityValue('--color-icon-on-primary'),
         'msg-other': withOpacityValue('--color-msg-other'),
         'msg-user': withOpacityValue('--color-msg-user')
       }

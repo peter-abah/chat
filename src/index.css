@@ -8,7 +8,8 @@
   --color-primary: 146 20 12;
   --color-msg-other: 240 240 240;
   --color-msg-user: var(--color-primary);
-  --color-meta-user: 235 235 235;
+  --color-icon: 75 85 99;
+  --color-icon-on-primary: 209 213 219;
 }
 
 html[data-theme='light'] {
@@ -17,20 +18,27 @@ html[data-theme='light'] {
   --color-primary: 146 20 12;
   --color-msg-other: 240 240 240;
   --color-msg-user: var(--color-primary);
-  --color-meta-user: 235 235 235;
+  --color-icon: 75 85 99;
+  --color-icon-on-primary: 209 213 219;
 }
 
 html[data-theme='dark'] {
-  --color-bg: 35 35 35;
-  --color-text: 235 235 235;
+  --color-bg: 24 23 25;
+  --color-text: 255 255 255;
   --color-primary: 179 26 15;
   --color-msg-other: 70 70 70;
   --color-msg-user: 146 20 12;
-  --color-meta-user: 235 235 235;
+  --color-icon: 209 213 219;
+  --color-icon-on-primary: 209 213 219;
 }
 
 body, input, textarea, .toast {
   @apply text-text bg-bg;
+}
+
+* {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /** Animate loader bar **/

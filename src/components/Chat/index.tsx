@@ -14,11 +14,11 @@ const Chat = ({ chat }: { chat: ChatType }) => {
   return (
     <Link to={`/chats/${chat.id}`} className='flex py-3 items-center'>
       <ProfileImage
-        className='mr-3 md:w-12 md:h-12'
+        className='mr-3 md:w-12 md:h-12 shrink-0'
         name={data?.name || ''}
         imgUrl={data?.photoUrl}
       />
-      <div className='grow grid'>
+      <div className='grid'>
         <h2 className='font-bold md:text-lg'>{data?.name}</h2>
         <LastMessage message={chat.lastMessage} type={chat.type} />
       </div>

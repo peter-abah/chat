@@ -75,3 +75,21 @@ export const getCroppedImage = async (image: HTMLImageElement, crop: PixelCrop) 
   const blob = await canvasToBlobPromise() as Blob;
   return new File([blob], "");
 };
+
+const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+export const formatFileSize = (size: number) => {
+  // 0 is special, log 0 is infinity.
+  // There can't be negative size so also treat as zero
+  if (size <= 0) return '0 B';
+
+  // gets the exponent
+  let n = Math.floor(Math.log(size) / Math.log(1024));
+  
+  // converts it to a number between 1 and 1023
+  const reducedSize = Math.floor(size / (1024 ** n))
+  
+  // For extremely large sizes, size > 1024 yottabyte
+  if (n > 8) n = 8;
+  
+  return `${reducedSize} ${sizes[n]}`
+}

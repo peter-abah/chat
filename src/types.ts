@@ -27,8 +27,8 @@ export interface TextMessage extends BaseMessage {
 export interface FileMessage extends BaseMessage {
   url: string;
   fileName: string;
-  fileExtension: string;
   fileType: string;
+  fileSize: number;
 }
 
 export type Message = FileMessage | TextMessage;
