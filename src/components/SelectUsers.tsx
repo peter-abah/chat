@@ -1,10 +1,14 @@
 import React from 'react';
-import useSwr from 'swr';
+import useSWRInfinite from 'swr/infinite'
 
-import { getUsers } from '@/firebase/users';
+import { getUsers, getKey } from '@/firebase/users';
 import { serializeError } from '@/lib/utils';
+import { User as UserType } from '@/types';
+
+import InfiniteScroll from 'react-infinite-scroller';
 import User from '@/components/User';
 import Loader from '@/components/Loader';
+import Spinner from '@/components/Spinner';
 import {MdArrowForward} from 'react-icons/md';
 
 interface Props {
@@ -24,13 +28,16 @@ const SelectUsers = (props: Props) => {
     shouldExclude = () => false,
   } = props;
 
-  let { data: users, error } = useSwr('users', () => getUsers());
-  
-  if (error) return <p>{serializeError(error)}</p>
-  if (!users) return <Loader />
+  let { data: allUsers, error, setSize, size } = useSWRInfinite(getKey, getUsers);
 
+  if (error) return <p>{serializeError(error)}</p>
+  if (!allUsers) return <Loader />
+
+  // merge all pages as one
+  let users = allUsers.reduce((total, data) => total.concat(data));
   users = users.filter(({uid}) => !shouldExclude(uid));
   
+  const hasMore = allUsers[allUsers.length - 1].length > 0;
   if (users.length <= 0) {
     return (
       <p
@@ -41,15 +48,24 @@ const SelectUsers = (props: Props) => {
   return (
    <section>
      {header}
-     <div className='px-8'>
-       {users.map((user) => (
-         <User
-            key={user.uid}
-            user={user}
-            isSelected={participants.hasOwnProperty(user.uid)}
-            onClick={onSelectUser}
-          />
-       ))}
+     <div className='md:px-12'>
+       <InfiniteScroll
+         pageStart={0}
+         loadMore={() => setSize(size+1)}
+         hasMore={hasMore}
+         loader={
+           <Spinner className='mx-auto my-4' key='loader' loading />
+         }
+       >
+         {users.map((user) => (
+           <User
+             key={user.uid}
+             user={user}
+             isSelected={participants.hasOwnProperty(user.uid)}
+             onClick={onSelectUser}
+           />
+         ))}
+       </InfiniteScroll>
      </div>
      <button
         onClick={onNext}

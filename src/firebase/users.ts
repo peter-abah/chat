@@ -49,20 +49,39 @@ export const updateUser = async ({displayName, about, picture, imgUrl}: UserData
 const usersQuery = () => {
   return query(collection(db, 'users'),
     limit(25),
-    orderBy('displayName')
+    orderBy('uid')
   );
 };
 
 const nextUsersQuery = (lastUid: string) => {
   return query(collection(db, 'users'),
     limit(25),
-    startAfter(lastUid),
-    orderBy('displayName')
+    orderBy('uid'),
+    startAfter(lastUid)
   );
 }
 
+export const getKey = (pageIndex: number, previousPageData: User[] | null) => {
+  if (previousPageData && previousPageData.length < 1) return null;
+  
+  // Do not need to pass any argument to the fetcher function if it is
+  // the first request but returning undefined will make useSwr not 
+  // call the function.
+  // Using any users as a special case to denote first request
+  if (!previousPageData || pageIndex === 0) return 'users'; 
+  
+  const lastUser = previousPageData[previousPageData.length - 1]
+  return lastUser.uid;
+};
+
+// Passing a user is the same as not passing any argument.
+// It will return the first page of data
+// Using it to bypass useSwr
 export const getUsers = async (lastUid?: string) => {
-  const query = lastUid ? nextUsersQuery(lastUid) : usersQuery();
+  const query = lastUid && lastUid !== 'users' ?
+    nextUsersQuery(lastUid) :
+    usersQuery();
+
   const snapshot = await getDocs(query);
   const users = snapshot.docs.map((e) => e.data() as User)
   return users;

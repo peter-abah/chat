@@ -19,7 +19,7 @@ const Header = ({ chat }: { chat: Chat }) => {
       <Link to={link} className='flex'>
         <BackBtn className='mr-2' />
         <ProfileImage
-          className='!w-8 !h-8 mr-2 !md:w-12 !md:h-12'
+          className='!w-8 !h-8 !min-w-[2rem] mr-2 !md:w-12 !md:h-12'
           name={name}
           imgUrl={data?.photoUrl}
         />

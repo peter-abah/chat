@@ -78,7 +78,7 @@ const Form = ({onSubmit, onImgChange, clearImage, imgUrl}: Props) => {
           type='submit'
         >
           {isSubmitting ?
-            <Spinner loading /> :
+            <Spinner className='!text-white' loading /> :
             <span>Save</span>
           }
         </button>
