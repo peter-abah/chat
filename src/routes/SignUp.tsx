@@ -43,9 +43,9 @@ const SignUp = () => {
 
   return (
     <main className='mx-auto max-w-[40rem]'>
-      <h1 className="px-4 my-6 text-3xl md:text-4xl md:mt-10 font-display">Chat</h1>
+      <h1 className="px-4 my-6 text-3xl md:text-4xl md:mt-10 font-display">Conecr</h1>
       <section className="p-4">
-        <h2 className="mb-3 text-lg md:text-xl">Sign up on Chat</h2>
+        <h2 className="mb-3 text-lg md:text-xl">Sign up on Conecr</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col mb-4">
