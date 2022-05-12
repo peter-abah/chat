@@ -45,6 +45,12 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
     const file = e.currentTarget.files?.[0];
     if (!file) return
     
+    const maxSize = 15 * 1024 * 1024 // 15mb max size
+    if (file.size > maxSize) {
+      toast.error(`Can not send files over 15 MB`);
+      return;
+    }
+ 
     try {
       await _sendMessage(chat, currentUser, file);
     } catch (e) {
@@ -54,7 +60,7 @@ const MessageForm = ({ chat }: { chat: Chat }) => {
   };
  
   return (
-    <section className='sticky bottom-0 bg-transparent z-10 px-4 md:px-12'>
+    <section className='sticky bottom-0 z-10 px-4 md:px-12'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='flex items-start bg-bg py-2 md:py-6'

@@ -22,7 +22,7 @@ const Messages = ({ chat }: { chat: Chat }) => {
   if (error) return <ErrorPage />
 
   return (
-    <div ref={ref} className='px-4 grow overflow-y-auto md:px-12'>
+    <div ref={ref} className='px-4 grow overflow-y-auto overflow-x-hidden md:px-12'>
       {messages.map((msg) => (
         <Message key={msg.id} message={msg} chat={chat} />
       ))}
