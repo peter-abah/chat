@@ -14,7 +14,7 @@ const MessageBody = ({message}: { message?: Message | null }) => {
 
   if ('fileName' in message) {
     return (
-      <span className='flex items-center'>
+      <span className='flex items-center truncate max-w-full'>
         <FaFile className='text-icon mr-1' />
         <span>{message.fileName}</span>
       </span>
@@ -34,13 +34,20 @@ const LastMessage = ({ message, type, className }: Props) => {
 
   className = classnames(
     className,
-    'text-sm max-w-full truncate',
+    'text-sm max-w-full truncate inline-flex',
     { italic: !userName }
   );
   
   const body = <MessageBody message={message} />
-  if (type === 'group' && message?.userName) {
-    return <p className={className}>{userName}: {body}</p>;
+  const showName = message && 
+    (message.userId === currentUser?.uid || type === 'group')
+  if (showName) {
+    return (
+      <p className={className}>
+        <span className='mr-2'>{userName}:</span>
+        {body}
+      </p>
+    )
   }
 
   return <p className={className}>{body}</p>

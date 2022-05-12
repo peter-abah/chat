@@ -15,10 +15,6 @@ const Header = ({ heading, subheading }: Props) => {
         <h1 className='text-lg font-bold md:text-xl'>{heading}</h1>
         {subheading && <h2 className='text-sm md:text-base'>{subheading}</h2>}
       </div>
-
-      <button>
-        <MdSearch className='text-2xl md:text-3xl'/>
-      </button>
     </header>
   )
 };

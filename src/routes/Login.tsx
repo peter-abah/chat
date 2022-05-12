@@ -40,7 +40,7 @@ const Login = () => {
 
   return (
     <main className='max-w-[35rem] mx-auto'>
-      <h1 className="px-4 my-6 text-2xl md:text-3xl md:mt-10 font-display">Chat</h1>
+      <h1 className="px-4 my-6 text-3xl md:text-4xl md:mt-10 font-display">Chat</h1>
       <section className="p-4">
         <h2 className="mb-3 text-lg md:text-xl">Sign in to Chat</h2>
 

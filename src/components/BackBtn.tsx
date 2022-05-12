@@ -7,7 +7,7 @@ const BackBtn = ({ className }: { className?: string }) => {
   
   return (
     <button className={className} onClick={handleClick}>
-     <MdArrowBack className='text-2xl' />
+     <MdArrowBack className='text-2xl md:text-3xl' />
    </button>
   );
 };
