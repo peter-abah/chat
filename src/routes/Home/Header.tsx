@@ -12,7 +12,7 @@ const Header = () => {
   ];
   return (
     <header className='sticky top-0 left-0 bg-bg z-10 flex p-4 md:px-12 md:py-6'>
-      <h1 className='mr-auto text-xl font-bold md:text-2xl'>Chat</h1>
+      <h1 className='mr-auto text-xl font-bold md:text-2xl font-display'>Chat</h1>
       
       <button type='button' className='mr-4'>
         <MdSearch className='text-2xl' />

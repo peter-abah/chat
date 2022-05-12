@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 function withOpacityValue(variable) {
   return ({ opacityValue }) => {
     if (opacityValue === undefined) {
@@ -21,6 +23,10 @@ module.exports = {
         'icon-on-primary': withOpacityValue('--color-icon-on-primary'),
         'msg-other': withOpacityValue('--color-msg-other'),
         'msg-user': withOpacityValue('--color-msg-user')
+      },
+      fontFamily: {
+        'sans': ['"Open Sans"', ...defaultTheme.fontFamily.sans],
+        'display': ['Macondo', '"Open Sans"', ...defaultTheme.fontFamily.sans]
       }
     }
   },
