@@ -8,7 +8,7 @@ interface Props {
 const Header = ({ heading, subheading }: Props) => {
   return (
     <header 
-      className='sticky top-0 bg-bg z-20 p-4 flex items-center md:px-12 md:py-6'
+      className='sticky top-0 bg-bg z-20 p-4 flex items-center md:px-12'
     >
       <BackBtn className='mr-4' />
       <div className='mr-auto'>

@@ -15,7 +15,7 @@ const Header = ({ chat }: { chat: Chat }) => {
   
   const link = getChatLink(chat);
   return (
-    <header className='flex justify-between sticky top-0 bg-bg p-4 md:px-12 md:my-6'>
+    <header className='flex justify-between sticky top-0 bg-bg p-4 md:px-12'>
       <Link to={link} className='flex'>
         <BackBtn className='mr-2' />
         <ProfileImage

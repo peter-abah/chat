@@ -29,14 +29,14 @@ const DeleteAccount = () => {
     <>
       <Header heading='Account' subheading='Delete Account' />
       
-      <section className='mt-2 px-4 max-w-[35rem] mx-auto mb-8'>
+      <section className='mt-2 px-4 md:px-12 mb-8'>
         <h2 className='font-bold text-lg'>
           Are you sure you want to delete your account
         </h2>
         <p> All messages and chats will also be deleted.</p>
       </section>
 
-      <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
+      <form className='px-4 md:px-12' onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col mb-8">
           <label
             htmlFor='password'
@@ -46,7 +46,7 @@ const DeleteAccount = () => {
           </label>
           <input
             id='password' 
-            className="px-3 py-2 border-2 border-gray-400 rounded-md"
+            className="px-3 py-2 border max-w-[20rem] border-gray-400 rounded-md"
             type='password'
             {...register('password', { required: 'Password can not be blank'})}
           />
@@ -58,7 +58,7 @@ const DeleteAccount = () => {
         </div>
 
         <button
-          className="mt-8 flex bg-red-600 text-white font-bold items-center mx-auto justify-center px-4 py-2 rounded-lg"
+          className="mt-8 flex bg-red-600 text-white font-bold items-center justify-center px-4 py-2 rounded-lg"
           type='submit'
         >
           {isSubmitting ?

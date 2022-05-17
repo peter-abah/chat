@@ -11,7 +11,7 @@ const Header = () => {
     ['Settings', () => navigate('/settings')]
   ];
   return (
-    <header className='sticky top-0 left-0 bg-bg z-10 flex p-4 md:px-12 md:py-6'>
+    <header className='sticky top-0 left-0 bg-bg z-10 flex p-4 md:px-12'>
       <h1 className='mr-auto text-2xl md:text-3xl font-display'>Conecr</h1>
       <OptionsMenu items={options} />
     </header>

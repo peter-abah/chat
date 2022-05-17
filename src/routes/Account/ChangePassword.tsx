@@ -57,7 +57,7 @@ const ChangePassword = () => {
           </label>
           <input
             id='current-password'
-            className="px-3 py-2 border-2 border-gray-400 rounded-md"
+            className="px-3 py-2 border max-w-[20rem] border-gray-400 rounded-md"
             type='password'
             {...register('currentPassword')}
           />
@@ -72,7 +72,7 @@ const ChangePassword = () => {
           <label htmlFor='new-password' className="font-bold mb-2">New Password: </label>
           <input
             id='new-password' 
-            className="px-3 py-2 border-2 border-gray-400 rounded-md"
+            className="px-3 py-2 border max-w-[20rem] border-gray-400 rounded-md"
             type='password'
             {...register('newPassword')}
           />
@@ -87,7 +87,7 @@ const ChangePassword = () => {
           <label htmlFor='new-password-confirmation' className="font-bold mb-2">Confirm New Password: </label>
           <input
             id='new-password-confirmation'
-            className="px-3 py-2 border-2 border-gray-400 rounded-md"
+            className="px-3 py-2 border max-w-[20rem] border-gray-400 rounded-md"
             type='password'
             {...register('newPasswordConfirmation')} 
           />

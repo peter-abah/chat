@@ -29,7 +29,12 @@ const FileMessage = ({ message, className, showName }: Props) => {
       <div className='py-2 flex gap-4 justify-between w-10/12 mx-auto'>
         <FileIcon className={iconClass} />
         <p className='truncate max-w-[70%]'>{fileName}</p>
-        <a href={url} download={fileName}>
+        <a
+          href={url}
+          download={fileName}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           <MdDownload className={iconClass} />
         </a>
       </div>

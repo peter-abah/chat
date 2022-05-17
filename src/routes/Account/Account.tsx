@@ -8,7 +8,7 @@ const Account = () => {
   return (
     <>
       <Header heading='Account' />
-      <section>
+      <section className='md:px-8'>
         <Link 
           to='email'
           className='w-full flex items-center px-4 py-2 font-bold'

@@ -53,7 +53,7 @@ const ChangeEmail = () => {
         </p>
       </section>
 
-      <form className='px-4' onSubmit={handleSubmit(onSubmit)}>
+      <form className='px-4 md:px-12' onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col mb-8">
           <label
             htmlFor='email'
@@ -63,7 +63,7 @@ const ChangeEmail = () => {
           </label>
           <input
             id='email'
-            className="px-3 py-2 border-2 border-gray-400 rounded-md"
+            className="px-3 py-2 border max-w-[20rem] border-gray-400 rounded-md"
             type='email'
             {...register('email')}
           />
@@ -83,7 +83,7 @@ const ChangeEmail = () => {
           </label>
           <input
             id='password' 
-            className="px-3 py-2 border-2 border-gray-400 rounded-md"
+            className="px-3 py-2 max-w-[20rem] border border-gray-400 rounded-md"
             type='password'
             {...register('password')}
           />
